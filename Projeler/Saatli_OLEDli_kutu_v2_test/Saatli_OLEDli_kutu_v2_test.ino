@@ -5,10 +5,10 @@
 #include <SimpleDHT.h>
 #include <SD.h>
 
-#define DS3231_I2C_ADDRESS 0x68 // DS3231 address
-#define SCREEN_WIDTH 128        // OLED display width, in pixels
-#define SCREEN_HEIGHT 64        // OLED display height, in pixels
-#define OLED_RESET     4        // Reset pin # (or -1 if sharing Arduino reset pin)
+#define DS3231_I2C_ADDRESS 0x68
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET     4
 
 File sdcard_file;
 String daycount = "";
@@ -69,10 +69,9 @@ byte bcdToDec(byte val)
 void readDS3231time(byte *second, byte *minute, byte *hour, byte *dayOfWeek, byte *dayOfMonth, byte *month, byte *year)
 {
   Wire.beginTransmission(DS3231_I2C_ADDRESS);
-  Wire.write(0); // set DS3231 register pointer to 00h
+  Wire.write(0);
   Wire.endTransmission();
 
-  // request seven bytes of data from DS3231 starting from register 00h
   Wire.requestFrom(DS3231_I2C_ADDRESS, 7);
   *second = bcdToDec(Wire.read() & 0x7f);
   *minute = bcdToDec(Wire.read());
@@ -1828,15 +1827,14 @@ void printTemperature()
 
   if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess)
   {
-    //display2.print("DHT11 sensörü okumasında hata oluştu, Hata=");
     display2.print(err);
     return;
   }
 
   display2.clearDisplay();
-  display2.setTextSize(3);      // Normal 1:1 pixel scale
-  display2.setTextColor(WHITE); // Draw white text
-  display2.cp437(true);         // Use full 256 char 'Code Page 437' font
+  display2.setTextSize(3);
+  display2.setTextColor(WHITE);
+  display2.cp437(true);
 
   display2.drawBitmap(0, 25, thermo, 32, 32, 1);
 
@@ -1858,7 +1856,6 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
   display2.setTextSize(2.5);
   display2.setTextColor(WHITE);
   display2.cp437(true);
-
   display2.setCursor(0, 40);
 
   if (hour < 10)
@@ -1866,7 +1863,6 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
     display2.print("0");
   }
   display2.print(hour);
-
   display2.print(':');
 
   if (minute < 10)
@@ -1874,7 +1870,6 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
     display2.print("0");
   }
   display2.print(minute);
-
   display2.print(':');
 
   if (second < 10)
@@ -1882,7 +1877,6 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
     display2.print("0");
   }
   display2.print(second);
-
   display2.setCursor(32, 2);
   display2.setTextSize(2);
 
@@ -1891,7 +1885,6 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
     display2.print("0");
   }
   display2.print(dayOfMonth);
-
   display2.print('/');
 
   if (month < 10)
@@ -1899,12 +1892,8 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
     display2.print("0");
   }
   display2.print(month);
-
   display2.print('/');
-
-  //display.print("20");
   display2.print(year);
-
   display2.drawBitmap(0, 0, calendar, 32, 32, 1);
   display2.drawBitmap(96, 30, clock_img, 32, 32, 1);
 
@@ -1915,7 +1904,7 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
 void ClockInit()
 {
   Wire.beginTransmission(DS3231_I2C_ADDRESS);
-  Wire.write(0); // set DS3231 register pointer to 00h
+  Wire.write(0);
   Wire.endTransmission();
 }
 
@@ -2029,9 +2018,9 @@ struct text_bitmap text_bitmap_list[cntTotalTextBitmap] =
 void print_text_bitmap(struct text_bitmap arr[], int i)
 {
   display1.clearDisplay();
-  display1.setTextSize(1);      // Normal 1:1 pixel scale
-  display1.setTextColor(WHITE); // Draw white text
-  display1.cp437(true);         // Use full 256 char 'Code Page 437' font
+  display1.setTextSize(1);
+  display1.setTextColor(WHITE);
+  display1.cp437(true);
   display1.setCursor(66, 0);
   display1.print(arr[i].text0);
   display1.setCursor(66, 10);
@@ -2049,14 +2038,32 @@ void print_text_bitmap(struct text_bitmap arr[], int i)
 }
 
 
+void print_display1(int textsize, int x1, int y1, char text1[11], int x2, int y2, char text2[11], int x3, int y3, char text3[11], int x4, int y4, char text4[11], int delay_ms)
+{
+  display1.clearDisplay();
+  display1.setTextSize(textsize);
+  display1.setTextColor(WHITE);
+  display1.cp437(true);
+  display1.setCursor(x1, y1);
+  display1.print(text1);
+  display1.setCursor(x2, y2);
+  display1.print(text2);
+  display1.setCursor(x3, y3);
+  display1.print(text3);
+  display1.setCursor(x4, y4);
+  display1.print(text4);
+  display1.display();
+  delay(delay_ms);
+}
+
 void setup()
 {
   Serial.begin(9600);
 
-  PinsInit(); // Initialize the pins
-  DisplayInit(); // Initialize the displays 
-  ClockInit();   // Initialize the clock
-  CardInit(); // Initialize the sd card
+  PinsInit();
+  DisplayInit();
+  ClockInit();
+  CardInit();
 }
 
 
@@ -2121,48 +2128,23 @@ void loop()
       else
       {
         Serial.println("Bugun bu dugmeye basamazsiniz!");
-        display1.clearDisplay();
-        display1.setTextSize(2);      // Normal 1:1 pixel scale
-        display1.setTextColor(WHITE); // Draw white text
-        display1.cp437(true);         // Use full 256 char 'Code Page 437' font
-        display1.setCursor(0, 0);
-        display1.print("Burcucum");
-        display1.setCursor(0, 16);
-        display1.print("gunde 1kez");
-        display1.setCursor(0, 33);
-        display1.print("basman");
-        display1.setCursor(0, 49);
-        display1.print("lazim =)");
-        display1.display();
-        delay(5000);
+        print_display1(2, 0, 0, "Burcucum", 0, 16, "gunde 1kez", 0, 33, "basman", 0, 49, "lazim =)", 5000);
       }
     }
     delay(200);
   } 
 
-
   //Display1
   byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
   readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
 
-// if ((dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek == 4 || dayOfWeek == 5 || dayOfWeek == 6) && (second == 0))
-//   // if ((dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek == 4 || dayOfWeek == 5 || dayOfWeek == 6))
+
+// if ((dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek == 4 || dayOfWeek == 5 || dayOfWeek == 6))
 //   {
     if (count < cntTotalTextBitmap)
     {
       print_text_bitmap(text_bitmap_list, count);
-      // delay(2000);
-
-      // if (count != cntTotalTextBitmap - 1)
-      // {
-      //   count = count + 1;
-      // }
-      // else
-      // {
-      //   count = 0;
-      // }
     }
-  // }
 
   //Display2
   if ((second / 5) % 2 == 0)

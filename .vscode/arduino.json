@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:mega",
     "configuration": "cpu=atmega2560",
-    "port": "COM11",
-    "sketch": "Projeler\\Saatli_OLEDli_kutu_v2\\Saatli_OLEDli_kutu_v2.ino"
+    "port": "COM5",
+    "sketch": "Projeler\\Saatli_OLEDli_kutu_v2_test\\Saatli_OLEDli_kutu_v2_test.ino"
 }
