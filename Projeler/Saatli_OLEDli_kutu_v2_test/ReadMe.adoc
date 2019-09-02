@@ -1,0 +1,4 @@
+- Düğmeye basılınca, eğer o günkü tarih X değilse, o günkü tarih içine yazılır.
+- Son kalan count 1 artırılır.
+- X-Y şeklinde o günkü tarih ve 1 artırılmış count SD Card'a yazılır.
+- Eğer o gün haftaiçiyse, bütün gün boyunca counttaki değer gösterilir.
