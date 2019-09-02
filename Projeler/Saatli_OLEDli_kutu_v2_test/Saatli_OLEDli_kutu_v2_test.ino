@@ -2154,6 +2154,5 @@ void loop()
   else
   {
     printTemperature();
-    delay(100);
   }
 }
