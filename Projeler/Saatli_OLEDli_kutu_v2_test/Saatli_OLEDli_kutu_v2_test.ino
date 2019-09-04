@@ -4,13 +4,19 @@
 #include <Adafruit_SSD1306.h>
 #include <SimpleDHT.h>
 #include <SD.h>
+#include <Servo.h>
 
 #define DS3231_I2C_ADDRESS 0x68
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET     4
 
+Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 File sdcard_file;
+Servo servo;
+
 String daycount = "";
 String new_daycount = "";
 int day_sd = 0;
@@ -18,9 +24,6 @@ int count_sd = 0;
 
 int count = 0;
 const int cntTotalTextBitmap = 47;
-
-Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 int pinLEDGreen = 10;
 int pinButtonGreen = 11;
@@ -1951,6 +1954,13 @@ void CardInit()
 }
 
 
+void ServoInit()
+{
+  servo.attach(9);
+  servo.write(0);
+}
+
+
 struct text_bitmap
 {
   const uint8_t* picture;
@@ -1965,53 +1975,53 @@ struct text_bitmap
 
 struct text_bitmap text_bitmap_list[cntTotalTextBitmap] =
 {
-  { acorn_fill, "Burcucum", "kestane", "gurgen", "palamutun", "PALAMUT", "olanidir" },
-  { agizsiz, "Burcucum", "yandaki", "gulucugu", "cok guzel", "zamanlarda", "yapar" },
-  { atlas, "Burcucum", "Atlas", "adindaki", "taptatli", "cocugun", "teyzesidir" },
-  { bangs, "Burcucum", "kahkul", "birakmayi", "cok sever.", "Cucuk", "yuzlum!" },
-  { beard, "Burcucum", "benim", "sakal", "uzatmami", "cok sever", "Fifuuuu!" },
-  { beer_stroke, "Burcucum", "ile en cok", "sevdigimiz", "bira", "Amsterdam", "markadir!" },
-  { beers_fill, "Burcucum", "birayi", "icince", "gozleri", "yariya", "iner hemen" },
-  { bicycle, "Burcucum", "bisiklete", "binmeyi", "benim gibi", "sever.", "Binelim mi" },
-  { bull, "Burcucum", "ile en cok", "gitmeyi", "sevdigimiz", "ilce", "Kadikoydur" },
-  { cake_fill, "Burcucum", "limonlu", "cheesecake", "cok sever.", "Kahveyle", "iyi gider!" },
-  { camp, "Burcucum", "ile", "birlikte", "kamp", "yapacagiz", "Fifuuuu!" },
-  { cat_stroke, "", "", "", "", "", "" },
-  { cats_fill, "", "", "", "", "", "" },
-  { chicken, "", "", "", "", "", "" },
-  { coffee, "", "", "", "", "", "" },
-  { comment_stroke, "", "", "", "", "", "" },
-  { diving, "", "", "", "", "", "" },
-  { dress_fill, "", "", "", "", "", "" },
-  { eggs, "", "", "", "", "", "" },
-  { go_away, "", "", "", "", "", "" },
-  { hands, "", "", "", "", "", "" },
-  { hug, "", "", "", "", "", "" },
-  { icecream_fill, "Burcucum", "en cok", "limonlu", "dondurma", "sever. Ve", "kapta yer" },
-  { ikinci_yeni, "", "", "", "", "", "" },  
-  { instagram_fill, "", "", "", "", "", "" },
-  { kitten_fill, "", "", "", "", "", "" },
-  { mussel, "", "", "", "", "", "" },
-  { necklace, "", "", "", "", "", "" },
-  { noodle, "", "", "", "", "", "" },
-  { ozyer, "", "", "", "", "", "" },
-  { paws, "", "", "", "", "", "" },
-  { pepper_fill, "", "", "", "", "", "" },
-  { phone, "", "", "", "", "", "" },
-  { pit, "", "", "", "", "", "" },
-  { plane, "", "", "", "", "", "" },
-  { question, "", "", "", "", "", "" },
-  { sakura, "", "", "", "", "", "" },
-  { salmon, "", "", "", "", "", "" },
-  { scale, "", "", "", "", "", "" },
-  { sickness, "", "", "", "", "", "" },
-  { summer, "", "", "", "", "", "" },
-  { sushi, "", "", "", "", "", "" },
-  { twins, "", "", "", "", "", "" },
-  { twitter_fill, "", "", "", "", "", "" },
-  { upside, "", "", "", "", "", "" },
-  { very_funny, "", "", "", "", "", "" },
-  { waffle_fill, "", "", "", "", "", "" }
+  {acorn_fill, "Burcucum", "kestane", "gurgen", "palamutun", "PALAMUT", "olanidir"},
+  {agizsiz, "Burcucum", "yandaki", "gulucugu", "cok guzel", "zamanlarda", "yapar"},
+  {atlas, "Burcucum", "Atlas", "adindaki", "taptatli", "cocugun", "teyzesidir"},
+  {bangs, "Burcucum", "kahkul", "birakmayi", "cok sever.", "Cucuk", "yuzlum!"},
+  {beard, "Burcucum", "benim", "sakal", "uzatmami", "cok sever", "Fifuuuu!"},
+  {beer_stroke, "Burcucum", "ile en cok", "sevdigimiz", "bira", "Amsterdam", "tabii ki !"},
+  {beers_fill, "Burcucum", "birayi", "icince", "gozleri", "yariya", "iner hemen"},
+  {bicycle, "Burcucum", "bisiklete", "binmeyi", "benim gibi", "sever.", "Binelim mi"},
+  {bull, "Burcucum", "ile en cok", "gitmeyi", "sevdigimiz", "ilce", "Kadikoydur"},
+  {cake_fill, "Burcucum", "limonlu", "cheesecake", "cok sever.", "Kahveyle", "iceriz =}"},
+  {camp, "Burcucum", "ile", "birlikte", "kamp", "yapacagiz", "Fifuuuu!"},
+  {cat_stroke, "Burcucum", "kedi", "sevmez.", "Burucucm", "kedinin", "kendisidir"},
+  {cats_fill, "Burcucum", "gordugum", "en guzel", "kedididir", "Miyuv!", "Miyuv!"},
+  {chicken, "Burcucum", "civciktir!", "Yumurta", "sevgisi", "buradan", "gelir =}"},
+  {coffee, "Burcucum", "ile sicak", "icecekler", "icmeyi de", "cok", "severiz!"},
+  {comment_stroke, "", "", "", "", "", ""},
+  {diving, "Burcucum", "su yesili", "gozluk", "ve snorkel", "ile dalar.", "Cup cup!"},
+  {dress_fill, "Burcucum", "elbise", "giyince", "cok fazla", "tatli olur", "Fiti fiti!"},
+  {eggs, "Burcucum", "sabahlari", "iki tane", "haslanmis", "yumurta", "yer =}"},
+  {go_away, "Burcucum", "bazen bana", "git burdan", "der.", "Ama ben", "gitmem =}"},
+  {hands, "Burcucum", "ile el ele", "dolasmayi", "asiri", "severim", "Ver elini!"},
+  {hug, "Burcucum", "sarilmayi", "cok sever.", "Koala gibi", "bana", "sarilir!"},
+  {icecream_fill, "Burcucum", "en cok", "limonlu", "dondurma", "sever. Ve", "kapta yer"},
+  {ikinci_yeni, "Burcucum", "ile resmi", "kahvecimiz", "Ikinci", "yenidir.", "Ust kat =}"},
+  {instagram_fill, "Burcucum", "instagram-", "da bizi", "paylasir", "Bende yok", "henüz =}"},
+  {kitten_fill, "Burcucum", "kedileri", "o kadar", "sever ki", "kendisi de", "kedi olmus"},
+  {mussel, "Burcucum", "ile midye", "yemeyi", "cok cok", "severiz", "Olsa yesek"},
+  {necklace, "Burcucum", "tasli ve", "metalli", "kolye", "takmayi", "cok sever"},
+  {noodle, "Burcucum", "benim en", "cok noodle", "yemegimi", "sever", "bence! =}"},
+  {ozyer, "Burcucum", "Ozyer", "hardal mi?", "sorusunu", "bence cok", "sever =}"},
+  {paws, "Burcucum", "ile", "parmak", "yapimiz", "cok benzer", "Eheh =}"},
+  {pepper_fill, "Burcucum", "cok aci", "biber", "yiyince", "sabit bir", "yere bakar"},
+  {phone, "Burcucum", "ile", "konusmadan", "once", "miyuvlarim", "Miyuv!"},
+  {pit, "Burcucum", "bazen pit", "olur. Yani", "sessizce", "uyuya", "kalir =}"},
+  {plane, "Burcucum", "ucaga", "binmekten", "korkar ama", "benimlen", "biner =}"},
+  {question, "Burcucum", "sen benim", "suyum", "musun", "yoksa", "buyum mu?"},
+  {sakura, "Burcucum", "ile buyuk", "hayalimiz", "Japonya'da", "sakuralari", "gormektir!"},
+  {salmon, "Burcucum", "tam bir", "sashimi", "delisidir", "Cig balik", "uiyyyyy!!!"},
+  {scale, "Burcucum", "kilosuna", "cok dikkat", "eder.Neden", "oyle", "yaptin? =}"},
+  {sickness, "", "", "", "", "", ""},
+  {summer, "Burcucum", "yaz ayini", "cok sever!", "Fiti fiti", "tatil", "yapariz =}"},
+  {sushi, "Burcucum", "ile ben", "sushi", "delisiyiz!", "Ona hep", "yapacagim!"},
+  {twins, "Burcucum", "Basakin", "ikizidir", "BasakBurcu", "olmak", "budur! =}"},
+  {twitter_fill, "Burcucum", "ile ben", "twitterdan", "konusuruz.", "26Kasimdan", "beridir <3"},
+  {upside, "Burcucum", "bu sekilde", "gulunce", "icim", "isinir,", "yanarim!"},
+  {very_funny, "Burcucum", "eskiden", "bana bazen", "cok komik", "derdi.", "Kih kih!"},
+  {waffle_fill, "Burcucum", "ile waffle", "yemeyi", "severiz.", "Mendebur", "waffleci.."}
 };
 
 
@@ -2056,6 +2066,7 @@ void print_display1(int textsize, int x1, int y1, char text1[11], int x2, int y2
   delay(delay_ms);
 }
 
+
 void setup()
 {
   Serial.begin(9600);
@@ -2064,6 +2075,7 @@ void setup()
   DisplayInit();
   ClockInit();
   CardInit();
+  ServoInit();
 }
 
 
@@ -2132,6 +2144,27 @@ void loop()
       }
     }
     delay(200);
+
+    if ((month == 9) && (dayOfMonth == 22))
+    {
+      servo.write(36);
+    }
+    else if ((month == 10) && (dayOfMonth == 21))
+    {
+      servo.write(72);
+    }
+    else if ((month == 11) && (dayOfMonth == 26))
+    {
+      servo.write(108);
+    }
+    else if ((month == 12) && (dayOfMonth == 4))
+    {
+      servo.write(144);
+    }
+    else
+    {
+      servo.write(0);
+    }
   } 
 
   //Display1
