@@ -2108,6 +2108,48 @@ void loop()
     byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
     readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
   
+    // if ((month == 9) && (dayOfMonth == 22))
+    // {
+    //   servo.write(36);
+    // }
+    // else if ((month == 10) && (dayOfMonth == 21))
+    // {
+    //   servo.write(72);
+    // }
+    // else if ((month == 11) && (dayOfMonth == 26))
+    // {
+    //   servo.write(108);
+    // }
+    // else if ((month == 12) && (dayOfMonth == 4))
+    // {
+    //   servo.write(144);
+    // }
+    // else
+    // {
+    //   servo.write(0);
+    // }
+
+    if (minute == 25)
+    {
+      servo.write(36);
+    }
+    else if (minute == 26)
+    {
+      servo.write(72);
+    }
+    else if (minute == 27)
+    {
+      servo.write(108);
+    }
+    else if (minute == 28)
+    {
+      servo.write(144);
+    }
+    else
+    {
+      servo.write(0);
+    }
+
     sdcard_file = SD.open("daycount.txt");
     if (sdcard_file) 
     {
@@ -2140,31 +2182,32 @@ void loop()
       else
       {
         Serial.println("Bugun bu dugmeye basamazsiniz!");
-        print_display1(2, 0, 0, "Burcucum", 0, 16, "gunde 1kez", 0, 33, "basman", 0, 49, "lazim =)", 5000);
+        print_display1(2, 0, 0, "Burcucum", 0, 16, "gunde 1kez", 0, 33, "basman", 0, 49, "lazim =)", 3000);
       }
     }
     delay(200);
 
-    if ((month == 9) && (dayOfMonth == 22))
-    {
-      servo.write(36);
-    }
-    else if ((month == 10) && (dayOfMonth == 21))
-    {
-      servo.write(72);
-    }
-    else if ((month == 11) && (dayOfMonth == 26))
-    {
-      servo.write(108);
-    }
-    else if ((month == 12) && (dayOfMonth == 4))
-    {
-      servo.write(144);
-    }
-    else
-    {
-      servo.write(0);
-    }
+    // if ((month == 9) && (dayOfMonth == 22))
+    // {
+    //   servo.write(36);
+    // }
+    // else if ((month == 10) && (dayOfMonth == 21))
+    // {
+    //   servo.write(72);
+    // }
+    // else if ((month == 11) && (dayOfMonth == 26))
+    // {
+    //   servo.write(108);
+    // }
+    // else if ((month == 12) && (dayOfMonth == 4))
+    // {
+    //   servo.write(144);
+    // }
+    // else
+    // {
+    //   servo.write(0);
+    // }
+    
   } 
 
   //Display1
