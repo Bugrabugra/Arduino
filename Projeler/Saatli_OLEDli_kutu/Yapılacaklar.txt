@@ -1,10 +1,13 @@
 1- Bugün Buğra ile konuştun mu? düğmesi ve ışığı
 2- 22 Eylül, 21 Ekim, 26 Kasım, 4 Aralık için hareketli bir yer
-3- Kırmızı, yeşil, mavi renkte üç ışık
-4- Eklenecek resimler:
+3- Eklenecek resimler:
     kamera ile kendimizi çekmek
-    hmhmm kelimesi
+    hmhmm'ın commente konması
+    pıt'ın commente konması
     pamuk gibi olduk
     Pıt'ın resmini değiştirelim
-5- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
-6- Ya sen benim? random üretici.
+    3 renk
+    Koala
+4- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
+5- Ya sen benim? random üretici.
+6- SD card ve saatin devre kartına oturması
