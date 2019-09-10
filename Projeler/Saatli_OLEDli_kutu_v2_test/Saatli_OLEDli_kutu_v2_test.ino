@@ -14,12 +14,21 @@
 Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-File sdcard_file;
+File daycount_file;
+File youaremy_file;
+File day_file;
+long randNumber;
+
 Servo servo;
+int state_dayservo = 0;
+
 
 String daycount = "";
 String new_daycount = "";
+String new_day = "";
+
 int day_sd = 0;
+int day_sd2 = 0;
 int count_sd = 0;
 
 int count = 0;
@@ -1903,6 +1912,10 @@ void printClock(byte second, byte minute, byte hour, byte dayOfWeek, byte dayOfM
   display2.display();
 }
 
+void RandomInit()
+{
+  randomSeed(analogRead(0));
+}
 
 void ClockInit()
 {
@@ -1932,24 +1945,36 @@ void PinsInit()
 void CardInit()
 {
   SD.begin();
+  youaremy_file = SD.open("youaremy.txt", FILE_WRITE);
+  daycount_file = SD.open("daycount.txt", FILE_WRITE);
+  day_file = SD.open("day.txt", FILE_WRITE);
 
-  sdcard_file = SD.open("daycount.txt", FILE_WRITE);
-  if (sdcard_file) 
+  if (youaremy_file)
   {
-    sdcard_file.close();
+    youaremy_file.close();
   }
 
-  sdcard_file = SD.open("daycount.txt");
-  if (sdcard_file) 
+  if (daycount_file) 
   {
-    while (sdcard_file.available()) 
+    daycount_file.close();
+  }
+
+  if (day_file)
+  {
+    day_file.close();
+  }
+  
+  daycount_file = SD.open("daycount.txt");
+  if (daycount_file) 
+  {
+    while (daycount_file.available()) 
     {
-      int day_setup = sdcard_file.parseInt();
-      count = sdcard_file.parseInt();
+      int day_setup = daycount_file.parseInt();
+      count = daycount_file.parseInt();
       Serial.print("day_setup: "); Serial.println(day_setup);
       Serial.print("count_setup: "); Serial.println(count);
     }
-    sdcard_file.close();
+    daycount_file.close();
   }
 }
 
@@ -2072,6 +2097,7 @@ void setup()
   Serial.begin(9600);
 
   PinsInit();
+  RandomInit();
   DisplayInit();
   ClockInit();
   CardInit();
@@ -2083,23 +2109,64 @@ void loop()
 {
   valButtonGreen = digitalRead(pinButtonGreen);
   valButtonBlue = digitalRead(pinButtonBlue);
-
+  randNumber = random(4);
+  
   if (valButtonGreen == LOW)
   {
-    if (stateButtonGreen == 0)
+    delay(200);
+    byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
+    readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
+
+    day_file = SD.open("day.txt");
+    if (day_file) 
     {
-      Serial.println("Yandi");
-      digitalWrite(pinLEDGreen, HIGH);
-      stateButtonGreen = 1;
-      delay(200);
+      while (day_file.available())
+      {
+        day_sd2 = day_file.parseInt();
+      }
+      day_file.close();
+
+      if (day_sd2 != dayOfMonth)
+      {
+        int recNum = 0; // We have read 0 records so far
+
+        youaremy_file = SD.open("youaremy.txt");
+
+        Serial.print("random number: ");
+        Serial.println(randNumber);
+
+        while (youaremy_file.available())
+        {
+            String list = youaremy_file.readStringUntil('\r');
+            Serial.println(list);
+            recNum++; // Count the record
+
+            if(recNum == randNumber)
+            {
+              Serial.println("aranilan deger");
+              Serial.println();
+            }
+        }
+        Serial.print("dayOfMonth: "); Serial.println(dayOfMonth);
+        Serial.print("day_sd2: "); Serial.println(day_sd2);
+        new_day = String(dayOfMonth);
+
+        SD.remove("day.txt");
+
+        day_file = SD.open("day.txt", FILE_WRITE);
+        if (day_file) 
+        {
+          day_file.print(new_day);
+          day_file.close();
+        }
+      }
+      else
+      {
+        Serial.println("Bugun bu dugmeye basamazsiniz!");
+        print_display1(2, 0, 0, "Burcucum", 0, 16, "gunde 1kez", 0, 33, "basman", 0, 49, "lazim =)", 3000);
+      }
     }
-    else if (stateButtonGreen == 1)
-    {
-      Serial.println("Sondu");
-      digitalWrite(pinLEDGreen, LOW);
-      stateButtonGreen = 0;
-      delay(200);
-    }
+  delay(200);
   }
   
   if (valButtonBlue == LOW)
@@ -2128,37 +2195,55 @@ void loop()
     // {
     //   servo.write(0);
     // }
-
-    if (minute == 25)
+    if ((month == 9) && (dayOfMonth == 10) && (state_dayservo == 0))
     {
-      servo.write(36);
+      Serial.println("10 Eylul giris");
+      Serial.println(state_dayservo);
+      Serial.println("36");
+      // servo.write(36);
+      state_dayservo = 1;
+      Serial.println("10 Eylul cikis");
     }
-    else if (minute == 26)
+    else if ((month == 10) && (dayOfMonth == 21) && (state_dayservo == 0))
     {
-      servo.write(72);
+      Serial.println(state_dayservo);
+      Serial.println("72");
+      // servo.write(72);
+      state_dayservo = 1;
     }
-    else if (minute == 27)
+    else if ((month == 11) && (dayOfMonth == 26) && (state_dayservo == 0))
     {
-      servo.write(108);
+      Serial.println(state_dayservo);
+      Serial.println("108");
+      // servo.write(108);
+      state_dayservo = 1;
     }
-    else if (minute == 28)
+    else if ((month == 12) && (dayOfMonth == 4) && (state_dayservo == 0))
     {
-      servo.write(144);
+      Serial.println(state_dayservo);
+      Serial.println("144");
+      // servo.write(144);
+      state_dayservo = 1;
     }
     else
     {
-      servo.write(0);
+      Serial.println("Normal gun giris");
+      Serial.println(state_dayservo);
+      Serial.println("0");
+      // servo.write(0);
+      Serial.println("Normal gun cikis");
+      state_dayservo = 0;
     }
-
-    sdcard_file = SD.open("daycount.txt");
-    if (sdcard_file) 
+    
+    daycount_file = SD.open("daycount.txt");
+    if (daycount_file) 
     {
-      while (sdcard_file.available())
+      while (daycount_file.available())
       {
-        day_sd = sdcard_file.parseInt();
-        count_sd = sdcard_file.parseInt();
+        day_sd = daycount_file.parseInt();
+        count_sd = daycount_file.parseInt();
       }
-      sdcard_file.close();
+      daycount_file.close();
 
       Serial.print("day: "); Serial.println(day_sd);
       Serial.print("count: "); Serial.println(count_sd);
@@ -2172,11 +2257,11 @@ void loop()
 
         SD.remove("daycount.txt");
 
-        sdcard_file = SD.open("daycount.txt", FILE_WRITE);
-        if (sdcard_file) 
+        daycount_file = SD.open("daycount.txt", FILE_WRITE);
+        if (daycount_file) 
         {
-          sdcard_file.print(new_daycount);
-          sdcard_file.close();
+          daycount_file.print(new_daycount);
+          daycount_file.close();
         }
       }
       else
