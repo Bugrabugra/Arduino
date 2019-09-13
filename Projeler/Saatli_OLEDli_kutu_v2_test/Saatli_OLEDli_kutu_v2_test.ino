@@ -17,6 +17,7 @@ Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 File daycount_file;
 File day_file;
 File random_text_file;
+File random_number_file;
 long randNumber;
 
 Servo servo;
@@ -30,6 +31,7 @@ String randomString = "";
 int day_sd = 0;
 int day_sd2 = 0;
 int count_sd = 0;
+int dailyRandomNumber = 0;
 
 int count = 0;
 const int cntTotalTextBitmap = 47;
@@ -1957,7 +1959,7 @@ void CardInit()
   {
     day_file.close();
   }
-  
+
   daycount_file = SD.open("daycount.txt");
   if (daycount_file) 
   {
@@ -2156,11 +2158,50 @@ void loop()
           day_file.print(new_day);
           day_file.close();
         }
+        SD.remove("random.txt");
+
+        random_number_file = SD.open("random.txt", FILE_WRITE);
+        if (random_number_file)
+        {
+          random_number_file.print(randNumber);
+          random_number_file.close();
+        }
       }
       else
       {
-        Serial.println("Bugun bu dugmeye basamazsiniz!");
-        print_display1(2, 0, 0, "Burcucum", 0, 16, "gunde 1kez", 0, 33, "basman", 0, 49, "lazim =)", 3000);
+        randomString = "";
+        random_number_file = SD.open("random.txt");
+        if (random_number_file)
+        {
+          while (random_number_file.available())
+          {
+            dailyRandomNumber = random_number_file.parseInt();
+          }
+          random_number_file.close();
+        }
+
+        random_text_file = SD.open(String(dailyRandomNumber) + ".TXT");
+        if (random_text_file) 
+        {
+          while (random_text_file.available()) 
+          {
+            randomString += (char)random_text_file.read();
+          }
+          random_text_file.close();
+        }
+
+        display1.clearDisplay();
+        display1.setTextSize(1);
+        display1.setTextColor(WHITE);
+        display1.cp437(true);
+        display1.setCursor(9, 0);
+        display1.print("Ya sen benim kucuk");
+        display1.setCursor(0, 19);
+        display1.print(randomString);
+        display1.setCursor(47, 53);
+        display1.print("misin?");
+        display1.display();
+        delay(4000);
       }
     }
   delay(200);
