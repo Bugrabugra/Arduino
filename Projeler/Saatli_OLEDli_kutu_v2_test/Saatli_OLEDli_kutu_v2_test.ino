@@ -15,17 +15,17 @@ Adafruit_SSD1306 display1(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Adafruit_SSD1306 display2(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 File daycount_file;
-File youaremy_file;
 File day_file;
+File random_text_file;
 long randNumber;
 
 Servo servo;
 int state_dayservo = 0;
 
-
 String daycount = "";
 String new_daycount = "";
 String new_day = "";
+String randomString = "";
 
 int day_sd = 0;
 int day_sd2 = 0;
@@ -1945,14 +1945,8 @@ void PinsInit()
 void CardInit()
 {
   SD.begin();
-  youaremy_file = SD.open("youaremy.txt", FILE_WRITE);
   daycount_file = SD.open("daycount.txt", FILE_WRITE);
   day_file = SD.open("day.txt", FILE_WRITE);
-
-  if (youaremy_file)
-  {
-    youaremy_file.close();
-  }
 
   if (daycount_file) 
   {
@@ -2109,11 +2103,11 @@ void loop()
 {
   valButtonGreen = digitalRead(pinButtonGreen);
   valButtonBlue = digitalRead(pinButtonBlue);
-  randNumber = random(4);
   
   if (valButtonGreen == LOW)
   {
     delay(200);
+    randNumber = random(101, 128);
     byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
     readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
 
@@ -2128,27 +2122,30 @@ void loop()
 
       if (day_sd2 != dayOfMonth)
       {
-        int recNum = 0; // We have read 0 records so far
-
-        youaremy_file = SD.open("youaremy.txt");
-
-        Serial.print("random number: ");
-        Serial.println(randNumber);
-
-        while (youaremy_file.available())
+        randomString = "";
+        random_text_file = SD.open(String(randNumber) + ".TXT");
+        if (random_text_file) 
         {
-            String list = youaremy_file.readStringUntil('\r');
-            Serial.println(list);
-            recNum++; // Count the record
+          while (random_text_file.available()) 
+          {
+            randomString += (char)random_text_file.read();
+          }
+          random_text_file.close();
+        } 
 
-            if(recNum == randNumber)
-            {
-              Serial.println("aranilan deger");
-              Serial.println();
-            }
-        }
-        Serial.print("dayOfMonth: "); Serial.println(dayOfMonth);
-        Serial.print("day_sd2: "); Serial.println(day_sd2);
+        display1.clearDisplay();
+        display1.setTextSize(1);
+        display1.setTextColor(WHITE);
+        display1.cp437(true);
+        display1.setCursor(9, 0);
+        display1.print("Ya sen benim kucuk");
+        display1.setCursor(0, 19);
+        display1.print(randomString);
+        display1.setCursor(48, 53);
+        display1.print("misin?");
+        display1.display();
+        delay(4000);
+
         new_day = String(dayOfMonth);
 
         SD.remove("day.txt");
@@ -2195,43 +2192,30 @@ void loop()
     // {
     //   servo.write(0);
     // }
-    if ((month == 9) && (dayOfMonth == 10) && (state_dayservo == 0))
+    if ((month == 9) && (dayOfMonth == 11) && (state_dayservo == 0))
     {
-      Serial.println("10 Eylul giris");
-      Serial.println(state_dayservo);
-      Serial.println("36");
-      // servo.write(36);
+      servo.write(36);
       state_dayservo = 1;
-      Serial.println("10 Eylul cikis");
+      Serial.println("11 Eylul cikis");
     }
     else if ((month == 10) && (dayOfMonth == 21) && (state_dayservo == 0))
     {
-      Serial.println(state_dayservo);
-      Serial.println("72");
-      // servo.write(72);
+      servo.write(72);
       state_dayservo = 1;
     }
     else if ((month == 11) && (dayOfMonth == 26) && (state_dayservo == 0))
     {
-      Serial.println(state_dayservo);
-      Serial.println("108");
-      // servo.write(108);
+      servo.write(108);
       state_dayservo = 1;
     }
     else if ((month == 12) && (dayOfMonth == 4) && (state_dayservo == 0))
     {
-      Serial.println(state_dayservo);
-      Serial.println("144");
-      // servo.write(144);
+      servo.write(144);
       state_dayservo = 1;
     }
-    else
+    else if (((month != 9) && (dayOfMonth != 11)) && ((month != 10) && (dayOfMonth != 21)) && ((month != 11) && (dayOfMonth != 26)) && ((month != 12) && (dayOfMonth != 4)))
     {
-      Serial.println("Normal gun giris");
-      Serial.println(state_dayservo);
-      Serial.println("0");
-      // servo.write(0);
-      Serial.println("Normal gun cikis");
+      servo.write(0);
       state_dayservo = 0;
     }
     

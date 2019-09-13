@@ -2,5 +2,5 @@
     "board": "arduino:avr:mega",
     "configuration": "cpu=atmega2560",
     "port": "COM5",
-    "sketch": "Projeler\\SD_Card_deneme\\SD_Card_deneme.ino"
+    "sketch": "Projeler\\Saatli_OLEDli_kutu_v2_test\\Saatli_OLEDli_kutu_v2_test.ino"
 }
