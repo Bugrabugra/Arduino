@@ -1,13 +1,13 @@
-1- Bugün Buğra ile konuştun mu? düğmesi ve ışığı
-2- 22 Eylül, 21 Ekim, 26 Kasım, 4 Aralık için hareketli bir yer
-3- Eklenecek resimler:
-    kamera ile kendimizi çekmek
-    hmhmm'ın commente konması
-    pıt'ın commente konması
-    pamuk gibi olduk
-    Pıt'ın resmini değiştirelim
-    3 renk
-    Koala
-4- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
-5- Ya sen benim? random üretici.
-6- SD card ve saatin devre kartına oturması
+OOO - 1- Bugün Buğra ile konuştun mu? düğmesi ve ışığı
+OOO - 2 - 22 Eylül, 21 Ekim, 26 Kasım, 4 Aralık, 5 Aralık için hareketli bir yer
+OOO - 3- Eklenecek resimler:
+    XXX - kamera ile kendimizi çekmek
+    XXX - hmhmm'ın commente konması
+    XXX - pıt'ın commente konması
+    XXX - pamuk gibi olduk
+    OOO - 3 renk
+    XXX - Koala
+    XXX - Yunus
+OOO - 4- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
+OOO - 5- Ya sen benim? random üretici.
+XXX - 6-  SD card ve saatin devre kartına oturması
