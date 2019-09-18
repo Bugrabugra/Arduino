@@ -1,6 +1,5 @@
-OOO - 1- Bugün Buğra ile konuştun mu? düğmesi ve ışığı
-OOO - 2- 22 Eylül, 21 Ekim, 26 Kasım, 4 Aralık, 5 Aralık için hareketli bir yer
-XXX - 3- Eklenecek resimler:
+OOO - 1- 22 Eylül, 21 Ekim, 26 Kasım, 4 Aralık, 5 Aralık için hareketli bir yer
+XXX - 2- Eklenecek resimler:
     XXX - kamera ile kendimizi çekmek
     XXX - hmhmm'ın commente konması
     XXX - pıt'ın commente konması
@@ -8,7 +7,9 @@ XXX - 3- Eklenecek resimler:
     XXX - 3 renk
     XXX - Koala
     XXX - Yunus
-OOO - 4- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
-OOO - 5- Ya sen benim? random üretici.
-XXX - 6- SD card ve saatin devre kartına oturması
-XXX - 7- Ya sen benim için arka plan.
+    XXX - Regl pantalonu
+
+OOO - 3- LED'ler için öne, yanlara, arka kaide üstüne ışık hazneleri
+OOO - 4- Ya sen benim? random üretici.
+XXX - 5- SD card ve saatin devre kartına oturması
+XXX - 6- Ya sen benim için arka plan.
