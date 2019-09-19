@@ -2375,6 +2375,7 @@ void GreenButton()
 {
   if (valButtonGreen == LOW)
   {
+    Serial.println("Yesil");
     delay(200);
     randNumber = random(101, 128);
     byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
