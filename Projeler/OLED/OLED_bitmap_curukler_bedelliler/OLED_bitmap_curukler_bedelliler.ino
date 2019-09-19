@@ -52,6 +52,5 @@ void loop()
   display.setCursor(0, 0);
   display.print("Curukler & Bedelliler");
 
-
   display.display();
 }
