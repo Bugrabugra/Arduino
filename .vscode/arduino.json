@@ -1,6 +1,6 @@
 {
-    "board": "arduino:avr:mega",
-    "configuration": "cpu=atmega2560",
-    "port": "COM5",
-    "sketch": "Projeler\\Saatli_OLEDli_kutu_v2_test\\Saatli_OLEDli_kutu_v2_test.ino"
+    "board": "arduino:avr:nano",
+    "configuration": "cpu=atmega328old",
+    "port": "COM4",
+    "sketch": "Projeler\\Wireless\\Long_wifi_transrec2\\Long_wifi_transrec2.ino"
 }
