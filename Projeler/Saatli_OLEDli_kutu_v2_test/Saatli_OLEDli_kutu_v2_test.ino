@@ -2412,7 +2412,7 @@ void GreenButton()
   {
     Serial.println("Yesil");
     delay(200);
-    randNumber = random(101, 128);
+    randNumber = random(101, 207);
     byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
     readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
 
@@ -2645,7 +2645,7 @@ struct text_bitmap text_bitmap_list[cntTotalTextBitmap] =
   {hug, "Burcucum", "sarilmayi", "cok sever.", "Koala gibi", "bana", "sarilir!"},
   {icecream_fill, "Burcucum", "en cok", "limonlu", "dondurma", "sever. Ve", "kapta yer"},
   {ikinci_yeni, "Burcucum", "ile resmi", "kahvecimiz", "Ikinci", "yenidir.", "Ust kat =)"},
-  {instagram_fill, "Burcucum", "instagram-", "da bizi", "paylasir", "Bende yok", "henüz =)"},
+  {instagram_fill, "Burcucum", "instagram-", "da bizi", "paylasir", "Bende yok", "henuz =)"},
   {island, "Burcucum", "ile ada", "tatilleri", "cok guzel!", "Gokceada!", "Bozcaada!"},
   {kitten_fill, "Burcucum", "kedileri", "o kadar", "sever ki", "kendisi de", "kedi olmus"},
   {koala, "Burcucum", "bana", "koala gibi", "sarilir!", "Okaliptus", "yer misin?"},
