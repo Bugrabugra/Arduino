@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
-    "port": "COM4",
-    "sketch": "Projeler\\Wireless\\Long_wifi_transrec2\\Long_wifi_transrec2.ino"
+    "port": "COM6",
+    "sketch": "Projeler\\Wireless\\Long_wifi_transrec1\\Long_wifi_transrec1.ino"
 }
