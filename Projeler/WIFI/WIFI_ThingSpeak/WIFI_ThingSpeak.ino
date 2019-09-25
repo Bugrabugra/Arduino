@@ -23,6 +23,9 @@ int valButton = 0;
 //this runs once
 void setup()
 {
+  pinMode(pinButton, INPUT_PULLUP);
+  pinMode(pinLED, OUTPUT);
+  
   Serial.begin(Baud_Rate);
   Serial.println("AT");
 
