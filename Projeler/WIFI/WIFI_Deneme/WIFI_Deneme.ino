@@ -1,102 +1,131 @@
-#include <SPI.h>
-#include <ESP8266WiFi.h>
-#include <ThingerWifi.h>
+#include <stdlib.h>
 
-// thinger.io config
-#define USER_ID "Buura"
-#define DEVICE_ID "1"
-#define DEVICE_CREDENTIAL "NvYF6k3gI!IV"
-#define ALARM_ENDPOINT "your_alarm_endpoint"
+#define SSID "SONRASI_YOKTU"//your network name
+#define PASS "BuuRA03045025"//your network password
+//#define SSID "KAT3"//your network name
+//#define PASS "UnV-2019!Wf++"//your network password
+#define IP "184.106.153.149" // thingspeak.com
+#define Baud_Rate 115200 //Another common value is 9600
+#define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
 
-// wifi config
-#define WIFI_SSID "your_wifi_ssid"
-#define WIFI_WPA2_PASSWORD "your_wifi_password"
+//Can use a post also
+String GET = "GET /update?api_key=571EEA6LUPEM9IHU&field1=";
 
-// sensor/led pins
-#define SENSOR_PIN D1
-#define LED_PIN D2
+//if you want to add more fields this is how
+//String FIELD3 = "&field3=";
 
-ThingerWifi thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
+bool updated;
 
-typedef enum WaterState{
-  WATER,
-  START_DETECTING_NO_WATER,
-  NO_WATER
-};
+int pinButton = 3;
+int pinLED = 4;
+int valButton = 0;
+int stateButton = 0;
 
-WaterState waterState = WATER;          // current water state
-bool showLedAlarm = true;               // control led alarm on/off
-unsigned long ledAlarmInterval = 500;   // led alam blink frequency
-unsigned long previousMillis = 0;       // util for hysteresis and blink
-unsigned long timeWithoutWater = 0;     // for hysteresis time
-unsigned long hysteresisTime = 60000;   // one minute
-int ledState = LOW;                     // current led alarm state
+//this runs once
+void setup()
+{
+	Serial.begin(Baud_Rate);
+	Serial.println("AT");
 
-void setup() {
-  // set pinmode for led alarm and humidity reader
-  pinMode(SENSOR_PIN, INPUT);
-  pinMode(LED_PIN, OUTPUT);
+	delay(5000);
 
-  // add wifi connection
-  thing.add_wifi(WIFI_SSID, WIFI_WPA2_PASSWORD);
-
-  // allow reading plant water/humidity
-  thing["water"] >> [](pson& out){ out = !digitalRead(SENSOR_PIN); };
-
-  // allow activating and deactivating led alarm remotelly
-  thing["led_alarm"]["show"] << [](pson& in){ 
-    if(in.is_empty()) in = showLedAlarm;
-    else showLedAlarm = in;
-  };
-
-  // allow changing led alarm frequency
-  thing["led_alarm"]["freq"] << [](pson& in){ 
-    if(in.is_empty()) in = ledAlarmInterval;
-    else ledAlarmInterval = in;
-  }; 
-
-  // allow changing hysteresisTime remotelly
-  thing["hysteresis"] << [](pson& in){ 
-    if(in.is_empty()) in = hysteresisTime;
-    else hysteresisTime = in;
-  };
+	if (Serial.find("OK"))
+	{
+		//connect to your wifi netowork
+		bool connected = connectWiFi();
+	}
 }
 
-void loop() {
-  thing.handle();
+//this runs over and over
+void loop()
+{
+	valButton = digitalRead(pinButton);
 
-  // read water value
-  bool water = !digitalRead(SENSOR_PIN);
-  
-  if(water){
-    if(waterState!=WATER){
-      digitalWrite(LED_PIN, LOW); // turn off led alarm
-      waterState = WATER; // reset water state
-    }
-  }else{
-     unsigned long currentMillis = millis();
-     switch(waterState){
-        case WATER:
-            timeWithoutWater = 0;
-            previousMillis = currentMillis;
-            waterState = START_DETECTING_NO_WATER;
-          break;
-        case START_DETECTING_NO_WATER:
-          timeWithoutWater += (currentMillis - previousMillis);
-          previousMillis = currentMillis;
-          // only notify after a hysteresis time to prevent drifts in sensor reading
-          if(timeWithoutWater>=hysteresisTime){
-            waterState = NO_WATER;
-            thing.call_endpoint(ALARM_ENDPOINT);
-          }
-          break;
-        case NO_WATER:
-          if(currentMillis - previousMillis > ledAlarmInterval) {
-            previousMillis = currentMillis;   
-            ledState = ledState == LOW ? HIGH & showLedAlarm : LOW;
-            digitalWrite(LED_PIN, ledState);
-          }
-          break;
-     }
-  }
+	//update ThingSpeak channel with new values
+	updated = updateLight(String(int(valButton)));
+
+	//wait for delay time before attempting to post again
+  digitalWrite(pinLED, HIGH);
+	delay(DELAY_TIME);
+  digitalWrite(pinLED, LOW);
+}
+
+bool updateLight(String state)
+{
+	//initialize your AT command string
+	String cmd = "AT+CIPSTART=\"TCP\",\"";
+
+	//add IP address and port
+	cmd += IP;
+	cmd += "\",80";
+
+	//connect
+	Serial.println(cmd);
+	delay(2000);
+	if (Serial.find("Error"))
+	{
+		return false;
+	}
+
+	//build GET command, ThingSpeak takes Post or Get commands for updates, I use a Get
+	cmd = GET;
+	cmd += state;
+
+
+	//continue to add data here if you have more fields such as a light sensor
+	//cmd += FIELD3;
+	//cmd += <field 3 value>
+
+	cmd += "\r\n";
+
+	//Use AT commands to send data
+	Serial.print("AT+CIPSEND=");
+	Serial.println(cmd.length());
+	if (Serial.find(">"))
+	{
+		//send through command to update values
+		Serial.print(cmd);
+	}
+	else {
+		Serial.println("AT+CIPCLOSE");
+	}
+
+	if (Serial.find("OK"))
+	{
+		//success! Your most recent values should be online.
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+boolean connectWiFi()
+{
+	//set ESP8266 mode with AT commands
+	Serial.println("AT+CWMODE=1");
+	delay(2000);
+
+	//build connection command
+	String cmd = "AT+CWJAP=\"";
+	cmd += SSID;
+	cmd += "\",\"";
+	cmd += PASS;
+	cmd += "\"";
+
+	//connect to WiFi network and wait 5 seconds
+	Serial.println(cmd);
+	delay(5000);
+
+	//if connected return true, else false
+	if (Serial.find("OK"))
+	{
+		Serial.println("Internete baglandi!");
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
