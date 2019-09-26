@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
-#define SSID "SONRASI_YOKTU"//your network name
-#define PASS "BuuRA03045025"//your network password
-//#define SSID "KAT3"//your network name
-//#define PASS "UnV-2019!Wf++"//your network password
+// #define SSID "SONRASI_YOKTU"//your network name
+// #define PASS "BuuRA03045025"//your network password
+#define SSID "KAT3"//your network name
+#define PASS "UnV-2019!Wf++"//your network password
 #define IP "184.106.153.149" // thingspeak.com
 #define Baud_Rate 115200 //Another common value is 9600
 #define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
