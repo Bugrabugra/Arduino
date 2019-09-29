@@ -1,0 +1,29 @@
+https://www.youtube.com/watch?v=ZJnpgYlelEA
+
+https://www.youtube.com/watch?v=uznq8W9sOKQ
+
+https://arduino.stackexchange.com/questions/23780/how-to-capture-data-from-a-webpage-in-arduino-and-display-it-over-serial-monitor
+
+
+
+AT
+AT+CWMODE=1
+AT+CWJAP="SONRASI_YOKTU","BuuRA03045025"
+AT+CIPSTART="TCP","184.106.153.149",80
+AT+CIPSEND=80
+GET /channels/871881/feeds.json?results=1 HTTP/1.0\r\nHost: api.thingspeak.com\r\n\r\n
+
+
+
+const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(8) + 240;
+DynamicJsonDocument doc(capacity);
+  
+const char* json = "{\"channel\":{\"id\":871881,\"name\":\"ESP8266-01 Button\",\"latitude\":\"0.0\",\"longitude\":\"0.0\",\"field1\":\"buttonState\",\"created_at\":\"2019-09-25T11:38:03Z\",\"updated_at\":\"2019-09-25T13:15:39Z\",\"last_entry_id\":66},\"feeds\":[{\"created_at\":\"2019-09-26T06:18:14Z\",\"entry_id\":66,\"field1\":\"1\"}]}";
+  
+deserializeJson(doc, json);
+
+JsonObject feeds_0 = doc["feeds"][0];
+const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-26T06:18:14Z"
+int feeds_0_entry_id = feeds_0["entry_id"]; // 66
+const char* feeds_0_field1 = feeds_0["field1"]; // "1"
+ 

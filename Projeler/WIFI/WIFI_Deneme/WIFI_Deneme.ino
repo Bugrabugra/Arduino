@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+
 const char SSID[] = "SONRASI_YOKTU"; //your network name
 const char PASS[] = "BuuRA03045025"; //your network password
 // const char SSID[] = "KAT3"; //your network name
@@ -9,10 +10,7 @@ const char IP[] = "184.106.153.149"; // thingspeak.com
 #define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
 
 //Can use a post also
-String GET = "GET /update?api_key=571EEA6LUPEM9IHU&field1=";
-
-//if you want to add more fields this is how
-//String FIELD3 = "&field3=";
+String GET = "GET /channels/871881/feeds.json?results=1 HTTP/1.0";
 
 bool updated;
 
@@ -20,7 +18,6 @@ int pinButton = 3;
 int pinLED = 4;
 int valButton = 0;
 
-//this runs once
 void setup()
 {
   pinMode(pinButton, INPUT_PULLUP);
@@ -38,7 +35,6 @@ void setup()
   }
 }
 
-//this runs over and over
 void loop()
 {
   valButton = digitalRead(pinButton);
@@ -50,6 +46,17 @@ void loop()
   digitalWrite(pinLED, HIGH);
   delay(DELAY_TIME);
   digitalWrite(pinLED, LOW);
+
+  // display.clearDisplay();
+  // display.setTextSize(2);      // Normal 1:1 pixel scale
+  // display.setTextColor(WHITE); // Draw white text
+  // display.cp437(true);         // Use full 256 char 'Code Page 437' font
+  // display.setCursor(0, 0);
+  // display.print("Deger: ");
+  // display.setCursor(30, 0);
+  // display.print(XXXX);
+
+  // display.display();
 }
 
 bool updateLight(String state)
@@ -61,6 +68,7 @@ bool updateLight(String state)
   cmd += IP;
   cmd += "\",80";
 
+
   //connect
   Serial.println(cmd);
   delay(2000);
@@ -71,24 +79,29 @@ bool updateLight(String state)
 
   //build GET command, ThingSpeak takes Post or Get commands for updates, I use a Get
   cmd = GET;
-  cmd += valButton;
-
+  // cmd += "\r\n";
+  // cmd += "Host: api.thingspeak.com:80";
 
   //continue to add data here if you have more fields such as a light sensor
   //cmd += FIELD3;
   //cmd += <field 3 value>
 
   cmd += "\r\n";
+  cmd += "Host: api.thingspeak.com";
+  cmd += "\r\n";
+  cmd += "\r\n";
 
   //Use AT commands to send data
   Serial.print("AT+CIPSEND=");
   Serial.println(cmd.length());
+  
   if (Serial.find(">"))
   {
     //send through command to update values
     Serial.print(cmd);
   }
-  else {
+  else 
+  {
     Serial.println("AT+CIPCLOSE");
   }
 
@@ -131,3 +144,5 @@ boolean connectWiFi()
     return false;
   }
 }
+
+
