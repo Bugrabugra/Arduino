@@ -8,8 +8,6 @@ void setup()
   softSerial.begin(baud);
   Serial.print("SETUP!! @");
   Serial.println(baud);
-  String cmd = "GET /channels/871881/feeds.json?results=1 HTTP/1.0\r\nHost: api.thingspeak.com\r\n\r\n";
-  Serial.println(cmd.length());
 }
 
 void loop() 

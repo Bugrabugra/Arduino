@@ -1,10 +1,12 @@
 #include <stdlib.h>
 
-const char SSID[] = "SONRASI_YOKTU"; //your network name
-const char PASS[] = "BuuRA03045025"; //your network password
-// const char SSID[] = "KAT3"; //your network name
-// const char PASS[] = "UnV-2019!Wf++"; //your network password
-const char IP[] = "184.106.153.149"; // thingspeak.com
+// const char SSID[] = "SONRASI_YOKTU"; //your network name
+// const char PASS[] = "BuuRA03045025"; //your network password
+// #define SSID "TurkTelekom_Z77MY" //your network name
+// #define PASS "fF667Fc489315" //your network password
+#define SSID "KAT3" //your network name
+#define PASS "UnV-2019!Wf++" //your network password
+#define IP "184.106.153.149" // thingspeak.com
 #define Baud_Rate 115200 //Another common value is 9600
 #define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
 
@@ -47,9 +49,7 @@ void loop()
   updated = updateLight(String(int(valButton)));
 
   //wait for delay time before attempting to post again
-  digitalWrite(pinLED, HIGH);
   delay(DELAY_TIME);
-  digitalWrite(pinLED, LOW);
 }
 
 bool updateLight(String state)
@@ -95,6 +95,9 @@ bool updateLight(String state)
   if (Serial.find("OK"))
   {
     //success! Your most recent values should be online.
+    digitalWrite(pinLED, HIGH);
+    delay(1000);
+    digitalWrite(pinLED, LOW);
     return true;
   }
   else
@@ -123,7 +126,6 @@ boolean connectWiFi()
   //if connected return true, else false
   if (Serial.find("OK"))
   {
-    Serial.println("Internete baglandi!");
     return true;
   }
   else
