@@ -34,9 +34,18 @@ Connection: keep-alive
 ------------------
 
 
+-------------------
+AT+CIPSEND=104
+GET /channels/871881/feeds.json?results=1 HTTP/1.1
+Host: api.thingspeak.com
+Connection: keep-alive
+------------------
+
+
+------------------
 AT+CIPSTART="TCP","postman-echo.com",80
 AT+CIPSEND=89
 GET /get?foo1=bar1&foo2=bar2 HTTP/1.1
 Host: postman-echo.com
 Connection: keep-alive
-
+------------------
