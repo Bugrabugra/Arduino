@@ -1,51 +1,28 @@
-https://www.youtube.com/watch?v=ZJnpgYlelEA
-
-https://www.youtube.com/watch?v=uznq8W9sOKQ
-
-https://www.youtube.com/watch?v=xZePXRjQOe
-
-https://arduino.stackexchange.com/questions/23780/how-to-capture-data-from-a-webpage-in-arduino-and-display-it-over-serial-monitor
-
-http://string-functions.com/length.aspx
-
-Süper
-https://circuitdigest.com/microcontroller-projects/arduino-with-esp8266-reading-data-from-internet
-https://www.youtube.com/watch?v=4vKxGHGYOtI
-
-
 AT
 AT+CWMODE=1
 AT+CWJAP="SONRASI_YOKTU","BuuRA03045025"
 AT+CWJAP="KAT3","UnV-2019!Wf++"
 AT+CIPSTART="TCP","184.106.153.149",80
 
+-------------------
 AT+CIPSEND=45
 GET /channels/871881/feeds.json?results=1
-
+-------------------
+-------------------
 AT+CIPSEND=47
 GET /update?api_key=571EEA6LUPEM9IHU&field1=3
-Üstteki bunu halde gönderince enter ile birlikte 45(47) oluyor
-
+//***Üstteki bunu halde gönderince enter ile birlikte 45(47) oluyor
+-------------------
 -------------------
 AT+CIPSEND=104
 GET /channels/871881/feeds.json?results=1 HTTP/1.1
 Host: api.thingspeak.com
 Connection: keep-alive
-------------------
-
-
 -------------------
-AT+CIPSEND=104
-GET /channels/871881/feeds.json?results=1 HTTP/1.1
-Host: api.thingspeak.com
-Connection: keep-alive
-------------------
-
-
-------------------
+-------------------
 AT+CIPSTART="TCP","postman-echo.com",80
 AT+CIPSEND=89
 GET /get?foo1=bar1&foo2=bar2 HTTP/1.1
 Host: postman-echo.com
 Connection: keep-alive
-------------------
+-------------------

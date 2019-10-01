@@ -1,11 +1,11 @@
 #include <stdlib.h>
 
-// const char SSID[] = "SONRASI_YOKTU"; //your network name
-// const char PASS[] = "BuuRA03045025"; //your network password
+const char SSID[] = "SONRASI_YOKTU"; //your network name
+const char PASS[] = "BuuRA03045025"; //your network password
 // #define SSID "TurkTelekom_Z77MY" //your network name
 // #define PASS "fF667Fc489315" //your network password
-#define SSID "KAT3" //your network name
-#define PASS "UnV-2019!Wf++" //your network password
+// #define SSID "KAT3" //your network name
+// #define PASS "UnV-2019!Wf++" //your network password
 #define IP "184.106.153.149" // thingspeak.com
 #define Baud_Rate 115200 //Another common value is 9600
 #define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak

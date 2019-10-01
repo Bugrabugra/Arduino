@@ -1,172 +1,93 @@
+//ESP TX >> Mega RX(0)
+//ESP RX >> Mega TX(0)
+
 #include <ArduinoJson.h>
-#include <stdlib.h>
-#include <SPI.h>
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
-#define MAX_STRING_LENGTH 10
+// #define ag_ismi "KAT3"
+// #define ag_sifresi "UnV-2019!Wf++"
+#define ag_ismi "SONRASI_YOKTU"
+#define ag_sifresi "BuuRA03045025"
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
 
-// const char SSID[] = "SONRASI_YOKTU"; //your network name
-// const char PASS[] = "BuuRA03045025"; //your network password
-const char SSID[] = "KAT3"; //your network name
-const char PASS[] = "UnV-2019!Wf++"; //your network password
-const char IP[] = "184.106.153.149"; // thingspeak.com
-#define Baud_Rate 115200 //Another common value is 9600
-#define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
-
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-//Can use a post also
-String GET = "GET /channels/871881/feeds.json?results=1";
-
-bool updated;
-
-int pinButton = 3;
-int pinLED = 4;
-int valButton = 0;
+#define host "184.106.153.149"
+int sayi = 0;
 
 void setup()
 {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  pinMode(pinButton, INPUT_PULLUP);
-  pinMode(pinLED, OUTPUT);
-  
-  Serial.begin(Baud_Rate);
-  Serial.println("AT");
+  Serial.begin(115200); //Seriport'u açıyoruz. Güncellediğimiz
 
+  Serial.println("AT");
   delay(5000);
 
   if (Serial.find("OK"))
   {
     //connect to your wifi netowork
-    bool connected = connectWiFi();
-  }
+    startWifi();
+  } 
 }
 
-void loop()
+void loop() 
 {
-  //update ThingSpeak channel with new values
-  updated = getLight();
-
-  //wait for delay time before attempting to post again
-  digitalWrite(pinLED, HIGH);
-  delay(DELAY_TIME);
-  digitalWrite(pinLED, LOW);
+  httpRequest();
+  delay(10000);
 }
 
-void printResponse() {
-  while (Serial.available()) {
-    Serial.println(Serial.readStringUntil('\n')); 
-  }
-}
-
-
-bool getLight()
+void httpRequest() 
 {
-  //initialize your AT command string
-  String cmd = "AT+CIPSTART=\"TCP\",\"";
+  String start_com = "AT+CIPSTART=\"TCP\",\"";
+  start_com += host;
+  start_com += "\",80";
 
-  //add IP address and port
-  cmd += IP;
-  cmd += "\",80";
-
-  //connect
-  Serial.println(cmd);
+  Serial.println(start_com);  //AT+CIPSTART komutu ile sunucuya bağlanmak için sunucudan izin istiyoruz.
   delay(2000);
+
   if (Serial.find("Error"))
   {
     return false;
   }
 
-  //build GET command, ThingSpeak takes Post or Get commands for updates, I use a Get
-  cmd = GET;
-  cmd += "\r\n";
+  sayi++;
+  String postData = "GET /channels/871881/feeds.json?results=1 HTTP/1.1\r\n";
+  postData += "Host: api.thingspeak.com\r\n";
+  postData += "Connection: keep-alive\r\n";
+  postData += "\r\n";
+  //TCP burada yapacağımız bağlantı çeşidini gösteriyor. 80 ise bağlanacağımız portu gösteriyor
 
-  //Use AT commands to send data
-  Serial.print("AT+CIPSEND=");
-  Serial.println(cmd.length());
+  //veri yollayacağımız zaman bu komutu kullanıyoruz. Bu komut ile önce kaç tane karakter yollayacağımızı söylememiz gerekiyor.
+  Serial.print("AT+CIPSEND="); 
+  Serial.println(postData.length());
 
-  if (Serial.find(">"))
-  {
-    //send through command to update values
-    Serial.print(cmd);
+  //eğer sunucu ile iletişim sağlayıp komut uzunluğunu gönderebilmişsek ESP modülü bize ">" işareti ile geri dönüyor.
+  if (Serial.find(">")) {
+        // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
+        Serial.print(postData);
+        // delay(2000); //Delayi önce koyunca veriyi çekemedi
+        gelenVeri();
+        delay(3000);
+        Serial.println("AT+CIPCLOSE");
 
+        // çalışma sıklığı saniye olarak
+    //delay(device.interval * 1000);
+        delay(2500);
 
-
-      // const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(8) + 240;
-      // DynamicJsonDocument doc(capacity);
-
-      // const char* json = Serial.read();
-
-      // deserializeJson(doc, json);
-
-      // JsonObject feeds_0 = doc["feeds"][0];
-      // const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-26T06:18:14Z"
-      // int feeds_0_entry_id = feeds_0["entry_id"]; // 66
-      // const char* feeds_0_field1 = feeds_0["field1"]; // "1"
-
-      // display.clearDisplay();
-      // display.setTextSize(3);      // Normal 1:1 pixel scale
-      // display.setTextColor(WHITE); // Draw white text
-      // display.cp437(true);         // Use full 256 char 'Code Page 437' font
-      // display.setCursor(0, 0);
-      // display.print(feeds_0_field1);
-      // display.display(); 
-  }
-  else {
-    Serial.println("AT+CIPCLOSE");
-  }
-
-  if (Serial.find("OK"))
-  {
-    static char responseBuffer[1024]; // Buffer for received data
-
-    while (Serial.available()) 
-    {                         // Now receive the data
-      String line = Serial.readStringUntil('\n');
-      if ( line.indexOf('{',0) >= 0 ) 
-      {                  // Ignore data that is not likely to be JSON formatted, so must contain a '{'
-        Serial.println(line);                            // Show the text received
-        line.toCharArray(responseBuffer, line.length()); // Convert to char array for the JSON decoder
-      }
-    }
-
-    Serial.println(responseBuffer);
-    //success! Your most recent values should be online.
-    return true;
-  }
-  else
-  {
-    return false;
   }
 }
-
-boolean connectWiFi()
+void startWifi() 
 {
-  //set ESP8266 mode with AT commands
-  Serial.println("AT+CWMODE=1");
+  //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
+  Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
   delay(2000);
+  String baglantiKomutu = "AT+CWJAP=\"";
+  baglantiKomutu += + ag_ismi;
+  baglantiKomutu += "\",\"";
+  baglantiKomutu += ag_sifresi;
+  baglantiKomutu += "\"";
 
-  //build connection command
-  String cmd = "AT+CWJAP=\"";
-  cmd += SSID;
-  cmd += "\",\"";
-  cmd += PASS;
-  cmd += "\"";
-
-  //connect to WiFi network and wait 5 seconds
-  Serial.println(cmd);
+  Serial.println(baglantiKomutu);
   delay(5000);
 
-  //if connected return true, else false
   if (Serial.find("OK"))
   {
-    Serial.println("Internete baglandi!");
     return true;
   }
   else
@@ -176,3 +97,64 @@ boolean connectWiFi()
 }
 
 
+void gelenVeri() 
+{
+  String gelen = "", jsonData = "";
+
+  if (Serial.available() > 0) 
+  {
+    gelen = Serial.readString();
+  }
+
+  Serial.println("---------GELEN Veri: " + String(sayi) + "-----------");
+  Serial.println(String(gelen));
+  Serial.println();
+
+  jsonData = parseJsonStr(gelen);
+  Serial.println("---------JSON Parsed-----------");
+  Serial.println(jsonData);
+  Serial.println();
+
+
+  StaticJsonDocument<1000> doc;
+  //deserializeJson(doc , jsonData);
+
+  DeserializationError error = deserializeJson(doc, jsonData);
+
+  // Test if parsing succeeds.
+  if (error) 
+  {
+    Serial.print(F("deserializeJson() failed: "));
+    Serial.println(error.c_str());
+    return;
+  }
+
+  // device init
+  JsonObject feeds_0 = doc["feeds"][0];
+
+  const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-30T10:52:56Z"
+  int feeds_0_entry_id = feeds_0["entry_id"]; // 112
+  const char* feeds_0_field1 = feeds_0["field1"]; // "1"
+
+  Serial.println("---------JSON Response-----------");
+
+  Serial.print("created_at: ");
+  Serial.println(feeds_0_created_at);
+  Serial.print("entry_id: ");
+  Serial.println(feeds_0_entry_id);
+  Serial.print("field1: ");
+  Serial.println(feeds_0_field1);
+}
+
+String parseJsonStr(String gelen) 
+{
+  int find1 = 0, find2 = 0;
+  String findChar1 = "{", findChar2 = "}";
+  String JsonStr = "";
+
+  find1 = gelen.indexOf(findChar1);
+  find2 = gelen.lastIndexOf(findChar2);
+
+  JsonStr = gelen.substring(find1, find2 + 1);
+  return JsonStr;
+}

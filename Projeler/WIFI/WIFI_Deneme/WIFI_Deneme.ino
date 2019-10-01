@@ -1,43 +1,69 @@
+//ESP TX >> Mega RX(0)
+//ESP RX >> Mega TX(0)
+
 #include <ArduinoJson.h>
 
-#define ag_ismi "KAT3"
-#define ag_sifresi "UnV-2019!Wf++"
+// #define ag_ismi "KAT3"
+// #define ag_sifresi "UnV-2019!Wf++"
+#define ag_ismi "SONRASI_YOKTU"
+#define ag_sifresi "BuuRA03045025"
 
-const String host = "184.106.153.149";
+
+#define host "184.106.153.149"
 int sayi = 0;
 
 void setup()
 {
   Serial.begin(115200); //Seriport'u açıyoruz. Güncellediğimiz
-  startWifi();
+
+  Serial.println("AT");
+  delay(5000);
+
+  if (Serial.find("OK"))
+  {
+    //connect to your wifi netowork
+    startWifi();
+  } 
 }
 
 void loop() 
 {
   httpRequest();
-  delay(5000);
+  delay(10000);
 }
 
 void httpRequest() 
 {
-  Serial.println(String("AT+CIPSTART=\"TCP\",\"") + host + "\",80");  //AT+CIPSTART komutu ile sunucuya bağlanmak için sunucudan izin istiyoruz.
+  String start_com = "AT+CIPSTART=\"TCP\",\"";
+  start_com += host;
+  start_com += "\",80";
+
+  Serial.println(start_com);  //AT+CIPSTART komutu ile sunucuya bağlanmak için sunucudan izin istiyoruz.
   delay(2000);
+
+  if (Serial.find("Error"))
+  {
+    return false;
+  }
+
   sayi++;
-  String postData = "GET /channels/871881/feeds.json?results=1 HTTP/1.1\n";
-  postData += "Host: " + host + "\n";
-  postData += "Connection: keep-alive\n";
+  String postData = "GET /channels/871881/feeds.json?results=1 HTTP/1.1\r\n";
+  postData += "Host: api.thingspeak.com\r\n";
+  postData += "Connection: keep-alive\r\n";
+  postData += "\r\n";
   //TCP burada yapacağımız bağlantı çeşidini gösteriyor. 80 ise bağlanacağımız portu gösteriyor
 
   //veri yollayacağımız zaman bu komutu kullanıyoruz. Bu komut ile önce kaç tane karakter yollayacağımızı söylememiz gerekiyor.
-  Serial.print("AT+CIPSEND="); Serial.println(postData.length());
-  delay(2000);
+  Serial.print("AT+CIPSEND="); 
+  Serial.println(postData.length());
 
   //eğer sunucu ile iletişim sağlayıp komut uzunluğunu gönderebilmişsek ESP modülü bize ">" işareti ile geri dönüyor.
   if (Serial.find(">")) {
         // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
         Serial.print(postData);
-        delay(2000);
+        // delay(2000); //Delayi önce koyunca veriyi çekemedi
         gelenVeri();
+        delay(3000);
         Serial.println("AT+CIPCLOSE");
 
         // çalışma sıklığı saniye olarak
@@ -48,25 +74,25 @@ void httpRequest()
 }
 void startWifi() 
 {
-  Serial.println("AT");
-  delay(3000); //ESP ile iletişim için 3 saniye bekliyoruz.
+  //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
+  Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
+  delay(2000);
+  String baglantiKomutu = "AT+CWJAP=\"";
+  baglantiKomutu += + ag_ismi;
+  baglantiKomutu += "\",\"";
+  baglantiKomutu += ag_sifresi;
+  baglantiKomutu += "\"";
 
-  if (Serial.find("OK")) 
+  Serial.println(baglantiKomutu);
+  delay(5000);
+
+  if (Serial.find("OK"))
   {
-    //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
-    Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
-    delay(2000);
-    String baglantiKomutu = String("AT+CWJAP=\"") + ag_ismi + "\",\"" + ag_sifresi + "\"";
-    Serial.println(baglantiKomutu);
-    delay(5000);
-    if (Serial.find("OK"))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return true;
+  }
+  else
+  {
+    return false;
   }
 }
 
@@ -111,6 +137,13 @@ void gelenVeri()
   const char* feeds_0_field1 = feeds_0["field1"]; // "1"
 
   Serial.println("---------JSON Response-----------");
+
+  Serial.print("created_at: ");
+  Serial.println(feeds_0_created_at);
+  Serial.print("entry_id: ");
+  Serial.println(feeds_0_entry_id);
+  Serial.print("field1: ");
+  Serial.println(feeds_0_field1);
 }
 
 String parseJsonStr(String gelen) 
