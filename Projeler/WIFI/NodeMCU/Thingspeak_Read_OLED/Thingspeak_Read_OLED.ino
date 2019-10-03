@@ -13,10 +13,10 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 //----------------  Fill in your credentails   ---------------------
-char ssid[] = "KAT3";     // your network SSID (name) 
-char pass[] = "UnV-2019!Wf++"; // your network password
-// char ssid[] = "SONRASI_YOKTU";     // your network SSID (name) 
-// char pass[] = "BuuRA03045025"; // your network password
+// char ssid[] = "KAT3";     // your network SSID (name) 
+// char pass[] = "UnV-2019!Wf++"; // your network password
+char ssid[] = "SONRASI_YOKTU";     // your network SSID (name) 
+char pass[] = "BuuRA03045025"; // your network password
 //------------------------------------------------------------------
 
 WiFiClient  client;

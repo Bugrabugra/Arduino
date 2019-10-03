@@ -1,5 +1,6 @@
 {
-    "board": "arduino:avr:uno",
-    "port": "COM5",
-    "sketch": "Projeler\\WIFI\\WIFI_ThingSpeak_Get\\WIFI_ThingSpeak_Get.ino"
+    "board": "arduino:avr:nano",
+    "port": "COM3",
+    "sketch": "Projeler\\Wireless\\Long_wireless_transrec2\\Long_wireless_transrec2.ino",
+    "configuration": "cpu=atmega328old"
 }
