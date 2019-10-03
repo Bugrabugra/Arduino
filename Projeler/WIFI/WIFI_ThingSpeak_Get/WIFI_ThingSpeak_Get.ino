@@ -3,10 +3,10 @@
 
 #include <ArduinoJson.h>
 
-// #define ag_ismi "KAT3"
-// #define ag_sifresi "UnV-2019!Wf++"
-#define ag_ismi "SONRASI_YOKTU"
-#define ag_sifresi "BuuRA03045025"
+#define ag_ismi "KAT3"
+#define ag_sifresi "UnV-2019!Wf++"
+// #define ag_ismi "SONRASI_YOKTU"
+// #define ag_sifresi "BuuRA03045025"
 
 
 #define host "184.106.153.149"
