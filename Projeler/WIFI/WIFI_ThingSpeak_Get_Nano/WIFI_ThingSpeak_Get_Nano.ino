@@ -4,10 +4,10 @@
 #include <ArduinoJson.h>
 #include "credentials.h"
 
-// const char ssid[] = WIFI_SSID_EV;
-// const char pass[] = WIFI_PASSWORD_EV;
-const char ssid[] = WIFI_SSID_IS;
-const char pass[] = WIFI_PASSWORD_IS;
+const char ssid[] = WIFI_SSID_EV;
+const char pass[] = WIFI_PASSWORD_EV;
+// const char ssid[] = WIFI_SSID_IS;
+// const char pass[] = WIFI_PASSWORD_IS;
 
 char host[16] = "184.106.153.149";
 int sayi = 0;
