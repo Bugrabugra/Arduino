@@ -2,12 +2,12 @@
 //ESP RX >> Mega TX(0)
 
 #include <ArduinoJson.h>
+#include "credentials.h"
 
-// char ag_ismi[5] = "KAT3";
-// char ag_sifresi[14] = "UnV-2019!Wf++";
-char* ag_ismi = "SONRASI_YOKTU";
-char* ag_sifresi = "BuuRA03045025";
-
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;
 
 char host[16] = "184.106.153.149";
 int sayi = 0;
@@ -82,9 +82,9 @@ void startWifi()
   delay(2000);
 
   char baglantiKomutu[40] = "AT+CWJAP=\"";
-  strcat(baglantiKomutu, ag_ismi);
+  strcat(baglantiKomutu, ssid);
   strcat(baglantiKomutu, "\",\"");
-  strcat(baglantiKomutu, ag_sifresi);
+  strcat(baglantiKomutu, pass);
   strcat(baglantiKomutu, "\"");
 
   Serial.println(baglantiKomutu);

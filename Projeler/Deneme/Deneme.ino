@@ -1,15 +1,23 @@
 #include <TinyGPS++.h>
+#include <SoftwareSerial.h>
 
-static const uint32_t GPSBaud = 9600;
+// Choose two Arduino pins to use for software serial
+int RXPin = 2;
+int TXPin = 3;
 
-// The TinyGPS++ object
+int GPSBaud = 9600;
+
+// Create a TinyGPS++ object
 TinyGPSPlus gps;
+
+// Create a software serial port called "gpsSerial"
+SoftwareSerial gpsSerial(RXPin, TXPin);
 
 void setup()
 {
   Serial.begin(9600);
   while(!Serial);
-  Serial1.begin(GPSBaud);
+  gpsSerial.begin(GPSBaud);
 
   Serial.println(F("FullExample.ino"));
   Serial.println(F("An extensive example of many interesting TinyGPS++ features"));
@@ -73,8 +81,8 @@ static void smartDelay(unsigned long ms)
   unsigned long start = millis();
   do 
   {
-    while (Serial1.available())
-      gps.encode(Serial1.read());
+    while (gpsSerial.available())
+      gps.encode(gpsSerial.read());
   } while (millis() - start < ms);
 }
 

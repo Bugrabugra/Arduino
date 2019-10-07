@@ -4,6 +4,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include "credentials.h"
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -13,10 +14,10 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 //----------------  Fill in your credentails   ---------------------
-// char ssid[] = "KAT3";     // your network SSID (name) 
-// char pass[] = "UnV-2019!Wf++"; // your network password
-char ssid[] = "SONRASI_YOKTU";     // your network SSID (name) 
-char pass[] = "BuuRA03045025"; // your network password
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;
 //------------------------------------------------------------------
 
 WiFiClient  client;

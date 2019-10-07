@@ -2,11 +2,12 @@
 //ESP RX >> Mega TX(0)
 
 #include <ArduinoJson.h>
+#include "credentials.h"
 
-// #define ag_ismi "KAT3"
-// #define ag_sifresi "UnV-2019!Wf++"
-#define ag_ismi "SONRASI_YOKTU"
-#define ag_sifresi "BuuRA03045025"
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;	
 
 
 #define host "184.106.153.149"
@@ -78,9 +79,9 @@ void startWifi()
   Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
   delay(2000);
   String baglantiKomutu = "AT+CWJAP=\"";
-  baglantiKomutu += ag_ismi;
+  baglantiKomutu += ssid;
   baglantiKomutu += "\",\"";
-  baglantiKomutu += ag_sifresi;
+  baglantiKomutu += pass;
   baglantiKomutu += "\"";
 
   Serial.println(baglantiKomutu);

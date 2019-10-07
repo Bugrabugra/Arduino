@@ -1,5 +1,9 @@
-String agAdi = "KAT3";																					//Ağımızın adını buraya yazıyoruz.    
-String agSifresi = "UnV-2019!Wf++";															//Ağımızın şifresini buraya yazıyoruz.
+#include "credentials.h"
+
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;													//Ağımızın şifresini buraya yazıyoruz.
 
 int pinLED = 5;																									
 
@@ -17,7 +21,7 @@ void setup()
 
 	Serial.println("AT+CWMODE=1");                                //Modülümüzü client olarak ayarlıyoruz.
 	while (!Serial.find("OK"));                                    //Ayarlamanın tamamlanmasını bekliyoruz.
-	Serial.println("AT+CWJAP=\"" + agAdi + "\",\"" + agSifresi + "\"");   //Wifi'a bağlanıyoruz.
+	Serial.println("AT+CWJAP=\"" + ssid + "\",\"" + pass + "\"");   //Wifi'a bağlanıyoruz.
 	delay(6000);
 	while (!Serial.find("OK"));                                    //Bağlanana kadar bekliyoruz.
 	Serial.print("AT+CIFSR\r\n");                                 //IP adresini ve MAC adresini okuyoruz.

@@ -40,13 +40,15 @@
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = BLYNK_PASS;
+const char auth[] = BLYNK_PASS;
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
 
-char ssid[] = WIFI_SSID;
-char pass[] = WIFI_PASSWORD;
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;
 
 void setup()
 {

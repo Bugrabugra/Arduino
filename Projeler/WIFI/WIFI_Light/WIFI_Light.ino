@@ -1,9 +1,11 @@
 #include <stdlib.h>
+#include "credentials.h"
 
-const char SSID[] = "SONRASI_YOKTU"; //your network name
-const char PASS[] = "BuuRA03045025"; //your network password
-// const char SSID[] = "KAT3"; //your network name
-// const char PASS[] = "UnV-2019!Wf++"; //your network password
+// const char ssid[] = WIFI_SSID_EV;
+// const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_IS;
+const char pass[] = WIFI_PASSWORD_IS;	
+
 const char IP[] = "184.106.153.149"; // thingspeak.com
 #define Baud_Rate 115200 //Another common value is 9600
 #define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
@@ -105,9 +107,9 @@ boolean connectWiFi()
 
 	//build connection command
 	String cmd = "AT+CWJAP=\"";
-	cmd += SSID;
+	cmd += ssid;
 	cmd += "\",\"";
-	cmd += PASS;
+	cmd += pass;
 	cmd += "\"";
 
 	//connect to WiFi network and wait 5 seconds
