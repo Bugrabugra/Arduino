@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:nano",
-    "port": "COM5",
+    "port": "COM6",
     "sketch": "Projeler\\WIFI\\WIFI_ThingSpeak_Get_Nano\\WIFI_ThingSpeak_Get_Nano.ino",
     "configuration": "cpu=atmega328old"
 }

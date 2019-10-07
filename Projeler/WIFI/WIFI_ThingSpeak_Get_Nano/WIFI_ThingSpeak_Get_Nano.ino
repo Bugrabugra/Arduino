@@ -3,10 +3,10 @@
 
 #include <ArduinoJson.h>
 
-char ag_ismi[5] = "KAT3";
-char ag_sifresi[14] = "UnV-2019!Wf++";
-// const ag_ismi[14] = "SONRASI_YOKTU";
-// #define ag_sifresi[14] = "BuuRA03045025";
+// char ag_ismi[5] = "KAT3";
+// char ag_sifresi[14] = "UnV-2019!Wf++";
+char* ag_ismi = "SONRASI_YOKTU";
+char* ag_sifresi = "BuuRA03045025";
 
 
 char host[16] = "184.106.153.149";
@@ -59,20 +59,22 @@ void httpRequest()
   Serial.println(sizeof(postData));
 
   //eğer sunucu ile iletişim sağlayıp komut uzunluğunu gönderebilmişsek ESP modülü bize ">" işareti ile geri dönüyor.
-  if (Serial.find(">")) {
-        // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
-        Serial.print(postData);
-        // delay(2000); //Delayi önce koyunca veriyi çekemedi
-        // gelenVeri();
-        delay(3000);
-        Serial.println("AT+CIPCLOSE");
+  if (Serial.find(">")) 
+  {
+    // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
+    Serial.print(postData);
+    // delay(2000); //Delayi önce koyunca veriyi çekemedi
+    gelenVeri();
+    delay(3000);
+    Serial.println("AT+CIPCLOSE");
 
-        // çalışma sıklığı saniye olarak
+    // çalışma sıklığı saniye olarak
     //delay(device.interval * 1000);
-        delay(2500);
-
+    delay(2500);
   }
 }
+
+
 void startWifi() 
 {
   //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
@@ -99,64 +101,67 @@ void startWifi()
 }
 
 
-// void gelenVeri() 
-// {
-//   const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(8) + 240;
-//   DynamicJsonDocument doc(capacity);
+void gelenVeri() 
+{
+  const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(8) + 240;
+  DynamicJsonDocument doc(capacity);
 
-//   char* gelen[] = "";
-//   char* jsonData[] = "";
+  String gelen = "";
+  String jsonData = "";
 
-//   if (Serial.available() > 0) 
-//   {
-//     gelen = Serial.readString();
-//   }
 
-//   Serial.println("---------GELEN Veri: -----------");
-//   Serial.println(gelen);
-//   Serial.println();
 
-//   jsonData = parseJsonStr(gelen);
-//   Serial.println("---------JSON Parsed-----------");
-//   Serial.println(jsonData);
-//   Serial.println();
+  if (Serial.available() > 0) 
+  {
+    gelen = Serial.readString();
+  }
+  delay(1000);
 
-//   DeserializationError error = deserializeJson(doc, jsonData);
+  Serial.println("---------GELEN Veri: -----------");
+  Serial.println(gelen);
+  Serial.println();
 
-//   // Test if parsing succeeds.
-//   if (error) 
-//   {
-//     Serial.print(F("deserializeJson() failed: "));
-//     Serial.println(error.c_str());
-//     return;
-//   }
+  jsonData = parseJsonStr(gelen);
+  Serial.println("---------JSON Parsed-----------");
+  Serial.println(jsonData);
+  Serial.println();
 
-//   // device init
-//   JsonObject feeds_0 = doc["feeds"][0];
+  DeserializationError error = deserializeJson(doc, jsonData);
 
-//   const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-30T10:52:56Z"
-//   int feeds_0_entry_id = feeds_0["entry_id"]; // 112
-//   const char* feeds_0_field1 = feeds_0["field1"]; // "1"
+  // Test if parsing succeeds.
+  if (error) 
+  {
+    Serial.print(F("deserializeJson() failed: "));
+    Serial.println(error.c_str());
+    return;
+  }
 
-//   Serial.println("---------JSON Response-----------");
+  // device init
+  JsonObject feeds_0 = doc["feeds"][0];
 
-//   Serial.print("created_at: ");
-//   Serial.println(feeds_0_created_at);
-//   Serial.print("entry_id: ");
-//   Serial.println(feeds_0_entry_id);
-//   Serial.print("field1: ");
-//   Serial.println(feeds_0_field1);
-// }
+  const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-30T10:52:56Z"
+  int feeds_0_entry_id = feeds_0["entry_id"]; // 112
+  const char* feeds_0_field1 = feeds_0["field1"]; // "1"
 
-// String parseJsonStr(String gelen) 
-// {
-//   int find1 = 0, find2 = 0;
-//   String findChar1 = "{", findChar2 = "}";
-//   String JsonStr = "";
+  Serial.println("---------JSON Response-----------");
 
-//   find1 = gelen.indexOf(findChar1);
-//   find2 = gelen.lastIndexOf(findChar2);
+  Serial.print("created_at: ");
+  Serial.println(feeds_0_created_at);
+  Serial.print("entry_id: ");
+  Serial.println(feeds_0_entry_id);
+  Serial.print("field1: ");
+  Serial.println(feeds_0_field1);
+}
 
-//   JsonStr = gelen.substring(find1, find2 + 1);
-//   return JsonStr;
-// }
+String parseJsonStr(String gelen) 
+{
+  int find1 = 0, find2 = 0;
+  String findChar1 = "{", findChar2 = "}";
+  String JsonStr = "";
+
+  find1 = gelen.indexOf(findChar1);
+  find2 = gelen.lastIndexOf(findChar2);
+
+  JsonStr = gelen.substring(find1, find2 + 1);
+  return JsonStr;
+}

@@ -3,10 +3,10 @@
 
 #include <ArduinoJson.h>
 
-#define ag_ismi "KAT3"
-#define ag_sifresi "UnV-2019!Wf++"
-// #define ag_ismi "SONRASI_YOKTU"
-// #define ag_sifresi "BuuRA03045025"
+// #define ag_ismi "KAT3"
+// #define ag_sifresi "UnV-2019!Wf++"
+#define ag_ismi "SONRASI_YOKTU"
+#define ag_sifresi "BuuRA03045025"
 
 
 #define host "184.106.153.149"
@@ -78,7 +78,7 @@ void startWifi()
   Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
   delay(2000);
   String baglantiKomutu = "AT+CWJAP=\"";
-  baglantiKomutu += + ag_ismi;
+  baglantiKomutu += ag_ismi;
   baglantiKomutu += "\",\"";
   baglantiKomutu += ag_sifresi;
   baglantiKomutu += "\"";
