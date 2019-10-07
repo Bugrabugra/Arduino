@@ -1,7 +1,6 @@
 AT
 AT+CWMODE=1
-AT+CWJAP="SONRASI_YOKTU","BuuRA03045025"
-AT+CWJAP="KAT3","UnV-2019!Wf++"
+AT+CWJAP="ssid","pass"
 AT+CIPSTART="TCP","184.106.153.149",80
 
 -------------------
@@ -10,7 +9,7 @@ GET /channels/871881/feeds.json?results=1
 -------------------
 -------------------
 AT+CIPSEND=47
-GET /update?api_key=571EEA6LUPEM9IHU&field1=3
+GET /update?api_key=apikey&field1=3
 //***Üstteki bunu halde gönderince enter ile birlikte 45(47) oluyor
 -------------------
 -------------------
