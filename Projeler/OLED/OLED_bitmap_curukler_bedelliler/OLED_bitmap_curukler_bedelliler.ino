@@ -42,7 +42,6 @@ void setup()
 }
 
 void loop()
-
 {
   display.clearDisplay();
   display.drawBitmap(40, 17, Untitled, 48, 48, 1);
