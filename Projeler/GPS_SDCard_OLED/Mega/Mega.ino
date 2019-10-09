@@ -14,15 +14,11 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 File myFile;
-int RXPin = 2;
-int TXPin = 3;
+
 int GPSBaud = 9600;
 
 // Create a TinyGPS++ object
 TinyGPSPlus gps;
-
-// Create a software serial port called "gpsSerial"
-SoftwareSerial gpsSerial(RXPin, TXPin);
 
 int satellite_count = 0;
 float latitude = 0;
@@ -45,7 +41,7 @@ void setup()
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
   // Start the software serial port at the GPS's default baud
-  gpsSerial.begin(GPSBaud);
+  Serial1.begin(GPSBaud);
 
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
