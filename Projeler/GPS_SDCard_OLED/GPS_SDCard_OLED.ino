@@ -24,6 +24,21 @@ TinyGPSPlus gps;
 // Create a software serial port called "gpsSerial"
 SoftwareSerial gpsSerial(RXPin, TXPin);
 
+int satellite_count = 0;
+float latitude = 0;
+float longitude = 0;
+int day_int = 0;
+int month_int = 0;
+int year_int = 0;
+
+String day_str = "";
+String month_str = "";
+String year_str = "";
+String date_time = "";
+String satellite = "";
+
+int count = 0; 
+
 void setup() 
 {
   //Initialize display
@@ -34,47 +49,54 @@ void setup()
 
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
-  while (!Serial) 
-  {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  Serial.print("Initializing SD card...");
 
   if (!SD.begin(5)) 
   {
-    Serial.println("initialization failed!");
     while (1);
   }
-  Serial.println("initialization done.");
-
-  // open the file. note that only one file can be open at a time,
-  // so you have to close this one before opening another.
 }
 
 void loop() 
 {
-  unsigned int satellite_count = gps.satellites.value();
-  float latitude = gps.location.lat();
-  float longitude = gps.location.lng();
-  unsigned int day_int = gps.date.day();
-  unsigned int month_int = gps.date.month();
-  unsigned int year_int = gps.date.year();
+  satellite_count = gps.satellites.value();
+  latitude = gps.location.lat();
+  longitude = gps.location.lng();
+  day_int = gps.date.day();
+  month_int = gps.date.month();
+  year_int = gps.date.year();
 
-  char day_char[2];
-  char month_char[2];
-  char year_char[4];
-  char myFile_char[8];
+  // satellite_count = 8;
+  // latitude = 41.233333;
+  // longitude = 28.654564;
+  // day_int = 9;
+  // month_int = 10;
+  // year_int = 2019;
 
-  itoa(day_int, day_char, 10);
-  itoa(month_int, month_char, 10);
-  itoa(year_int, year_char, 10);
+  if (day_int < 10)
+  {
+    day_str = "0" + String(day_int);
+  }
+  else 
+  {
+    day_str = String(day_int);
+  }
 
-  strcat(myFile_char, day_char);
-  strcat(myFile_char, month_char);
-  strcat(myFile_char, year_char);
+  if (month_int < 10)
+  {
+    month_str = "0" + String(month_int);
+  }
+  else 
+  {
+    month_str = String(month_int);
+  }
 
-  myFile = SD.open(myFile_char + ".TXT");
-
-
-
+  year_str = String(year_int);
+  date_time = day_str + month_str + year_str;
+  
+  myFile = SD.open("GPS.TXT", FILE_WRITE);
+  myFile.println(String(count) + "-" + String(latitude) + "-" + String(longitude) + "-" + String(date_time) + "-" + String(satellite_count));
+  myFile.close();
+  Serial.println(String(count) + "-" + String(latitude) + "-" + String(longitude) + "-" + String(date_time) + "-" + String(satellite_count));
+  delay(10000);
+  count += 1;
 }
