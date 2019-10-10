@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:nano",
-    "port": "COM3",
-    "sketch": "Projeler\\Deneme\\Deneme.ino",
+    "port": "COM5",
+    "sketch": "Projeler\\GPS_SDCard_OLED\\Nano\\Nano.ino",
     "configuration": "cpu=atmega328old"
 }
