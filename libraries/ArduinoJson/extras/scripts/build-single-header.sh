@@ -55,9 +55,10 @@ process()
 
 simplify_namespaces() {
 	perl -p0i -e 's|\}  // namespace ARDUINOJSON_NAMESPACE\r?\nnamespace ARDUINOJSON_NAMESPACE \{\r?\n||igs' "$1"
+	rm -f "$1.bak"
 }
 
-cd $(dirname $0)/../
+cd $(dirname $0)/../..
 INCLUDED=()
 process src/ArduinoJson.h true > ../ArduinoJson-$TAG.h
 simplify_namespaces ../ArduinoJson-$TAG.h

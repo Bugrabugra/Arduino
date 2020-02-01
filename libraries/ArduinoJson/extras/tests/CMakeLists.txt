@@ -1,5 +1,5 @@
 # ArduinoJson - arduinojson.org
-# Copyright Benoit Blanchon 2014-2019
+# Copyright Benoit Blanchon 2014-2020
 # MIT License
 
 add_subdirectory(catch)
@@ -72,6 +72,7 @@ if(MSVC)
 	)
 endif()
 
+include_directories(Helpers)
 add_subdirectory(ElementProxy)
 add_subdirectory(IntegrationTests)
 add_subdirectory(JsonArray)
