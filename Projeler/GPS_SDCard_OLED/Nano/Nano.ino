@@ -31,10 +31,14 @@ File dataFile;
 // file name
 String fileName;
 
+// hour difference 
+int hourDifference = 3;
+
 // timestamp of previous location capture. Used to check if we should save this location or skip it
 unsigned long previous = 0;
 
-int count = 0; 
+// point counter
+int count = 1; 
 
 void setup() 
 {
@@ -102,22 +106,26 @@ void logInfo()
     previous = millis();
     // Write data row (dd.MM.yyyy HH:mm:ss lat,lon)
     dataFile = SD.open(fileName, FILE_WRITE);
+    dataFile.print(count);
+    dataFile.print(F(" - "));
     printIntValue(gps.date.day());
     dataFile.print(F("."));
     printIntValue(gps.date.month());
     dataFile.print(F("."));
     dataFile.print(gps.date.year());
     dataFile.print(F(" "));
-    printIntValue(gps.time.hour());
+    printIntValue(gps.time.hour() + hourDifference);
     dataFile.print(F(":"));
     printIntValue(gps.time.minute());
     dataFile.print(F(":"));
     printIntValue(gps.time.second());
     dataFile.print(F(" "));
-    dataFile.print(gps.location.lat(), 6);
+    dataFile.print(gps.location.lat(), 10);
     dataFile.print(F(","));
-    dataFile.print(gps.location.lng(), 6);
+    dataFile.print(gps.location.lng(), 10);
     dataFile.println();
     dataFile.close();
+
+    count += 1;
   }
 }
