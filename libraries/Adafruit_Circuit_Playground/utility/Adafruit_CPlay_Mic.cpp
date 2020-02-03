@@ -25,9 +25,12 @@ static bool pdmConfigured = false;
 #elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
 
 #include <PDM.h>
+<<<<<<< HEAD
 // The default Circuit Playground Bluefruit pins 
 // data pin, clock pin, power pin (-1 if not used)
 PDMClass PDM(24, 25, -1);
+=======
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 #define SAMPLERATE_HZ 16000
 
 // buffer to read samples into, each sample is 16-bits

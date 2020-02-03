@@ -543,6 +543,7 @@ boolean Adafruit_SSD1306::begin(uint8_t vcs, uint8_t addr, boolean reset,
     SSD1306_COMSCANDEC };
   ssd1306_commandList(init3, sizeof(init3));
 
+<<<<<<< HEAD
   if((WIDTH == 128) && (HEIGHT == 32)) {
     static const uint8_t PROGMEM init4a[] = {
       SSD1306_SETCOMPINS,                 // 0xDA
@@ -564,10 +565,32 @@ boolean Adafruit_SSD1306::begin(uint8_t vcs, uint8_t addr, boolean reset,
       SSD1306_SETCONTRAST };              // 0x81
     ssd1306_commandList(init4c, sizeof(init4c));
     ssd1306_command1((vccstate == SSD1306_EXTERNALVCC) ? 0x10 : 0xAF);
+=======
+  uint8_t comPins = 0x02;
+  contrast = 0x8F;
+
+  if((WIDTH == 128) && (HEIGHT == 32)) {
+    comPins = 0x02;
+    contrast = 0x8F;
+  } else if((WIDTH == 128) && (HEIGHT == 64)) {
+    comPins = 0x12;
+    contrast = (vccstate == SSD1306_EXTERNALVCC) ? 0x9F : 0xCF;
+  } else if((WIDTH == 96) && (HEIGHT == 16)) {
+    comPins = 0x2;    // ada x12
+    contrast = (vccstate == SSD1306_EXTERNALVCC) ? 0x10 : 0xAF;
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
   } else {
     // Other screen varieties -- TBD
   }
 
+<<<<<<< HEAD
+=======
+  ssd1306_command1(SSD1306_SETCOMPINS);
+  ssd1306_command1(comPins);
+  ssd1306_command1(SSD1306_SETCONTRAST);
+  ssd1306_command1(contrast);
+
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
   ssd1306_command1(SSD1306_SETPRECHARGE); // 0xd9
   ssd1306_command1((vccstate == SSD1306_EXTERNALVCC) ? 0x22 : 0xF1);
   static const uint8_t PROGMEM init5[] = {
@@ -1087,6 +1110,7 @@ void Adafruit_SSD1306::invertDisplay(boolean i) {
             display() function -- buffer contents are not changed.
 */
 void Adafruit_SSD1306::dim(boolean dim) {
+<<<<<<< HEAD
   uint8_t contrast;
 
   if(dim) {
@@ -1094,10 +1118,16 @@ void Adafruit_SSD1306::dim(boolean dim) {
   } else {
     contrast = (vccstate == SSD1306_EXTERNALVCC) ? 0x9F : 0xCF;
   }
+=======
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
   // the range of contrast to too small to be really useful
   // it is useful to dim the display
   TRANSACTION_START
   ssd1306_command1(SSD1306_SETCONTRAST);
+<<<<<<< HEAD
   ssd1306_command1(contrast);
+=======
+  ssd1306_command1(dim ? 0 : contrast);
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
   TRANSACTION_END
 }

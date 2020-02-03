@@ -1,10 +1,17 @@
 // ArduinoJson - arduinojson.org
-// Copyright Benoit Blanchon 2014-2019
+// Copyright Benoit Blanchon 2014-2020
 // MIT License
 
 #pragma once
 
+<<<<<<< HEAD
 #define ARDUINOJSON_VERSION "6.13.0"
 #define ARDUINOJSON_VERSION_MAJOR 6
 #define ARDUINOJSON_VERSION_MINOR 13
 #define ARDUINOJSON_VERSION_REVISION 0
+=======
+#define ARDUINOJSON_VERSION "6.14.1"
+#define ARDUINOJSON_VERSION_MAJOR 6
+#define ARDUINOJSON_VERSION_MINOR 14
+#define ARDUINOJSON_VERSION_REVISION 1
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328

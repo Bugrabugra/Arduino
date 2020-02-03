@@ -1,5 +1,5 @@
 // ArduinoJson - arduinojson.org
-// Copyright Benoit Blanchon 2014-2019
+// Copyright Benoit Blanchon 2014-2020
 // MIT License
 
 #pragma once
@@ -24,6 +24,7 @@ size_t serialize(const TSource &source, TDestination &destination) {
 }
 
 template <template <typename> class TSerializer, typename TSource>
+<<<<<<< HEAD
 size_t serialize(const TSource &source, char *buffer, size_t bufferSize) {
   StaticStringWriter writer(buffer, bufferSize);
   return doSerialize<TSerializer>(source, writer);
@@ -35,4 +36,23 @@ size_t serialize(const TSource &source, char (&buffer)[N]) {
   return doSerialize<TSerializer>(source, writer);
 }
 
+=======
+size_t serialize(const TSource &source, void *buffer, size_t bufferSize) {
+  StaticStringWriter writer(reinterpret_cast<char *>(buffer), bufferSize);
+  return doSerialize<TSerializer>(source, writer);
+}
+
+template <template <typename> class TSerializer, typename TSource,
+          typename TChar, size_t N>
+#if defined _MSC_VER && _MSC_VER < 1900
+typename enable_if<sizeof(remove_reference<TChar>::type) == 1, size_t>::type
+#else
+typename enable_if<sizeof(TChar) == 1, size_t>::type
+#endif
+serialize(const TSource &source, TChar (&buffer)[N]) {
+  StaticStringWriter writer(reinterpret_cast<char *>(buffer), N);
+  return doSerialize<TSerializer>(source, writer);
+}
+
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 }  // namespace ARDUINOJSON_NAMESPACE

@@ -117,7 +117,11 @@
  #define SSD1306_LCDHEIGHT  16 ///< DEPRECATED: height w/SSD1306_96_16 defined
 #endif
 
+<<<<<<< HEAD
 /*! 
+=======
+/*!
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
     @brief  Class that stores state and functions for interacting with
             SSD1306 OLED displays.
 */
@@ -183,6 +187,10 @@ class Adafruit_SSD1306 : public Adafruit_GFX {
   uint32_t     wireClk;    // Wire speed for SSD1306 transfers
   uint32_t     restoreClk; // Wire speed following SSD1306 transfers
 #endif
+<<<<<<< HEAD
+=======
+  uint8_t      contrast;    // normal contrast setting for this device
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 };
 
 #endif // _Adafruit_SSD1306_H_
