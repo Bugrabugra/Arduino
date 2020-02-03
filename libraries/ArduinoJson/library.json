@@ -7,7 +7,11 @@
     "type": "git",
     "url": "https://github.com/bblanchon/ArduinoJson.git"
   },
+<<<<<<< HEAD
+  "version": "6.13.0",
+=======
   "version": "6.14.1",
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
   "authors": {
     "name": "Benoit Blanchon",
     "url": "https://blog.benoitblanchon.fr"

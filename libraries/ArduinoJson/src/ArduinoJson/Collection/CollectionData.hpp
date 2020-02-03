@@ -5,7 +5,10 @@
 #pragma once
 
 #include <ArduinoJson/Namespace.hpp>
+<<<<<<< HEAD
+=======
 #include <ArduinoJson/Polyfills/assert.hpp>
+>>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 
 #include <stddef.h>  // size_t
 
