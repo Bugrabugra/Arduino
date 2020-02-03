@@ -47,8 +47,8 @@ const char auth[] = BLYNK_PASS;
 
 // const char ssid[] = WIFI_SSID_EV;
 // const char pass[] = WIFI_PASSWORD_EV;
-const char ssid[] = WIFI_SSID_IS;
-const char pass[] = WIFI_PASSWORD_IS;
+const char ssid[] = WIFI_SSID_EV;
+const char pass[] = WIFI_PASSWORD_EV;
 
 void setup()
 {
