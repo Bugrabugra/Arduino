@@ -15,7 +15,7 @@ const char *myWriteAPIKey = THINGSPEAK_1009245_W; //Your Write API Key
 
 void setup()
 {
-	Serial.begin(9600);
+  Serial.begin(9600);
   delay(10);
 
   // Connect to WiFi network
@@ -26,10 +26,10 @@ void setup()
 
 void loop()
 {
-	val = digitalRead(pinHallEffect);
-	Serial.print(val);
-	delay(1000);
-	
-	ThingSpeak.writeField(myChannelNumber, 1,val, myWriteAPIKey); //Update in ThingSpeak
-	delay(5000);
+  val = digitalRead(pinHallEffect);
+  Serial.print(val);
+  delay(1000);
+  
+  ThingSpeak.writeField(myChannelNumber, 1,val, myWriteAPIKey); //Update in ThingSpeak
+  delay(5000);
 }
