@@ -57,8 +57,6 @@ TEST_CASE("Writer<std::string>") {
   common_tests(sb, output);
 }
 
-<<<<<<< HEAD
-=======
 TEST_CASE("Writer<String>") {
   ::String output;
   Writer< ::String> sb(output);
@@ -97,7 +95,6 @@ TEST_CASE("Writer<String>") {
   }
 }
 
->>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 TEST_CASE("Writer<custom_string>") {
   custom_string output;
   Writer<custom_string> sb(output);

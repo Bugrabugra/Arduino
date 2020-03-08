@@ -24,19 +24,6 @@ size_t serialize(const TSource &source, TDestination &destination) {
 }
 
 template <template <typename> class TSerializer, typename TSource>
-<<<<<<< HEAD
-size_t serialize(const TSource &source, char *buffer, size_t bufferSize) {
-  StaticStringWriter writer(buffer, bufferSize);
-  return doSerialize<TSerializer>(source, writer);
-}
-
-template <template <typename> class TSerializer, typename TSource, size_t N>
-size_t serialize(const TSource &source, char (&buffer)[N]) {
-  StaticStringWriter writer(buffer, N);
-  return doSerialize<TSerializer>(source, writer);
-}
-
-=======
 size_t serialize(const TSource &source, void *buffer, size_t bufferSize) {
   StaticStringWriter writer(reinterpret_cast<char *>(buffer), bufferSize);
   return doSerialize<TSerializer>(source, writer);
@@ -54,5 +41,4 @@ serialize(const TSource &source, TChar (&buffer)[N]) {
   return doSerialize<TSerializer>(source, writer);
 }
 
->>>>>>> 83396e542db2e19daf6539085d3dc42151f34328
 }  // namespace ARDUINOJSON_NAMESPACE
