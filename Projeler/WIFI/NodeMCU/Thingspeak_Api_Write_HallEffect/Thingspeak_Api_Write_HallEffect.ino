@@ -6,8 +6,8 @@
 const char ssid[] = WIFI_SSID_EV; //Your Network SSID
 const char pass[] = WIFI_PASSWORD_EV; //Your Network Password
 
-int pinHallEffect = 4;
-int pinLED = 13;
+int pinHallEffect = 14;
+int pinLED = 4;
 int valHallEffect;
 
 WiFiClient client;
@@ -17,7 +17,7 @@ const char *myWriteAPIKey = THINGSPEAK_1009245_W; //Your Write API Key
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   delay(10);
 
   pinMode(pinHallEffect, INPUT);
@@ -32,16 +32,19 @@ void setup()
 void loop()
 {
   valHallEffect = digitalRead(pinHallEffect);
-  Serial.print(valHallEffect);
+  Serial.println(valHallEffect);
+  delay(1000);
 
-  if (valHallEffect == 0)
+  if (valHallEffect == 1)
   {
-    ThingSpeak.writeField(myChannelNumber, 1, valHallEffect, myWriteAPIKey);
     digitalWrite(pinLED, HIGH);
+    Serial.println("Yandi!");
+    ThingSpeak.writeField(myChannelNumber, 1, valHallEffect, myWriteAPIKey);
     delay(17000);
   }
   else
   {
     digitalWrite(pinLED, LOW);
+    Serial.println("Sondu!");
   }
 }
