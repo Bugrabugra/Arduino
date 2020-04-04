@@ -25,6 +25,11 @@ char host_url[75];
 char client_get[200];
 char result[7];
 int count_letter = 0;
+int pinButton1 = 0;
+int pinButton2 = 2;
+int pinButton3 = 14;
+int pinButton4 = 12;
+int pinLED = 13;
  
 void setup() 
 {
@@ -33,6 +38,12 @@ void setup()
   
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(pinButton1, INPUT_PULLUP);
+  pinMode(pinButton2, INPUT_PULLUP);
+  pinMode(pinButton3, INPUT_PULLUP);
+  pinMode(pinButton4, INPUT_PULLUP);
+  pinMode(pinLED, OUTPUT);
+
  
   // We start by connecting to a WiFi network
   Serial.println();
@@ -56,12 +67,53 @@ void setup()
  
 void loop() 
 {
-   for(int i = 0; i < sizeof(result); ++i)
-   {
-    result[i] = (char)0;
-   }
+  if (digitalRead(pinButton1) == LOW)
+  {
+    digitalWrite(pinLED, HIGH);
+    Serial.println('1');
+  }
+  else
+  {
+    digitalWrite(pinLED, LOW);
+  }
+
+  if (digitalRead(pinButton2) == LOW)
+  {
+    digitalWrite(pinLED, HIGH);
+    Serial.println('2');
+  }
+  else
+  {
+    digitalWrite(pinLED, LOW);
+  }  
+  
+  if (digitalRead(pinButton3) == LOW)
+  {
+    digitalWrite(pinLED, HIGH);
+    Serial.println('3');
+  }
+  else
+  {
+    digitalWrite(pinLED, LOW);
+  }  
+  
+  if (digitalRead(pinButton4) == LOW)
+  {
+    digitalWrite(pinLED, HIGH);
+    Serial.println('4');
+  }
+  else
+  {
+    digitalWrite(pinLED, LOW);
+  }
+  
+  
+  for(int i = 0; i < sizeof(result); ++i)
+  {
+   result[i] = (char)0;
+  }
    
-   count_letter = 0;
+  count_letter = 0;
    
   Serial.print("Connecting to ");
   Serial.println(host);
