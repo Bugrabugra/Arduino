@@ -10,10 +10,10 @@
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-int pinButtonDown = 3;
 int pinButtonUp = 2;
-int pinButtonEnter = 5;
+int pinButtonDown = 3;
 int pinButtonBack = 4;
+int pinButtonEnter = 5;
 
 int pinGreenLED = 6;
 int pinBlueLED = 7;
@@ -28,6 +28,11 @@ int valButtonBack = 0;
 int cursorPos = 0;
 int numPage = 0;
 
+int menu_row = 15;
+
+char *menuMain[] = {"Araclar", "Uygulamalar", "Haritalar", "LEDler"};
+char *menuLEDler = {"Green LED", "Blue LED"};
+char *menuGreenLED = {"Green High", "Green Low"};
 
 void setup()
 {
@@ -49,61 +54,8 @@ void loop()
   valButtonEnter = digitalRead(pinButtonEnter);
   valButtonBack = digitalRead(pinButtonBack);
 
-  if (numPage == 0) // Main menu
-  {
-    display.clearDisplay();
-
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.cp437(true);
-    display.setCursor(10, 0);
-    display.print("Araclar");
-    display.setCursor(10, 15);
-    display.print("Uygulamalar");
-    display.setCursor(10, 30);
-    display.print("Rehber");
-    display.setCursor(10, 45);
-    display.print("LEDler");
-  }
-
-  if (numPage == 1) // Green LED and Blue LED screen 
-  {
-    display.clearDisplay();
-
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.cp437(true);
-    display.setCursor(10, 0);
-    display.print("Green LED");
-    display.setCursor(10, 15);
-    display.print("Blue LED");
-  }
-
-  if (numPage == 2) // Green LED screen
-  {
-    display.clearDisplay();
-
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.cp437(true);
-    display.setCursor(10, 0);
-    display.print("Green High");
-    display.setCursor(10, 15);
-    display.print("Green Low");
-  }
-
-  if (numPage == 3) // Blue LED screen
-  {
-    display.clearDisplay();
-
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.cp437(true);
-    display.setCursor(10, 0);
-    display.print("Blue High");
-    display.setCursor(10, 15);
-    display.print("Blue Low");
-  }
+  numPage = 0;
+  menu_populator(menuMain);
 
   if (valButtonDown == 0 && numPage == 0)
   {
@@ -127,95 +79,7 @@ void loop()
     }
   }
 
-  if (valButtonEnter == 0 && numPage == 0 && cursorPos == 45)
-  {
-    cursorPos = 0;
-    numPage = 1;
-    delay(200);
-    buzzer();
-  }
 
-  if (valButtonDown == 0 && numPage == 1)
-  {
-    delay(200);
-    cursorPos = cursorPos + 15;
-    buzzer();
-    if (cursorPos > 15)
-    {
-      cursorPos = 0;
-    }
-  }
-
-  if (valButtonUp == 0 && numPage == 1)
-  {
-    delay(200);
-    cursorPos = cursorPos - 15;
-    buzzer();
-    if (cursorPos < 0)
-    {
-      cursorPos = 15;
-    }
-  }
-
-  if (valButtonEnter == 0 && numPage == 1 && cursorPos == 0) // Green High and Low
-  {
-    delay(500);
-    cursorPos = 0;
-    numPage = 2;
-    buzzer();
-  }
-
-  if (valButtonEnter == 0 && numPage == 1 && cursorPos == 15) // Blue High and Low
-  {
-    delay(200);
-    cursorPos = 0;
-    numPage = 3;
-    buzzer();
-  }
-
-  if (valButtonDown == 0 && numPage == 2)
-  {
-    delay(200);
-    cursorPos = cursorPos + 15;
-    buzzer();
-    if (cursorPos > 15)
-    {
-      cursorPos = 0;
-    }
-  }
-
-  if (valButtonUp == 0 && numPage == 2)
-  {
-    delay(200);
-    cursorPos = cursorPos - 15;
-    buzzer();
-    if (cursorPos < 0)
-    {
-      cursorPos = 15;
-    }
-  }
-
-  if (valButtonDown == 0 && numPage == 3)
-  {
-    delay(200);
-    cursorPos = cursorPos + 15;
-    buzzer();
-    if (cursorPos > 15)
-    {
-      cursorPos = 0;
-    }
-  }
-
-  if (valButtonUp == 0 && numPage == 3)
-  {
-    delay(200);
-    cursorPos = cursorPos - 15;
-    buzzer();
-    if (cursorPos < 0)
-    {
-      cursorPos = 15;
-    }
-  }
 
   display.setCursor(0, cursorPos);
   display.print(">");
@@ -231,3 +95,48 @@ void buzzer()
   delay(50);
 }
 
+void menu_populator(char *menu_name_list[])
+{
+  display.clearDisplay();
+
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.cp437(true);
+  
+  for (int i = 0; i < 4; i++)
+  {
+    display.setCursor(10, menu_row * i);
+    display.print(menu_name_list[i]);
+  }
+}
+
+void menu_walker(int rowNumber, int up_down, int page)
+{
+  if (up_down == 0)
+  {
+    if (valButtonDown == 0 && numPage == page)
+    {
+      delay(200);
+      cursorPos = cursorPos + menu_row;
+      buzzer();
+      if (cursorPos > rowNumber * menu_row)
+      {
+        cursorPos = 0;
+      }
+    }
+  }
+  
+  else
+  {
+    if (valButtonUp == 0 && numPage == page)
+    {
+      delay(200);
+      cursorPos = cursorPos - menu_row;
+      buzzer();
+      if (cursorPos < 0)
+      {
+        cursorPos = rowNumber * menu_row;
+      }
+    }
+  } 
+}
