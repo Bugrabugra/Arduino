@@ -28,11 +28,14 @@ int valButtonBack = 0;
 int cursorPos = 0;
 int numPage = 0;
 
-int menu_row = 15;
+int menuRowPixels = 15;
+int rowsMenuMain = 4;
+int rowsLEDler = 2;
+int rowsGreenLED = 2;
 
 char *menuMain[] = {"Araclar", "Uygulamalar", "Haritalar", "LEDler"};
-char *menuLEDler = {"Green LED", "Blue LED"};
-char *menuGreenLED = {"Green High", "Green Low"};
+char *menuLEDler[] = {"Green LED", "Blue LED"};
+char *menuGreenLED[] = {"Green High", "Green Low"};
 
 void setup()
 {
@@ -54,32 +57,9 @@ void loop()
   valButtonEnter = digitalRead(pinButtonEnter);
   valButtonBack = digitalRead(pinButtonBack);
 
-  numPage = 0;
-  menu_populator(menuMain);
+  menu_populator(menuMain, rowsMenuMain);
 
-  if (valButtonDown == 0 && numPage == 0)
-  {
-    delay(200);
-    cursorPos = cursorPos + 15;
-    buzzer();
-    if (cursorPos > 45)
-    {
-      cursorPos = 0;
-    }
-  }
-
-  if (valButtonUp == 0 && numPage == 0)
-  {
-    delay(200);
-    cursorPos = cursorPos - 15;
-    buzzer();
-    if (cursorPos < 0)
-    {
-      cursorPos = 45;
-    }
-  }
-
-
+  
 
   display.setCursor(0, cursorPos);
   display.print(">");
@@ -95,7 +75,7 @@ void buzzer()
   delay(50);
 }
 
-void menu_populator(char *menu_name_list[])
+void menu_populator(char *menu_name_list[], int menuRowCount)
 {
   display.clearDisplay();
 
@@ -103,40 +83,62 @@ void menu_populator(char *menu_name_list[])
   display.setTextColor(WHITE);
   display.cp437(true);
   
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < menuRowCount; i++)
   {
-    display.setCursor(10, menu_row * i);
+    display.setCursor(10, menuRowPixels * i);
     display.print(menu_name_list[i]);
+  }
+
+  if (valButtonDown == 0 && numPage == 0)
+  {
+    delay(200);
+    cursorPos = cursorPos + menuRowPixels;
+    buzzer();
+    if (cursorPos > ((menuRowCount-1) * menuRowPixels))
+    {
+      cursorPos = 0;
+    }
+  }
+
+  if (valButtonUp == 0 && numPage == 0)
+  {
+    delay(200);
+    cursorPos = cursorPos - menuRowPixels;
+    buzzer();
+    if (cursorPos < 0)
+    {
+      cursorPos = ((menuRowCount-1) * menuRowPixels);
+    }
   }
 }
 
-void menu_walker(int rowNumber, int up_down, int page)
-{
-  if (up_down == 0)
-  {
-    if (valButtonDown == 0 && numPage == page)
-    {
-      delay(200);
-      cursorPos = cursorPos + menu_row;
-      buzzer();
-      if (cursorPos > rowNumber * menu_row)
-      {
-        cursorPos = 0;
-      }
-    }
-  }
+// void menu_walker(int rowNumber, int up_down, int page)
+// {
+//   if (up_down == 0)
+//   {
+//     if (valButtonDown == 0 && numPage == page)
+//     {
+//       delay(200);
+//       cursorPos = cursorPos + menuRowPixels;
+//       buzzer();
+//       if (cursorPos > rowNumber * menuRowPixels)
+//       {
+//         cursorPos = 0;
+//       }
+//     }
+//   }
   
-  else
-  {
-    if (valButtonUp == 0 && numPage == page)
-    {
-      delay(200);
-      cursorPos = cursorPos - menu_row;
-      buzzer();
-      if (cursorPos < 0)
-      {
-        cursorPos = rowNumber * menu_row;
-      }
-    }
-  } 
-}
+//   else
+//   {
+//     if (valButtonUp == 0 && numPage == page)
+//     {
+//       delay(200);
+//       cursorPos = cursorPos - menuRowPixels;
+//       buzzer();
+//       if (cursorPos < 0)
+//       {
+//         cursorPos = rowNumber * menuRowPixels;
+//       }
+//     }
+//   } 
+// }
