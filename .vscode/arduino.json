@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:nano",
-    "port": "COM5",
+    "port": "COM4",
     "sketch": "Projeler\\OLED\\OLED_Menu\\OLED_Menu.ino",
     "configuration": "cpu=atmega328old"
 }
