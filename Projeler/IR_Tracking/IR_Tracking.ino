@@ -1,7 +1,7 @@
-#define sens1 9
-#define sens2 10
-#define sens3 11
-#define sens4 12
+int sens1 = 5;
+int sens2 = 6;
+int sens3 = 7;
+int sens4 = 8;
 
 void setup()
 {
@@ -16,28 +16,32 @@ void setup()
 void loop()
 {
 
-  int sol1 = digitalRead(sens1);
-  int sol2 = digitalRead(sens2);
-  int sol3 = digitalRead(sens3);
-  int sol4 = digitalRead(sens4);
+  int valSensor1 = digitalRead(sens1);
+  int valSensor2 = digitalRead(sens2);
+  int valSensor3 = digitalRead(sens3);
+  int valSensor4 = digitalRead(sens4);
 
-  if (sol1 == LOW)
+  if (valSensor1 == LOW)
   {
     Serial.println("Sol 1'de obje var");
+    delay(1000);
   }
 
-  if (sol2 == LOW)
+  if (valSensor2 == LOW)
   {
     Serial.println("Sol 2'de obje var");
+    delay(1000);
   }
 
-  if (sol3 == LOW)
+  if (valSensor3 == LOW)
   {
     Serial.println("Sol 3'te obje var");
+    delay(1000);
   }
 
-  if (sol4 == LOW)
+  if (valSensor4 == LOW)
   {
     Serial.println("Sol 4'te obje var");
+    delay(1000);
   }
 }
