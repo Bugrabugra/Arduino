@@ -1,6 +1,6 @@
 {
-    "board": "arduino:avr:nano",
+    "board": "arduino:avr:mega",
     "port": "COM5",
-    "sketch": "Projeler\\IR_Tracking\\IR_Tracking.ino",
-    "configuration": "cpu=atmega328old"
+    "sketch": "Projeler\\Robot_arm\\Robot_arm.ino",
+    "configuration": "cpu=atmega2560"
 }
