@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <WString.h>
+#include <Arduino.h>
 
 namespace ARDUINOJSON_NAMESPACE {
 
@@ -24,7 +24,8 @@ class Writer< ::String, void> {
   size_t write(uint8_t c) {
     ARDUINOJSON_ASSERT(_size < bufferCapacity);
     _buffer[_size++] = static_cast<char>(c);
-    if (_size + 1 >= bufferCapacity) flush();
+    if (_size + 1 >= bufferCapacity)
+      flush();
     return 1;
   }
 

@@ -22,21 +22,21 @@
                 "C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src",
                 "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.1\\**",
                 "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
-                "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**"
+                "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "C:\\Users\\Bugra\\Documents\\Arduino\\libraries\\**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "USBCON"
             ],
             "compilerPath": "C:\\cygwin64\\bin\\gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64",
-            "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
-                "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\cores\\arduino\\Arduino.h"
-            ]
+            "forcedInclude": []
         }
     ],
     "version": 4

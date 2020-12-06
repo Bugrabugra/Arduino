@@ -4,10 +4,10 @@
 
 add_executable(NumbersTests 
 	parseFloat.cpp
+	parseDouble.cpp
 	parseInteger.cpp
 	parseNumber.cpp
 )
 
-target_link_libraries(NumbersTests catch)
 
 add_test(Numbers NumbersTests)
