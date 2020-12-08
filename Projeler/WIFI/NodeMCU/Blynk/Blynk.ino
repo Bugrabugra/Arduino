@@ -19,10 +19,31 @@ const char pass[] = WIFI_PASSWORD_EV;
 
 void setup()
 {
+  WidgetLED led1(V1);
+
+
+// V1 LED Widget is blinking
+
+  // if (led1.getValue()) {
+  //   led1.off();
+  //   Serial.println("LED on V1: off");
+  // } else {
+  //   led1.on();
+  //   Serial.println("LED on V1: on");
+  // }
+
+
   // Debug console
   Serial.begin(9600);
 
   Blynk.begin(auth, ssid, pass);
+  Serial.println(Blynk.connected());
+
+  if (Blynk.connected())
+  {
+    led1.on();
+  }
+  
   // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
