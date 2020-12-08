@@ -9,8 +9,11 @@ add_executable(JsonDocumentTests
 	containsKey.cpp
 	createNested.cpp
 	DynamicJsonDocument.cpp
+	ElementProxy.cpp
 	isNull.cpp
+	MemberProxy.cpp
 	nesting.cpp
+	overflowed.cpp
 	remove.cpp
 	shrinkToFit.cpp
 	size.cpp
@@ -18,5 +21,4 @@ add_executable(JsonDocumentTests
 	subscript.cpp
 )
 
-target_link_libraries(JsonDocumentTests catch)
 add_test(JsonDocument JsonDocumentTests)

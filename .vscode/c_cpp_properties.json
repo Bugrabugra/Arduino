@@ -23,9 +23,14 @@
                 "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.1\\**",
                 "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
                 "C:\\Users\\Bugra\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
+<<<<<<< HEAD
                 "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\**",
                 "C:\\Users\\CBS\\Documents\\Arduino\\libraries\\**"
+=======
+                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "C:\\Users\\Bugra\\Documents\\Arduino\\libraries\\**"
+>>>>>>> 21f6774e1ec658e13a14d9976994bb8405d21cf5
             ],
             "defines": [
                 "_DEBUG",
@@ -37,9 +42,7 @@
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64",
-            "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
-            ]
+            "forcedInclude": []
         }
     ],
     "version": 4

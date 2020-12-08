@@ -1,3 +1,62 @@
+## 2.8.0 2020/10
+- Changed License to MIT see https://github.com/z3t0/Arduino-IRremote/issues/397.
+- Added ATtiny timer 1 support.
+- Changed wrong return code signature of decodePulseDistanceData() and its handling.
+- Removed Mitsubishi protocol, since the implementation is in contradiction with all documentation I could found and therefore supposed to be wrong.
+- Removed AIWA implementation, since it is only for 1 device and at least sending implemented wrong.
+- Added Lego_PF decode.
+- Added new example IR2Keyboard.
+- Changed internal usage of custom_delay_usec.
+- Moved dump/print functions from example to irReceiver.
+- irPronto.cpp: Using Print instead of Stream saves 1020 bytes program memory. Changed from & to * parameter type to be more transparent and consistent with other code of IRremote.
+
+## 2.7.0 2020/09
+- Added ATmega328PB support.
+- Renamed hardware specific macro and function names.
+- Renamed `USE_SOFT_CARRIER`, `USE_NO_CARRIER`, `DUTY_CYCLE` macros to `USE_SOFT_SEND_PWM`, `USE_NO_SEND_PWM`, `IR_SEND_DUTY_CYCLE`.
+- Removed blocking wait for ATmega32U4 Serial in examples.
+- Deactivated default debug output.
+- Optimized types in sendRC5ext and sendSharpAlt.
+- Added `DECODE_NEC_STANDARD` and `SEND_NEC_STANDARD`.
+- Renamed all IRrecv* examples to IRreceive*.
+- Added functions `printResultShort(&Serial)` and `getProtocolString(decode_type_t aDecodeType)`.
+- Added flag `results.isRepeat`.
+- Updated examples.
+
+## 2.6.1 2020/08
+- Adjusted JVC and LG timing.
+- Fixed 4809 bug.
+
+## 2.6.0 2020/08
+- Added support for MagiQuest IR wands.
+- Corrected Samsung timing.
+- NEC repeat implementation.
+- Formatting and changing `TIMER_CONFIG_KHZ` and `TIMER_CONFIG_NORMAL` macros to static functions.
+- Added `IRAM_ATTR` for ESP32 ISR.
+- Removed #define `HAS_AVR_INTERRUPT_H`.
+- Changed Receiver States. Now starting with 0.
+- Changed switch to if / else if in IRRemote.cpp because of ESP32 compiler bug.
+- Changed `DEBUG` handling since compiler warns about empty "IF" or "ELSE" statements in IRRemote.cpp.
+
+## 2.5.0 2020/06
+- Corrected keywords.txt.
+- BoseWave protocol added PR #690.
+- Formatting comply to the new stylesheet.
+- Renamed "boarddefs.h" [ISSUE #375](https://github.com/z3t0/Arduino-IRremote/issues/375).
+- Renamed `SEND_PIN` to `IR_SEND_PIN`.
+- Renamed state macros.
+- Enabled `DUTY_CYCLE` for send signal.
+- Added sending for ESP32.
+- Changed rawlen from uint8_t to unsigned int allowing bigger receive buffer and renamed `RAWBUF` to `RAW_BUFFER_LENGTH`.
+- Introduced `USE_NO_CARRIER` for simulating an IR receiver.
+Changes from #283 by bengtmartensson
+- Added function sendRaw_P() for sending data from flash.
+Changes from #268 by adamlhumphreys
+- Optimized by reducing floating point operations as suggested by @madmalkav (#193).
+- Optimized with macros when using default `MICROS_PER_TICK` and `TOLERANCE`.
+- Made decodeHash as a settable protocol defined by `DECODE_HASH`.
+- Added Philips Extended RC-5 protocol support [PR #522] (https://github.com/z3t0/Arduino-IRremote/pull/522)
+
 ## 2.4.0 - 2017/08/10
  - Cleanup of hardware dependencies. Merge in SAM support [PR #437](https://github.com/z3t0/Arduino-IRremote/pull/437)
 

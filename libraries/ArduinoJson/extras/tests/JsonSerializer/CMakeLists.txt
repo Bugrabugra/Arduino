@@ -14,5 +14,4 @@ add_executable(JsonSerializerTests
 	std_string.cpp
 )
 
-target_link_libraries(JsonSerializerTests catch)
 add_test(JsonSerializer JsonSerializerTests)

@@ -11,5 +11,4 @@ add_executable(MsgPackSerializerTests
 	serializeVariant.cpp
 )
 
-target_link_libraries(MsgPackSerializerTests catch)
 add_test(MsgPackSerializer MsgPackSerializerTests)
