@@ -7,7 +7,7 @@
 =======
     "board": "esp8266:esp8266:generic",
     "port": "COM6",
-    "sketch": "Projeler\\WIFI\\ESP8266\\Blynk_WIFI_IR\\Blynk_WIFI_IR.ino",
+    "sketch": "Projeler\\WIFI\\NodeMCU\\OLED\\OLED.ino",
     "configuration": "xtal=80,vt=flash,exception=disabled,ssl=all,ResetMethod=ck,CrystalFreq=26,FlashFreq=40,FlashMode=dout,eesz=512K,led=2,sdk=nonosdk221,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=115200"
 >>>>>>> a6a4faee7d275be405d86c06d39b04a93d3fc8a3
 }
