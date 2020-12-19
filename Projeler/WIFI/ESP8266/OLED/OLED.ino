@@ -1,27 +1,31 @@
-#include <SPI.h>
+// Libraries
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include "SSD1306.h" // alias for `#include "SSD1306Wire.h"`
 
-#define OLED_RESET 4 // not used / nicht genutzt bei diesem Display
-Adafruit_SSD1306 display(OLED_RESET);
+//Object declarations
+
+SSD1306  display(0x3c, 0, 2);//0x3C being the usual address of the OLED
 
 void setup() {
-  Wire.begin(0,2);
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);    
+  Wire.pins(0, 2);// yes, see text
+  Wire.begin(0,2);// 0=sda, 2=scl
 
-  Serial.begin(115200);
-  delay(10);
+  // Initialise the display.
+  display.init();
+  display.setFont(ArialMT_Plain_10);
 }
 
+
 void loop() {
-  display.clearDisplay();
-  display.setTextSize(2);      // Normal 1:1 pixel scale
-  display.setTextColor(WHITE); // Draw white text
-  display.cp437(true); 
-  display.setCursor(0, 0);
-  display.print("WiFi connected"); 
-  display.setCursor(0, 10); 
-  display.print("IP address: ");
-  display.display(); 
+  display.clear();
+
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
+  display.setFont(ArialMT_Plain_16);
+  String t = "Bugra";
+  String t2 = "Burcu";
+  display.drawString(0, 10, t);//
+  display.drawString(0, 24, t2);
+  // write the buffer to the display
+  display.display();
+  delay(10);
 }
