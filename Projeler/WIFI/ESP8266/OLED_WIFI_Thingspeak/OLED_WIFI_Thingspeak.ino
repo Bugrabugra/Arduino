@@ -34,6 +34,7 @@ void setup() {
   Serial.println(ssid);
   
   display.clear();
+  display.flipScreenVertically();
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.setFont(ArialMT_Plain_16);
   display.drawString(0, 0, "Connecting to");
