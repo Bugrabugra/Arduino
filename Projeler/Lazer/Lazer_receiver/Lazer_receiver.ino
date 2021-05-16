@@ -1,13 +1,11 @@
 int pinDetector = 7;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   pinMode(pinDetector, INPUT);
 }
 
-void loop()
-{
+void loop() {
   boolean val = digitalRead(pinDetector);
   Serial.println(val);
 }
