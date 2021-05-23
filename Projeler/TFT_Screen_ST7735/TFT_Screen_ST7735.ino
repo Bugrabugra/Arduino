@@ -17,13 +17,15 @@
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 void setup(void) {
-  tft.initR(INITR_REDTAB);
-  tft.setRotation(3);
+  // tft.initR(INITR_REDTAB);
+  // tft.setRotation(3);
 
-  //tft.initR(INITR_MINI160x80); //Initializes ST7735.
+  tft.initR(INITR_MINI160x80); //Initializes ST7735.
   //Please note that use of 'MINI160x80' displays cyan instead of yellow and vice versa.
  
-  //tft.setRotation(3);
+  tft.invertDisplay(true);
+
+  tft.setRotation(3);
   tft.fillScreen(ST7735_BLACK);
  
   tft.setCursor(5, 5);
