@@ -1,12 +1,12 @@
-//  6 Channel Receiver | 6 Kanal Alıcı
-//  PWM output on pins D2, D3, D4, D5, D6, D7 (Çıkış pinleri)
-
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
-int pinLED = 2;
+#define CE_PIN 9
+#define CSN_PIN 8
 
+int pinLED = 2;
+int stateButton;
 
 struct Signal {
   byte stateButton;
@@ -14,36 +14,38 @@ struct Signal {
 
 Signal data;
 
-const uint64_t pipeIn = 0xE9E8F0F0E1LL;
-RF24 radio(9, 10); 
+const uint64_t pipe = 0xE8E8F0F0E1LL;
+RF24 radio(CE_PIN, CSN_PIN); 
 
 void setup() {
-  //Set the pins for each PWM signal | Her bir PWM sinyal için pinler belirleniyor.
+  Serial.begin(9600);
+  delay(1000);
   pinMode(pinLED, OUTPUT);
+  Serial.println("Nrf24L01 Alıcı Başlatılıyor");
 
-  //Configure the NRF24 module
   radio.begin();
-  radio.openReadingPipe(1,pipeIn);
+  radio.openReadingPipe(1, pipe);
   radio.setAutoAck(false);
   radio.setDataRate(RF24_250KBPS);
   radio.setPALevel(RF24_PA_HIGH);
-  radio.startListening(); //start the radio comunication for receiver | Alıcı olarak sinyal iletişimi başlatılıyor
+  radio.startListening(); 
 }
 
-unsigned long lastRecvTime = 0;
-
-void recvData() {
+void loop() {
   while (radio.available()) {
     radio.read(&data, sizeof(Signal));
-    
-    if (data.stateButton == 1) {
+
+    digitalWrite(pinLED, LOW);
+    stateButton = data.stateButton;
+
+    Serial.print("Button state = ");
+    Serial.print(stateButton);
+    Serial.println();
+
+    if (stateButton == 1) {
       digitalWrite(pinLED, HIGH);
     } else {
       digitalWrite(pinLED, LOW);
     }
   }
-}
-
-void loop() {
-  recvData();
 }
