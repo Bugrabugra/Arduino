@@ -1,3 +1,5 @@
+// Adafruit_ST77xx.h dosyasında #define ST77XX_MADCTL_MY 0 olacak!
+
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
@@ -17,15 +19,11 @@
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 void setup(void) {
-  // tft.initR(INITR_REDTAB);
-  // tft.setRotation(3);
-
-  tft.initR(INITR_MINI160x80); //Initializes ST7735.
-  //Please note that use of 'MINI160x80' displays cyan instead of yellow and vice versa.
+  tft.initR(INITR_MINI160x80);
  
   tft.invertDisplay(true);
 
-  tft.setRotation(3);
+  tft.setRotation(1);
   tft.fillScreen(ST7735_BLACK);
  
   tft.setCursor(5, 5);
@@ -50,5 +48,12 @@ void setup(void) {
  
 void loop()
 {
- 
+  for (int i=0; i < 100; i++) {
+    tft.setCursor(5, 5);
+    tft.setTextColor(ST7735_ORANGE);
+    tft.setTextSize(10);
+    tft.println(i);
+    delay(1000);
+    tft.fillScreen(ST7735_BLACK);
+  }
 }
