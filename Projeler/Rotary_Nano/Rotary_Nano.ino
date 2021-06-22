@@ -1,18 +1,3 @@
-// -----
-// SimplePollRotator.ino - Example for the RotaryEncoder library.
-// This class is implemented for use with the Arduino environment.
-//
-// Copyright (c) by Matthias Hertel, http://www.mathertel.de
-// This work is licensed under a BSD 3-Clause License. See http://www.mathertel.de/License.aspx
-// More information on: http://www.mathertel.de/Arduino
-// -----
-// 18.01.2014 created by Matthias Hertel
-// 04.02.2021 conditions and settings added for ESP8266
-// -----
-
-// This example checks the state of the rotary encoder in the loop() function.
-// The current position and direction is printed on output when changed.
-
 // Hardware setup:
 // Attach a rotary encoder with output pins to
 // * A2 and A3 on Arduino UNO.
@@ -22,6 +7,9 @@
 
 #include <Arduino.h>
 #include <RotaryEncoder.h>
+#include <Adafruit_GFX.h>    // Core graphics library
+#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <SPI.h>
 
 //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_NANO_EVERY)
 // Example for Arduino UNO with input signals on pin 2 and 3
@@ -46,13 +34,36 @@
 // Setup a RotaryEncoder with 2 steps per latch for the 2 signal input pins:
 RotaryEncoder encoder(PIN_IN1, PIN_IN2, RotaryEncoder::LatchMode::TWO03);
 
+//Arduino Uno/Nano Pins:
+//GND = GND
+//VCC = 5v
+//DC = 8
+//RES = 9
+//CS = 10
+//SDA = 11
+//SCL = 13
+ 
+#define TFT_CS     10
+#define TFT_RST    9
+#define TFT_DC     8
+
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+
 void setup()
 {
   pinMode(pinButton, INPUT_PULLUP);
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (! Serial);
   Serial.println("SimplePollRotator example for the RotaryEncoder library.");
-} // setup()
+
+  tft.initR(INITR_MINI160x80);
+ 
+  tft.invertDisplay(true);
+
+  tft.setRotation(1);
+  tft.fillScreen(ST7735_BLACK);
+  tft.setTextSize(8);
+}
 
 
 // Read the current position of the encoder and print out when changed.
@@ -68,16 +79,27 @@ void loop()
       Serial.print(newPos/2);
       Serial.print(" dir:");
       Serial.println((int)(encoder.getDirection()));
+      
+      if (newPos/2 % 2 == 0) {
+        tft.setCursor(5, 5);
+        tft.setTextColor(ST7735_ORANGE, ST7735_BLACK); 
+        tft.print(newPos/2);
+      } else {
+        tft.setCursor(5, 5);
+        tft.setTextColor(ST7735_CYAN, ST7735_BLACK); 
+        tft.print(newPos/2);
+      }
     }
 
     pos = newPos;
-  } // if
+  }
 
   if (digitalRead(pinButton) == 0) {
+    tft.setCursor(5, 5);
+    tft.fillScreen(ST7735_BLACK);
+    tft.setTextColor(ST7735_GREEN); 
+    tft.print("X");
     Serial.println("button");
     delay(debounce);
   }
-  
-} // loop ()
-
-// The End
+}
