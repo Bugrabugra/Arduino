@@ -1,5 +1,5 @@
-// ArduinoJson - arduinojson.org
-// Copyright Benoit Blanchon 2014-2020
+// ArduinoJson - https://arduinojson.org
+// Copyright © 2014-2022, Benoit BLANCHON
 // MIT License
 
 #define ARDUINOJSON_ENABLE_COMMENTS 1
@@ -231,6 +231,15 @@ TEST_CASE("Filtering") {
       DeserializationError::Ok,
       "{\"example\":{\"outcome\":42}}",
       2 * JSON_OBJECT_SIZE(1) + 16
+    },
+    {
+      // exclusion filter (issue #1628)
+      "{\"example\":1,\"ignored\":2}",
+      "{\"*\":true,\"ignored\":false}",
+      10,
+      DeserializationError::Ok,
+      "{\"example\":1}",
+      JSON_OBJECT_SIZE(1) + 8
     },
     {
       // only the first element of array counts
@@ -656,6 +665,20 @@ TEST_CASE("Filtering") {
     CHECK(doc.as<std::string>() == tc.output);
     CHECK(doc.memoryUsage() == tc.memoryUsage);
   }
+}
+
+TEST_CASE("Zero-copy mode") {  // issue #1697
+  char input[] = "{\"include\":42,\"exclude\":666}";
+
+  StaticJsonDocument<256> filter;
+  filter["include"] = true;
+
+  StaticJsonDocument<256> doc;
+  DeserializationError err =
+      deserializeJson(doc, input, DeserializationOption::Filter(filter));
+
+  REQUIRE(err == DeserializationError::Ok);
+  CHECK(doc.as<std::string>() == "{\"include\":42}");
 }
 
 TEST_CASE("Overloads") {

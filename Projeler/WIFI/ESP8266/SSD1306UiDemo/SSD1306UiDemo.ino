@@ -4,22 +4,25 @@
 #include "images.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
+#include <WiFiClientSecure.h>
+#include <ArduinoJson.h>
 #include "credentials.h"
+
 
 SSD1306 display(0x3c, 0, 2);
 OLEDDisplayUi ui(&display);
 
 const char ssid[] = WIFI_SSID_EV;
 const char password[] = WIFI_PASSWORD_EV;
-const char *host = "api.thingspeak.com"; //We read the data from this host
-const int httpPortRead = 80;
-const char *thinghttp_address = "/apps/thinghttp/send_request?api_key=ID01RLTWTE0EF82T";
+const char *host = "https://timeapi.io/api/Time/current/zone?timeZone=Turkey"; //We read the data from this host
+int port = 443;
+
 String Data_Raw;
 int pin1 = 1;
 int pin3 = 3;
 bool fetched = false;
 
-WiFiClient client;
+WiFiClientSecure client;
 HTTPClient http;
 
 // Overlay
@@ -29,8 +32,7 @@ HTTPClient http;
 //   display->drawString(128, 0, String(millis()));
 // }
 
-void drawProgress(OLEDDisplay *display, int percentage, String label)
-{
+void drawProgress(OLEDDisplay *display, int percentage, String label) {
   display->clear();
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
@@ -40,8 +42,7 @@ void drawProgress(OLEDDisplay *display, int percentage, String label)
   delay(400);
 }
 
-void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y)
-{
+void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y) {
   // draw an xbm image.
   // Please note that everything that should be transitioned
   // needs to be drawn relative to x and y
@@ -50,8 +51,7 @@ void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
   display->drawString(x + 33, y + 33, "Connecting to");
   display->drawString(x + 20, y + 42, ssid);
 
-  if (WiFi.status() == WL_CONNECTED)
-  {
+  if (WiFi.status() == WL_CONNECTED) {
     display->clear();
     display->drawXbm(x + 34, y + 0, WiFi_Logo_width, WiFi_Logo_height, WiFi_Logo_bits);
     display->drawString(x + 35, y + 33, "Connected!");
@@ -59,47 +59,49 @@ void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
   }
 }
 
-void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y)
-{
+void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y) {
   // Demonstrates the 3 included default sizes. The fonts come from SSD1306Fonts.h file
   // Besides the default fonts there will be a program to convert TrueType fonts into this format
 
-  if (digitalRead(pin1) == LOW)
-  {
+  if (digitalRead(pin1) == LOW) {
     ui.nextFrame();
   }
 
-  if (digitalRead(pin3) == LOW)
-  {
+  if (digitalRead(pin3) == LOW) {
     ui.previousFrame();
   }
   // !fetched &&
 
-  if (!fetched && ui.getUiState()->frameState == FIXED)
-  {
-    http.begin(host, httpPortRead, thinghttp_address);
+  if (!fetched && ui.getUiState()->frameState == FIXED) {
+    client.setInsecure(); //the magic line, use with caution
+    client.connect(host, port);
+    // client.setFingerprint(fingerprint);
+    http.begin(client, host);
+    // https.addHeader("Content-Type", "application/json");
+
     int httpCode = http.GET();
 
-    if (httpCode > 0)
-    {
-      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY)
-      {
+    if (httpCode > 0) {
+      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
         Data_Raw = http.getString();
       }
+
+      StaticJsonDocument<384> doc;
+      DeserializationError error = deserializeJson(doc, Data_Raw);
+      const char* time = doc["time"]; // "01:50"
+
       display->clear();
       display->setTextAlignment(TEXT_ALIGN_LEFT);
       display->setFont(ArialMT_Plain_10);
-      display->drawString(x + 0, y + 0, "Gram altın: ");
+      display->drawString(x + 0, y + 0, "Result: ");
       display->setFont(ArialMT_Plain_16);
-      display->drawString(x + 0, y + 15, Data_Raw);
+      display->drawString(x + 0, y + 15, time);
 
-      if (digitalRead(pin1) == LOW)
-      {
+      if (digitalRead(pin1) == LOW) {
         ui.nextFrame();
       }
 
-      if (digitalRead(pin3) == LOW)
-      {
+      if (digitalRead(pin3) == LOW) {
         ui.previousFrame();
       }
       http.end();
@@ -107,13 +109,11 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
   }
 }
 
-void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y)
-{
-  // Text alignment demo
-
-  display->setFont(ArialMT_Plain_10);
-  display->drawString(x + 0, y + 0, "Connecting to");
-  display->drawString(x + 0, y + 10, password);
+// void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y) {
+  // // Text alignment demo
+  // display->setFont(ArialMT_Plain_10);
+  // display->drawString(x + 0, y + 0, "Connecting to");
+  // display->drawString(x + 0, y + 10, password);
 
   // if (http.begin(host, httpPortRead, thinghttp_address)) {
   //   int httpCode = http.GET();
@@ -132,7 +132,7 @@ void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
   //   }
   //   http.end();
   // }
-}
+// }
 
 // void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
 //   // Demo for drawStringMaxWidth:
@@ -149,17 +149,16 @@ void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
 
 // This array keeps function pointers to all frames
 // frames are the single views that slide in
-FrameCallback frames[] = {drawFrame1, drawFrame2, drawFrame3};
+FrameCallback frames[] = {drawFrame1, drawFrame2};
 
 // how many frames are there?
-int frameCount = 3;
+int frameCount = 2;
 
 // Overlays are statically drawn on top of a frame eg. a clock
 // OverlayCallback overlays[] = { msOverlay };
 // int overlaysCount = 1;
 
-void setup()
-{
+void setup() {
   // Wire.pins(0, 2);// yes, see text
   // Wire.begin(0, 2);// 0=sda, 2=scl
 
@@ -204,25 +203,21 @@ void setup()
   WiFi.begin(ssid, password);
 }
 
-void loop()
-{
+void loop() {
   int remainingTimeBudget = ui.update();
 
-  if (remainingTimeBudget > 0)
-  {
+  if (remainingTimeBudget > 0) {
     // You can do some work here
     // Don't do stuff if you are below your
     // time budget.
     delay(remainingTimeBudget);
   }
 
-  if (digitalRead(pin1) == LOW)
-  {
+  if (digitalRead(pin1) == LOW) {
     ui.nextFrame();
   }
 
-  if (digitalRead(pin3) == LOW)
-  {
+  if (digitalRead(pin3) == LOW) {
     ui.previousFrame();
   }
 }
