@@ -25,13 +25,6 @@ bool fetched = false;
 WiFiClientSecure client;
 HTTPClient http;
 
-// Overlay
-// void msOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
-//   display->setTextAlignment(TEXT_ALIGN_RIGHT);
-//   display->setFont(ArialMT_Plain_10);
-//   display->drawString(128, 0, String(millis()));
-// }
-
 void drawProgress(OLEDDisplay *display, int percentage, String label) {
   display->clear();
   display->setTextAlignment(TEXT_ALIGN_CENTER);
