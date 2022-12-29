@@ -1,23 +1,10 @@
 /* SevSeg Library
  *
- * Copyright 2017 Dean Reading
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * Copyright 2020 Dean Reading
  *
  * This library allows an Arduino to easily display numbers and letters on a
  * 7-segment display without a separate 7-segment display controller.
  *
- * Direct any questions or suggestions to deanreading@hotmail.com
  * See the included readme for instructions.
  * https://github.com/DeanIsMe/SevSeg
  */
@@ -50,44 +37,41 @@ public:
   SevSeg();
 
   void refreshDisplay();
-  void begin(byte hardwareConfig, byte numDigitsIn, byte digitPinsIn[],
-          byte segmentPinsIn[], bool resOnSegmentsIn=0, 
+  void begin(uint8_t hardwareConfig, uint8_t numDigitsIn, const uint8_t digitPinsIn[],
+          const uint8_t segmentPinsIn[], bool resOnSegmentsIn=0, 
           bool updateWithDelaysIn=0, bool leadingZerosIn=0,
 		  bool disableDecPoint=0);
-  void setBrightness(int brightnessIn); // A number from 0..100
+  void setBrightness(int16_t brightnessIn); // A number from 0..100
 
-  void setNumber(long numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(unsigned long numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(int numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(unsigned int numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(char numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(byte numToShow, char decPlaces=-1, bool hex=0);
-  void setNumber(float numToShow, char decPlaces=-1, bool hex=0);
+  void setNumber(int32_t numToShow, int8_t decPlaces=-1, bool hex=0);
+  void setNumberF(float numToShow, int8_t decPlaces=-1, bool hex=0);
 
-  void setSegments(byte segs[]);
-  void setChars(char str[]);
+  void setSegments(const uint8_t segs[]);
+  void getSegments(uint8_t segs[]);
+  void setSegmentsDigit(const uint8_t digitNum, const uint8_t segs);
+  void setChars(const char str[]);
   void blank(void);
 
 private:
-  void setNewNum(long numToShow, char decPlaces, bool hex=0);
-  void findDigits(long numToShow, char decPlaces, bool hex, byte digits[]);
-  void setDigitCodes(byte nums[], char decPlaces);
-  void segmentOn(byte segmentNum);
-  void segmentOff(byte segmentNum);
-  void digitOn(byte digitNum);
-  void digitOff(byte digitNum);
+  void setNewNum(int32_t numToShow, int8_t decPlaces, bool hex=0);
+  void findDigits(int32_t numToShow, int8_t decPlaces, bool hex, uint8_t digits[]);
+  void setDigitCodes(const uint8_t nums[], int8_t decPlaces);
+  void segmentOn(uint8_t segmentNum);
+  void segmentOff(uint8_t segmentNum);
+  void digitOn(uint8_t digitNum);
+  void digitOff(uint8_t digitNum);
 
-  bool digitOnVal,digitOffVal,segmentOnVal,segmentOffVal;
+  uint8_t digitOnVal,digitOffVal,segmentOnVal,segmentOffVal;
   bool resOnSegments, updateWithDelays, leadingZeros;
-  byte digitPins[MAXNUMDIGITS];
-  byte segmentPins[8];
-  byte numDigits;
-  byte numSegments;
-  byte prevUpdateIdx; // The previously updated segment or digit
-  byte digitCodes[MAXNUMDIGITS]; // The active setting of each segment of each digit
-  unsigned long prevUpdateTime; // The time (millis()) when the display was last updated
-  int ledOnTime; // The time (us) to wait with LEDs on
-  int waitOffTime; // The time (us) to wait with LEDs off
+  uint8_t digitPins[MAXNUMDIGITS];
+  uint8_t segmentPins[8];
+  uint8_t numDigits;
+  uint8_t numSegments;
+  uint8_t prevUpdateIdx; // The previously updated segment or digit
+  uint8_t digitCodes[MAXNUMDIGITS]; // The active setting of each segment of each digit
+  uint32_t prevUpdateTime; // The time (millis()) when the display was last updated
+  int16_t ledOnTime; // The time (us) to wait with LEDs on
+  int16_t waitOffTime; // The time (us) to wait with LEDs off
   bool waitOffActive; // Whether  the program is waiting with LEDs off
 };
 

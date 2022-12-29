@@ -8,6 +8,9 @@ It supports common cathode and common anode displays, and the use of switching t
 
 Direct any questions or suggestions to deanreading@hotmail.com. If I have the time, I'm happy to help you get things working.
 
+#### Note on shift registers
+It's often preferred to drive seven segment displays through shift register chips, as that only uses ~3 micrcontroller pins instead of ~12 pins. This library does not support shift registers. However, there's a mostly-compatible branch that does support shift registers.
+See [bridystone's SevSegShift][5].
 
 ## Hardware
 
@@ -59,6 +62,12 @@ Top Row:    1 A F  2 3 B
 Bottom Row: E D DP C G 4
 ```
 
+### Sample simulations
+The Wokwi team has created sample simulations of the examples in this library:
+[Wokwi SevSeg_Counter Example][6].  
+[Wokwi stringWithPeriod Example][7].  
+[Wokwi testWholeDisplay Example][8].  
+ 
 
 ## Software
 
@@ -93,42 +102,15 @@ void setup() {
 If you wish to use more than 8 digits, increase MAXNUMDIGITS in SevSeg.h.
 
 
-### Setting a number
-
-```c++
-sevseg.setNumber(3141,3); // Displays '3.141'
-```
-
-The first argument is the number to display. The second argument indicates where the decimal place should be, counted from the least significant digit. E.g. to display an integer, the second argument is 0.
-Floats are supported. In this case, the second argument indicates how many decimal places of precision you want to display. E.g:
-
-```c++
-sevseg.setNumber(3.14159f,3); //Displays '3.141'
-```
-
-Out of range numbers are shown as '----'.
-
-If the second argument is -1 or omitted, there will be no decimal place.
-
-Enter 'true' as the third agument to display the number in hexadecimal representation.
-
-
-### Setting a character string
-
-```c++
-sevseg.setChars("abcd");
-```
-
-Character arrays can be displayed - as accurately as possible on a seven segment display. See SevSeg.cpp digitCodeMap[] to notes on each character. Only alphanumeric characters, plus ' ', '-' and '.' are supported. The character array should be NULL terminated.
-
-
 ### Refreshing the display
 
 ```c++
 sevseg.refreshDisplay();
 ```
 
-Your program must run the refreshDisplay() function repeatedly to display the number. Note that any delays introduced by other functions will produce undesirable effects on the display.
+Your program must run the refreshDisplay() function repeatedly to display the number. 
+**Warning: Any calls to delay() will interfere with the display.**
+Any delays introduced by other functions will produce undesirable effects on the display. If you need help getting away from delay() statements, I recommend the simple [Blink Without Delay][9] arduino example sketch.
 
 To blank the display, call:
 
@@ -136,6 +118,44 @@ To blank the display, call:
 sevseg.blank();
 ```
 
+### Setting a number
+#### Integer
+```c++
+sevseg.setNumber(3141,3); // Displays '3.141'
+```
+The first argument is the number to display. The second argument indicates where the decimal place should be, counted from the least significant digit. E.g. to display an integer, the second argument is 0.
+
+#### Floating point
+```c++
+sevseg.setNumberF(3.14159f,3); //Displays '3.141'
+```
+Floats are supported. In this case, the second argument indicates how many decimal places of precision you want to display.
+
+Note that:
+
+ - Out of range numbers are shown as '----'. 
+ - If the second argument is -1 or omitted, there will be no decimal place. 
+ - Enter 'true' as the third argument to display the number in hexadecimal representation (instead of decimal)
+
+### Setting a character string
+
+```c++
+sevseg.setChars("abcd");
+```
+
+Character arrays can be displayed - as accurately as possible on a seven segment display. See SevSeg.cpp digitCodeMap[] to notes on each character. Only alphanumeric characters, plus ' ', '-', '_', and '.' are supported. The character array should be NULL terminated.
+
+### Custom display setting
+```c++
+// Set the segments for every digit on the display
+uint8_t segs[4] = {0, 0x5B, 0x6D, 0x63};
+sevseg.setSegments(segs);
+```
+```c++
+// Set the segments for a single digit. Set digit 3 to 0x63. 
+sevseg.setSegmentsDigit(3, 0x63);
+```
+You can manipulate individual segments if needed. Each byte represents the display of a single digit, with each bit representing a single segment. The bits represent segments in the order .GFEDCBA. See SevSeg.cpp for more examples of these 'digitCodes'.
 
 ### Setting the brightness
 
@@ -150,21 +170,34 @@ Results will vary for each implementation. The brightness seen depends on the di
 
 ## License
 
-Copyright 2019 Dean Reading
+MIT License
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-http://www.apache.org/licenses/LICENSE-2.0
+Copyright (c) 2020 Dean Reading
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 [1]: https://github.com/DeanIsMe/SevSeg
 [2]: https://en.wikipedia.org/wiki/File:7_segment_display_labeled.svg
 [3]: http://www.ebay.com/sch/i.html?LH_BIN=1&_from=R40&_sacat=0&_nkw=7+segment+display+4+digit+2+pcs&_sop=15
 [4]: http://arduino.cc/en/Guide/Libraries
+[5]: https://github.com/bridystone/SevSegShift
+[6]: https://wokwi.com/arduino/libraries/SevSeg/SevSeg_Counter
+[7]: https://wokwi.com/arduino/libraries/SevSeg/stringWithPeriod
+[8]: https://wokwi.com/arduino/libraries/SevSeg/testWholeDisplay
+[9]: https://www.arduino.cc/en/Tutorial/BuiltInExamples/BlinkWithoutDelay
