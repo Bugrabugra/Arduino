@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------------
-// NewPing Library - v1.9.6 - 12/15/2022
+// NewPing Library - v1.9.7 - 02/16/2023
 //
 // AUTHOR/LICENSE:
 // Created by Tim Eckel - eckel.tim@gmail.com
-// Copyright 2022 License: Forks and derivitive works are NOT permitted without
+// Copyright 2023 License: Forks and derivitive works are NOT permitted without
 // permission. Permission is only granted to use as-is for private and
 // commercial use. If you wish to contribute, make changes, or enhancements,
 // please create a pull request. I get a lot of support issues from this
@@ -20,7 +20,7 @@
 //
 // BACKGROUND:
 // Initially, I wasn't happy with how poorly ultrasonic sensors performed. I
-// soon realized the problem was not the sensor, it was the available ping and
+// soon realized the problem wasn't the sensor, it was the available ping and
 // ultrasonic libraries causing the problem. The NewPing library totally fixes
 // these problems, adds many new features, and breathes new life into these
 // very affordable distance sensors.
@@ -60,6 +60,10 @@
 //   NewPing::timer_stop() - Stop the timer.
 //
 // HISTORY:
+// 02/16/2023 v1.9.7 - ONE_PIN_ENABLED mode is now automatic, based on if you
+//   use the same trigger and echo pins. Echo TRIGGER_WIDTH can now be modified
+//   if your sensors are out of spec (defaults to 12uS, previously 10uS).
+//
 // 12/15/2022 v1.9.6 - Reverted timer overflow commit as it contained bugs.
 //
 // 12/13/2022 v1.9.5 - Resolved micros() timer overflow bug. Changed example
@@ -178,14 +182,14 @@
 	#define MAX_SENSOR_DISTANCE 500 // Maximum sensor distance can be as high as 500cm, no reason to wait for ping longer than sound takes to travel this distance and back. Default=500
 	#define US_ROUNDTRIP_CM 57      // Microseconds (uS) it takes sound to travel round-trip 1cm (2cm total), uses integer to save compiled code space. Default=57
 	#define US_ROUNDTRIP_IN 146     // Microseconds (uS) it takes sound to travel round-trip 1 inch (2 inches total), uses integer to save compiled code space. Default=146
-	#define ONE_PIN_ENABLED true    // Set to "false" to disable one pin mode which saves around 14-26 bytes of binary size. Default=true
 	#define ROUNDING_ENABLED false  // Set to "true" to enable distance rounding which also adds 64 bytes to binary size. Default=false
 	#define URM37_ENABLED false     // Set to "true" to enable support for the URM37 sensor in PWM mode. Default=false
+	#define TRIGGER_WIDTH 12        // Microseconds (uS) notch to trigger sensor to start ping. Sensor specs state notch should be 10uS, defaults to 12uS for out of spec sensors. Default=12
 
 	// Probably shouldn't change these values unless you really know what you're doing.
 	#define NO_ECHO 0               // Value returned if there's no ping echo within the specified MAX_SENSOR_DISTANCE or max_cm_distance. Default=0
 	#define MAX_SENSOR_DELAY 5800   // Maximum uS it takes for sensor to start the ping. Default=5800
-	#define ECHO_TIMER_FREQ 24      // Frequency to check for a ping echo (every 24uS is about 0.4cm accuracy). Default=24
+	#define ECHO_TIMER_FREQ 24      // Frequency (in microseconds) to check for a ping echo (every 24uS is about 0.4cm accuracy). Default=24
 	#define PING_MEDIAN_DELAY 30000 // Microsecond delay between pings in the ping_median method. Default=30000
 	#if URM37_ENABLED == true
 		#undef  US_ROUNDTRIP_CM
@@ -279,6 +283,7 @@
 	#endif
 			unsigned int _maxEchoTime;
 			unsigned long _max_time;
+			bool _one_pin_mode;
 	};
 
 

@@ -24,20 +24,20 @@ NewPing::NewPing(uint8_t trigger_pin, uint8_t echo_pin, unsigned int max_cm_dist
 	_triggerPin = trigger_pin;
 	_echoPin = echo_pin;
 #endif
+	_one_pin_mode = (trigger_pin == echo_pin); // Automatic one pin mode detection per sensor.
 
 	set_max_distance(max_cm_distance); // Call function to set the max sensor distance.
 
-#if (defined(__arm__) && (defined(TEENSYDUINO) || defined(PARTICLE))) || DO_BITWISE != true
+#if (defined(__arm__) && (defined(TEENSYDUINO) || defined(PARTICLE))) || defined(ARDUINO_AVR_YUN) || DO_BITWISE != true
 	pinMode(echo_pin, INPUT);     // Set echo pin to input (on Teensy 3.x (ARM), pins default to disabled, at least one pinMode() is needed for GPIO mode).
 	pinMode(trigger_pin, OUTPUT); // Set trigger pin to output (on Teensy 3.x (ARM), pins default to disabled, at least one pinMode() is needed for GPIO mode).
 #endif
 
-#if defined(ARDUINO_AVR_YUN)
-	pinMode(echo_pin, INPUT);     // Set echo pin to input for the Arduino Yun, not sure why it doesn't default this way.
-#endif
-
-#if ONE_PIN_ENABLED != true && DO_BITWISE == true
-	*_triggerMode |= _triggerBit; // Set trigger pin to output.
+#if DO_BITWISE == true
+	*_triggerMode |= _triggerBit;    // Set trigger pin to output.
+	*_triggerOutput &= ~_triggerBit; // Trigger pin should already be low, but set to low to make sure.
+#else
+	digitalWrite(_triggerPin, LOW);  // Trigger pin should already be low, but set to low to make sure.
 #endif
 }
 
@@ -97,18 +97,20 @@ unsigned long NewPing::ping_median(uint8_t it, unsigned int max_cm_distance) {
 	unsigned long t;
 	uS[0] = NO_ECHO;
 
-	while (i < it) {
-		t = micros();                  // Start ping timestamp.
-		last = ping(max_cm_distance);  // Send ping.
+	if (max_cm_distance > 0) set_max_distance(max_cm_distance); // Call function to set a new max sensor distance.
 
-		if (last != NO_ECHO) {         // Ping in range, include as part of median.
-			if (i > 0) {               // Don't start sort till second ping.
+	while (i < it) {
+		t = micros();          // Start ping timestamp.
+		last = ping();         // Send ping.
+
+		if (last != NO_ECHO) { // Ping in range, include as part of median.
+			if (i > 0) {       // Don't start sort till second ping.
 				for (j = i; j > 0 && uS[j - 1] < last; j--) // Insertion sort loop.
 					uS[j] = uS[j - 1];                      // Shift ping array to correct position for sort insertion.
-			} else j = 0;              // First ping is sort starting point.
-			uS[j] = last;              // Add last ping to array in sorted position.
-			i++;                       // Move to next ping.
-		} else it--;                   // Ping out of range, skip and don't include as part of median.
+			} else j = 0;      // First ping is sort starting point.
+			uS[j] = last;      // Add last ping to array in sorted position.
+			i++;               // Move to next ping.
+		} else it--;           // Ping out of range, skip and don't include as part of median.
 
 		if (i < it && micros() - t < PING_MEDIAN_DELAY)
 			delay((PING_MEDIAN_DELAY + t - micros()) >> 10); // Millisecond delay between pings.
@@ -124,19 +126,13 @@ unsigned long NewPing::ping_median(uint8_t it, unsigned int max_cm_distance) {
 
 boolean NewPing::ping_trigger() {
 #if DO_BITWISE == true
-	#if ONE_PIN_ENABLED == true
-		*_triggerMode |= _triggerBit;  // Set trigger pin to output.
-	#endif
+	*_triggerMode |= _triggerBit; // Set trigger pin to output (only matters if _one_pin_mode is true, but is quicker/smaller than checking _one_pin_mode state).
 
-	*_triggerOutput &= ~_triggerBit;   // Set the trigger pin low, should already be low, but this will make sure it is.
-	delayMicroseconds(4);              // Wait for pin to go low.
-	*_triggerOutput |= _triggerBit;    // Set trigger pin high, this tells the sensor to send out a ping.
-	delayMicroseconds(10);             // Wait long enough for the sensor to realize the trigger pin is high. Sensor specs say to wait 10uS.
-	*_triggerOutput &= ~_triggerBit;   // Set trigger pin back to low.
+	*_triggerOutput |= _triggerBit;   // Set trigger pin high, this tells the sensor to send out a ping.
+	delayMicroseconds(TRIGGER_WIDTH); // Wait long enough for the sensor to realize the trigger pin is high.
+	*_triggerOutput &= ~_triggerBit;  // Set trigger pin back to low.
 
-	#if ONE_PIN_ENABLED == true
-		*_triggerMode &= ~_triggerBit; // Set trigger pin to input (when using one Arduino pin, this is technically setting the echo pin to input as both are tied to the same Arduino pin).
-	#endif
+	if (_one_pin_mode) *_triggerMode &= ~_triggerBit; // Set trigger pin to input (this is technically setting the echo pin to input as both are tied to the same pin).
 
 	#if URM37_ENABLED == true
 		if (!(*_echoInput & _echoBit)) return false;            // Previous ping hasn't finished, abort.
@@ -150,19 +146,13 @@ boolean NewPing::ping_trigger() {
 			if (micros() > _max_time) return false;             // Took too long to start, abort.
 	#endif
 #else
-	#if ONE_PIN_ENABLED == true
-		pinMode(_triggerPin, OUTPUT); // Set trigger pin to output.
-	#endif
+	if (_one_pin_mode) pinMode(_triggerPin, OUTPUT); // Set trigger pin to output.
 	
-	digitalWrite(_triggerPin, LOW);   // Set the trigger pin low, should already be low, but this will make sure it is.
-	delayMicroseconds(4);             // Wait for pin to go low.
 	digitalWrite(_triggerPin, HIGH);  // Set trigger pin high, this tells the sensor to send out a ping.
-	delayMicroseconds(10);            // Wait long enough for the sensor to realize the trigger pin is high. Sensor specs say to wait 10uS.
+	delayMicroseconds(TRIGGER_WIDTH); // Wait long enough for the sensor to realize the trigger pin is high.
 	digitalWrite(_triggerPin, LOW);   // Set trigger pin back to low.
 
-	#if ONE_PIN_ENABLED == true
-		pinMode(_triggerPin, INPUT);  // Set trigger pin to input (when using one Arduino pin, this is technically setting the echo pin to input as both are tied to the same Arduino pin).
-	#endif
+	if (_one_pin_mode) pinMode(_triggerPin, INPUT); // Set trigger pin to input (this is technically setting the echo pin to input as both are tied to the same pin).
 
 	#if URM37_ENABLED == true
 		if (!digitalRead(_echoPin)) return false;               // Previous ping hasn't finished, abort.
