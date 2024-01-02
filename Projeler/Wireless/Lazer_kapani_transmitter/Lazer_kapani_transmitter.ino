@@ -5,12 +5,11 @@ int msg[1];
 int pinLaser = 9;
 int pinButton = 4;
 
-RF24 radio(7, 8); //CE,CSN
+RF24 radio(7, 8);  //CE,CSN
 
-byte addresses[][6] = {"1Node", "2Node"};
+byte addresses[][6] = { "1Node", "2Node" };
 
-void setup(void)
-{
+void setup(void) {
   Serial.begin(9600);
 
   pinMode(pinLaser, INPUT);
@@ -22,13 +21,11 @@ void setup(void)
   radio.openReadingPipe(1, addresses[0]);
 }
 
-void loop(void)
-{
-  msg[0] =  digitalRead(pinLaser);
+void loop(void) {
+  msg[0] = digitalRead(pinLaser);
   //msg[0] =  digitalRead(pinButton);
 
-  if (msg[0] == 0)
-  {
+  if (msg[0] == 0) {
     radio.write(msg, 1);
     delay(2000);
   }

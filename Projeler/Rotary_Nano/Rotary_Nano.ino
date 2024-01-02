@@ -7,8 +7,8 @@
 
 #include <Arduino.h>
 #include <RotaryEncoder.h>
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <Adafruit_GFX.h>     // Core graphics library
+#include <Adafruit_ST7735.h>  // Hardware-specific library
 #include <SPI.h>
 
 //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_NANO_EVERY)
@@ -42,22 +42,22 @@ RotaryEncoder encoder(PIN_IN1, PIN_IN2, RotaryEncoder::LatchMode::TWO03);
 //CS = 10
 //SDA = 11
 //SCL = 13
- 
-#define TFT_CS     10
-#define TFT_RST    9
-#define TFT_DC     8
+
+#define TFT_CS 10
+#define TFT_RST 9
+#define TFT_DC 8
 
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
-void setup()
-{
+void setup() {
   pinMode(pinButton, INPUT_PULLUP);
   Serial.begin(9600);
-  while (! Serial);
+  while (!Serial)
+    ;
   Serial.println("SimplePollRotator example for the RotaryEncoder library.");
 
   tft.initR(INITR_MINI160x80);
- 
+
   tft.invertDisplay(true);
 
   tft.setRotation(1);
@@ -67,8 +67,7 @@ void setup()
 
 
 // Read the current position of the encoder and print out when changed.
-void loop()
-{
+void loop() {
   static int pos = 0;
   encoder.tick();
 
@@ -76,18 +75,18 @@ void loop()
   if (pos != newPos) {
     if (newPos % 2 == 0) {
       Serial.print("pos:");
-      Serial.print(newPos/2);
+      Serial.print(newPos / 2);
       Serial.print(" dir:");
       Serial.println((int)(encoder.getDirection()));
-      
-      if (newPos/2 % 2 == 0) {
+
+      if (newPos / 2 % 2 == 0) {
         tft.setCursor(5, 5);
-        tft.setTextColor(ST7735_ORANGE, ST7735_BLACK); 
-        tft.print(newPos/2);
+        tft.setTextColor(ST7735_ORANGE, ST7735_BLACK);
+        tft.print(newPos / 2);
       } else {
         tft.setCursor(5, 5);
-        tft.setTextColor(ST7735_CYAN, ST7735_BLACK); 
-        tft.print(newPos/2);
+        tft.setTextColor(ST7735_CYAN, ST7735_BLACK);
+        tft.print(newPos / 2);
       }
     }
 
@@ -97,7 +96,7 @@ void loop()
   if (digitalRead(pinButton) == 0) {
     tft.setCursor(5, 5);
     tft.fillScreen(ST7735_BLACK);
-    tft.setTextColor(ST7735_GREEN); 
+    tft.setTextColor(ST7735_GREEN);
     tft.print("X");
     Serial.println("button");
     delay(debounce);

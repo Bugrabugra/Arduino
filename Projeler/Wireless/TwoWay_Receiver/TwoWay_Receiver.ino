@@ -7,15 +7,14 @@
 
 RF24 radio(7, 8);
 
-byte addresses[][6] = {"1Node", "2Node"};
+byte addresses[][6] = { "1Node", "2Node" };
 
 int pinLED = 4;
 
 // -----------------------------------------------------------------------------
 // SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP
 // -----------------------------------------------------------------------------
-void setup() 
-{
+void setup() {
   Serial.begin(9600);
   Serial.println("THIS IS THE RECEIVER CODE - YOU NEED THE OTHER ARDUINO TO TRANSMIT");
 
@@ -34,25 +33,23 @@ void setup()
 // -----------------------------------------------------------------------------
 // We are LISTENING on this device only (although we do transmit a response)
 // -----------------------------------------------------------------------------
-void loop() 
-{
+void loop() {
   // This is what we receive from the other device (the transmitter)
   unsigned char data;
 
   // Is there any data for us to get?
-  if ( radio.available()) {
+  if (radio.available()) {
 
     // Go and read the data and put it into that variable
-    while (radio.available()) 
-    {
-      radio.read( &data, sizeof(char));
+    while (radio.available()) {
+      radio.read(&data, sizeof(char));
     }
 
     // No more data to get so send it back but add 1 first just for kicks
     // First, stop listening so we can talk
     radio.stopListening();
     data++;
-    radio.write( &data, sizeof(char));
+    radio.write(&data, sizeof(char));
 
     // Now, resume listening so we catch the next packets.
     radio.startListening();

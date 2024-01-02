@@ -22,23 +22,21 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN         9           // Configurable, see typical pin layout above
-#define SS_PIN          10          // Configurable, see typical pin layout above
+#define RST_PIN 9  // Configurable, see typical pin layout above
+#define SS_PIN 10  // Configurable, see typical pin layout above
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
+MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 
 //*****************************************************************************************//
-void setup()
-{
-  Serial.begin(9600);                                           // Initialize serial communications with the PC
-  SPI.begin();                                                  // Init SPI bus
-  mfrc522.PCD_Init();                                              // Init MFRC522 card
-  Serial.println(F("Read personal data on a MIFARE PICC:"));    //shows in serial that it is ready to read
+void setup() {
+  Serial.begin(9600);                                         // Initialize serial communications with the PC
+  SPI.begin();                                                // Init SPI bus
+  mfrc522.PCD_Init();                                         // Init MFRC522 card
+  Serial.println(F("Read personal data on a MIFARE PICC:"));  //shows in serial that it is ready to read
 }
 
 //*****************************************************************************************//
-void loop()
-{
+void loop() {
 
   // Prepare key - all keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
   MFRC522::MIFARE_Key key;
@@ -52,14 +50,12 @@ void loop()
   //-------------------------------------------
 
   // Look for new cards
-  if ( ! mfrc522.PICC_IsNewCardPresent())
-  {
+  if (!mfrc522.PICC_IsNewCardPresent()) {
     return;
   }
 
   // Select one of the cards
-  if ( ! mfrc522.PICC_ReadCardSerial())
-  {
+  if (!mfrc522.PICC_ReadCardSerial()) {
     return;
   }
 
@@ -67,7 +63,7 @@ void loop()
 
   //-------------------------------------------
 
-  mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid)); //dump some details about the card
+  mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid));  //dump some details about the card
 
   //mfrc522.PICC_DumpToSerial(&(mfrc522.uid));      //uncomment this to see all blocks in hex
 
@@ -81,27 +77,23 @@ void loop()
   len = 18;
 
   //------------------------------------------- GET FIRST NAME
-  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 4, &key, &(mfrc522.uid)); //line 834 of MFRC522.cpp file
-  if (status != MFRC522::STATUS_OK)
-  {
+  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 4, &key, &(mfrc522.uid));  //line 834 of MFRC522.cpp file
+  if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Authentication failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
 
   status = mfrc522.MIFARE_Read(block, buffer1, &len);
-  if (status != MFRC522::STATUS_OK)
-  {
+  if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
 
   //PRINT FIRST NAME
-  for (uint8_t i = 0; i < 16; i++)
-  {
-    if (buffer1[i] != 32)
-    {
+  for (uint8_t i = 0; i < 16; i++) {
+    if (buffer1[i] != 32) {
       Serial.write(buffer1[i]);
     }
   }
@@ -112,26 +104,23 @@ void loop()
   byte buffer2[18];
   block = 1;
 
-  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 1, &key, &(mfrc522.uid)); //line 834
-  if (status != MFRC522::STATUS_OK)
-  {
+  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 1, &key, &(mfrc522.uid));  //line 834
+  if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Authentication failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
 
   status = mfrc522.MIFARE_Read(block, buffer2, &len);
-  if (status != MFRC522::STATUS_OK)
-  {
+  if (status != MFRC522::STATUS_OK) {
     Serial.print(F("Reading failed: "));
     Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
 
   //PRINT LAST NAME
-  for (uint8_t i = 0; i < 16; i++)
-  {
-    Serial.write(buffer2[i] );
+  for (uint8_t i = 0; i < 16; i++) {
+    Serial.write(buffer2[i]);
   }
 
 
@@ -139,7 +128,7 @@ void loop()
 
   Serial.println(F("\n**End Reading**\n"));
 
-  delay(1000); //change value if you want to read cards faster
+  delay(1000);  //change value if you want to read cards faster
 
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();

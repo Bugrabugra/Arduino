@@ -1,5 +1,5 @@
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
+#include <Adafruit_GFX.h>     // Core graphics library
+#include <Adafruit_ST7789.h>  // Hardware-specific library for ST7789
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <Arduino_JSON.h>
@@ -15,9 +15,9 @@
 //ST77XX_ORANGE
 
 // ST7789 TFT module connections
-#define TFT_DC    D1     // TFT DC  pin is connected to NodeMCU pin D1 (GPIO5)
-#define TFT_RST   D2     // TFT RST pin is connected to NodeMCU pin D2 (GPIO4)
-#define TFT_CS    D8     // TFT CS  pin is connected to NodeMCU pin D8 (GPIO15)
+#define TFT_DC D1   // TFT DC  pin is connected to NodeMCU pin D1 (GPIO5)
+#define TFT_RST D2  // TFT RST pin is connected to NodeMCU pin D2 (GPIO4)
+#define TFT_CS D8   // TFT CS  pin is connected to NodeMCU pin D8 (GPIO15)
 // initialize ST7789 TFT library with hardware SPI module
 // SCK (CLK) ---> NodeMCU pin D5 (GPIO14)
 // MOSI(DIN)(SDA) ---> NodeMCU pin D7 (GPIO13)
@@ -33,7 +33,7 @@ void setup() {
   delay(1000);
 
   // if the display has CS pin try with SPI_MODE0
-  tft.init(240, 240, SPI_MODE2);    // Init ST7789 display 240x240 pixel
+  tft.init(240, 240, SPI_MODE2);  // Init ST7789 display 240x240 pixel
 
   // if the screen is flipped, remove this command
   tft.setRotation(2);
@@ -79,7 +79,7 @@ void loop() {
       String payload = http.getString();
       Serial.println(payload);
       JSONVar myObject = JSON.parse(payload);
-      
+
       JSONVar keys = myObject.keys();
       tft.setTextColor(ST77XX_BLUE);
       tft.println(myObject[keys[2]]);

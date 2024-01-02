@@ -6,9 +6,9 @@
 const char ssid[] = WIFI_SSID_IS;
 const char pass[] = WIFI_PASSWORD_IS;
 
-#define IP "184.106.153.149" // thingspeak.com
-#define Baud_Rate 115200 //Another common value is 9600
-#define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
+#define IP "184.106.153.149"  // thingspeak.com
+#define Baud_Rate 115200      //Another common value is 9600
+#define DELAY_TIME 5000       //time in ms between posting data to ThingSpeak
 
 //Can use a post also
 String GET = "GET /update?api_key=571EEA6LUPEM9IHU&field1=";
@@ -23,26 +23,23 @@ int pinLED = 4;
 int valButton = 0;
 
 //this runs once
-void setup()
-{
+void setup() {
   pinMode(pinButton, INPUT_PULLUP);
   pinMode(pinLED, OUTPUT);
-  
+
   Serial.begin(Baud_Rate);
   Serial.println("AT");
 
   delay(5000);
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     //connect to your wifi netowork
     bool connected = connectWiFi();
   }
 }
 
 //this runs over and over
-void loop()
-{
+void loop() {
   valButton = digitalRead(pinButton);
 
   //update ThingSpeak channel with new values
@@ -52,8 +49,7 @@ void loop()
   delay(DELAY_TIME);
 }
 
-bool updateLight(String state)
-{
+bool updateLight(String state) {
   //initialize your AT command string
   String cmd = "AT+CIPSTART=\"TCP\",\"";
 
@@ -64,8 +60,7 @@ bool updateLight(String state)
   //connect
   Serial.println(cmd);
   delay(2000);
-  if (Serial.find("Error"))
-  {
+  if (Serial.find("Error")) {
     return false;
   }
 
@@ -83,31 +78,25 @@ bool updateLight(String state)
   //Use AT commands to send data
   Serial.print("AT+CIPSEND=");
   Serial.println(cmd.length());
-  if (Serial.find(">"))
-  {
+  if (Serial.find(">")) {
     //send through command to update values
     Serial.print(cmd);
-  }
-  else {
+  } else {
     Serial.println("AT+CIPCLOSE");
   }
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     //success! Your most recent values should be online.
     digitalWrite(pinLED, HIGH);
     delay(1000);
     digitalWrite(pinLED, LOW);
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
-boolean connectWiFi()
-{
+boolean connectWiFi() {
   //set ESP8266 mode with AT commands
   Serial.println("AT+CWMODE=1");
   delay(2000);
@@ -124,12 +113,9 @@ boolean connectWiFi()
   delay(5000);
 
   //if connected return true, else false
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }

@@ -24,8 +24,7 @@ int pinPot = 0;
 //Potansiyometre düğme değeri
 int potDeger = 0;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   pinMode(pinRedLED, OUTPUT);
@@ -37,8 +36,7 @@ void setup()
   pinMode(btnBlue, INPUT_PULLUP);
 }
 
-void loop()
-{
+void loop() {
   valBtnRed = digitalRead(btnRed);
   valBtnGreen = digitalRead(btnGreen);
   valBtnBlue = digitalRead(btnBlue);
@@ -49,16 +47,12 @@ void loop()
   Serial.println("stateRedLED: ");
   Serial.println(!valBtnRedLastState);
 
-  if (valBtnRed == LOW)
-  {
-    if (valBtnRedLastState == 0)
-    {
+  if (valBtnRed == LOW) {
+    if (valBtnRedLastState == 0) {
       delay(200);
       digitalWrite(pinRedLED, HIGH);
       valBtnRedLastState = 1;
-    }
-    else if (valBtnRedLastState == 1)
-    {
+    } else if (valBtnRedLastState == 1) {
       delay(200);
       digitalWrite(pinRedLED, LOW);
       valBtnRedLastState = 0;

@@ -13,8 +13,7 @@ int D3 = 11;
 int D4 = 12;
 
 // the setup routine runs once when you press reset:
-void setup()
-{
+void setup() {
   // initialize the digital pins as outputs.
   pinMode(pinA, OUTPUT);
   pinMode(pinB, OUTPUT);
@@ -30,8 +29,7 @@ void setup()
 }
 
 // the loop routine runs over and over again forever:
-void loop()
-{
+void loop() {
   digitalWrite(D1, HIGH);
   digitalWrite(D2, LOW);
   digitalWrite(D3, LOW);
@@ -44,7 +42,7 @@ void loop()
   digitalWrite(pinE, HIGH);
   digitalWrite(pinF, LOW);
   digitalWrite(pinG, LOW);
-  delay(1);               // wait for a second
+  delay(1);  // wait for a second
 
   digitalWrite(D1, LOW);
   digitalWrite(D2, HIGH);
@@ -58,7 +56,7 @@ void loop()
   digitalWrite(pinE, LOW);
   digitalWrite(pinF, LOW);
   digitalWrite(pinG, LOW);
-  delay(1);               // wait for a second
+  delay(1);  // wait for a second
 
   digitalWrite(D1, LOW);
   digitalWrite(D2, LOW);
@@ -72,7 +70,7 @@ void loop()
   digitalWrite(pinE, LOW);
   digitalWrite(pinF, HIGH);
   digitalWrite(pinG, LOW);
-  delay(1);               // wait for a second
+  delay(1);  // wait for a second
 
   digitalWrite(D1, LOW);
   digitalWrite(D2, LOW);
@@ -86,7 +84,7 @@ void loop()
   digitalWrite(pinE, LOW);
   digitalWrite(pinF, LOW);
   digitalWrite(pinG, HIGH);
-  delay(1);               // wait for a second
+  delay(1);  // wait for a second
 
   /* //4
     digitalWrite(pinA, HIGH);
@@ -147,5 +145,4 @@ void loop()
     digitalWrite(pinF, LOW);
     digitalWrite(pinG, LOW);
     delay(1000);               // wait for a second*/
-
 }

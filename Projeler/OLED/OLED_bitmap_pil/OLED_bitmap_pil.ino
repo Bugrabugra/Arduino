@@ -8,14 +8,14 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_WIDTH 128  // OLED display width, in pixels
+#define SCREEN_HEIGHT 64  // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET 4  // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-const unsigned char Battery_Status_Full [] PROGMEM = {
+const unsigned char Battery_Status_Full[] PROGMEM = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x80,
   0x3F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xE0, 0x78, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xE0,
   0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70,
@@ -35,13 +35,11 @@ const unsigned char Battery_Status_Full [] PROGMEM = {
   0x1F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-void setup()
-{
+void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 }
 
-void loop()
-{
+void loop() {
   display.clearDisplay();
   display.drawBitmap(32, 20, Battery_Status_Full, 64, 34, 1);
   display.display();

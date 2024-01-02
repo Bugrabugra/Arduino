@@ -8,15 +8,15 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
-#define OLED_RESET     4
+#define OLED_RESET 4
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 Servo servoYatay;
 Servo servoDikey;
 
-RF24 radio(7, 8); //CE,CSN
+RF24 radio(7, 8);  //CE,CSN
 
-byte addresses[][6] = {"1Node", "2Node"};
+byte addresses[][6] = { "1Node", "2Node" };
 
 int msg[1];
 int pinLaser = 5;
@@ -31,8 +31,7 @@ int valSolServo;
 int valSagServo;
 
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   pinMode(pinLaser, OUTPUT);
@@ -51,32 +50,30 @@ void setup()
   radio.startListening();
 }
 
-void loop()
-{
+void loop() {
   valSolPotans = analogRead(pinSolPotans);
   valSagPotans = analogRead(pinSagPotans);
 
   valSolServo = map(valSolPotans, 0, 1023, 0, 100);
   valSagServo = map(valSagPotans, 0, 1023, 0, 100);
 
-  Serial.println("Sol: "); Serial.print(valSolServo);
-  Serial.println("Sag: "); Serial.print(valSagServo);
+  Serial.println("Sol: ");
+  Serial.print(valSolServo);
+  Serial.println("Sag: ");
+  Serial.print(valSagServo);
 
   servoYatay.write(valSolServo);
   servoDikey.write(valSagServo);
 
   digitalWrite(pinLaser, HIGH);
 
-  if (radio.available())
-  {
-    while (radio.available())
-    {
+  if (radio.available()) {
+    while (radio.available()) {
       radio.read(msg, 1);
 
       Serial.println(msg[0]);
 
-      if (msg[0] == 0)
-      {
+      if (msg[0] == 0) {
         digitalWrite(pinLED, HIGH);
 
         adet = adet + 1;
@@ -92,9 +89,7 @@ void loop()
 
         display.display();
         delay(1000);
-      }
-      else
-      {
+      } else {
         digitalWrite(pinLED, LOW);
 
         display.clearDisplay();
@@ -108,9 +103,6 @@ void loop()
 
         display.display();
       }
-
-
-
     }
   }
 }

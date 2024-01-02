@@ -14,7 +14,7 @@ Servo ch1;
 //*** Servo ch3;
 
 struct Signal {
-  //*** byte throttle;      
+  //*** byte throttle;
   byte steering;
   //*** byte aux1;
 };
@@ -23,12 +23,12 @@ Signal data;
 const uint64_t pipeIn = 0xE9E8F0F0E1LL;
 
 // Select CE,CSN pin | CE ve CSN pinlerin seçimi
-RF24 radio(9, 10); 
+RF24 radio(9, 10);
 
 void ResetData() {
   // Define the inicial value of each data input. | Veri girişlerinin başlangıç değerleri
   // The middle position for Potenciometers | Potansiyometreler için orta konum
-  data.steering = 127;   // Center | Merkez
+  data.steering = 127;  // Center | Merkez
   //*** data.throttle = 127;   // Motor Stop | Motor Kapalı
   //*** data.aux1 = 0;         // Center | Merkez
 }
@@ -41,11 +41,11 @@ void setup() {
   //Configure the NRF24 module
   ResetData();
   radio.begin();
-  radio.openReadingPipe(1,pipeIn);
+  radio.openReadingPipe(1, pipeIn);
   radio.setAutoAck(false);
   radio.setDataRate(RF24_250KBPS);
   radio.setPALevel(RF24_PA_MAX);
-  radio.startListening(); //start the radio comunication for receiver | Alıcı olarak sinyal iletişimi başlatılıyor
+  radio.startListening();  //start the radio comunication for receiver | Alıcı olarak sinyal iletişimi başlatılıyor
 }
 
 unsigned long lastRecvTime = 0;
@@ -53,7 +53,7 @@ unsigned long lastRecvTime = 0;
 void recvData() {
   while (radio.available()) {
     radio.read(&data, sizeof(Signal));
-    lastRecvTime = millis();   // receive the data | data alınıyor
+    lastRecvTime = millis();  // receive the data | data alınıyor
   }
 }
 
@@ -63,13 +63,13 @@ void loop() {
   unsigned long now = millis();
 
   if (now - lastRecvTime > 1000) {
-    ResetData(); // Signal lost.. Reset data | Sinyal kayıpsa data resetleniyor
+    ResetData();  // Signal lost.. Reset data | Sinyal kayıpsa data resetleniyor
   }
 
-  ch_width_1 = map(data.steering, 0, 255, 1000, 2000);     // pin D3 (PWM signal)
+  ch_width_1 = map(data.steering, 0, 255, 1000, 2000);  // pin D3 (PWM signal)
   //*** ch_width_2 = map(data.throttle, 0, 255, 800, 2200);     // pin D5 (PWM signal)
   //*** ch_width_3 = map(data.aux1, 0, 1, 1000, 2000);           // pin D6 (PWM signal)
-  
+
   // Write the PWM signal | PWM sinyaller çıkışlara gönderiliyor
   ch1.writeMicroseconds(ch_width_1);
   //*** ch2.writeMicroseconds(ch_width_2);

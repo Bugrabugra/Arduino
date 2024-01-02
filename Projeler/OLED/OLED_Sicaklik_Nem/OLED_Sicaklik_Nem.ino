@@ -5,16 +5,15 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_WIDTH 128  // OLED display width, in pixels
+#define SCREEN_HEIGHT 64  // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET 4  // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // Thermometrenin bitmapi
-const unsigned char thermo [] PROGMEM =
-{
+const unsigned char thermo[] PROGMEM = {
   0x00, 0x02, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x0F, 0x80, 0x00, 0x06, 0x0F, 0x81, 0xE0,
   0x07, 0x80, 0x1B, 0xF8, 0x07, 0xDF, 0x9B, 0xB8, 0x07, 0x1F, 0xCB, 0x58, 0x02, 0x7F, 0xE2, 0x58,
   0x00, 0xFF, 0xF2, 0x58, 0x01, 0xFF, 0xFA, 0x58, 0x01, 0xFF, 0xFA, 0x58, 0x3B, 0xFF, 0xFA, 0x58,
@@ -26,16 +25,55 @@ const unsigned char thermo [] PROGMEM =
 };
 
 // Nemin bitmapi
-const unsigned char humi [] PROGMEM =
-{
-  0x01, 0x80, 0x03, 0xC0, 0x07, 0xE0, 0x09, 0xF0, 0x09, 0xF0, 0x19, 0xF8, 0x17, 0xF8, 0x37, 0xFC,
-  0x77, 0xFC, 0x6F, 0xFC, 0x6F, 0xFC, 0x6F, 0xFE, 0x9F, 0xFE, 0xBF, 0xFE, 0xFF, 0xFE, 0x9F, 0xFE,
-  0xFF, 0xFE, 0x7F, 0xFE, 0x7F, 0xFC, 0x3F, 0xFC, 0x1F, 0xF8, 0x0F, 0xF0,
+const unsigned char humi[] PROGMEM = {
+  0x01,
+  0x80,
+  0x03,
+  0xC0,
+  0x07,
+  0xE0,
+  0x09,
+  0xF0,
+  0x09,
+  0xF0,
+  0x19,
+  0xF8,
+  0x17,
+  0xF8,
+  0x37,
+  0xFC,
+  0x77,
+  0xFC,
+  0x6F,
+  0xFC,
+  0x6F,
+  0xFC,
+  0x6F,
+  0xFE,
+  0x9F,
+  0xFE,
+  0xBF,
+  0xFE,
+  0xFF,
+  0xFE,
+  0x9F,
+  0xFE,
+  0xFF,
+  0xFE,
+  0x7F,
+  0xFE,
+  0x7F,
+  0xFC,
+  0x3F,
+  0xFC,
+  0x1F,
+  0xF8,
+  0x0F,
+  0xF0,
 };
 
 // Güneşin bitmapi
-const unsigned char sun [] PROGMEM =
-{
+const unsigned char sun[] PROGMEM = {
   0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x00, 0x00, 0x03, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x03, 0xC0,
   0x00, 0x00, 0x00, 0x0C, 0x03, 0xC0, 0x30, 0x00, 0x00, 0x1C, 0x03, 0xC0, 0x38, 0x00, 0x00, 0x1E,
   0x01, 0x80, 0x78, 0x00, 0x00, 0x1F, 0x00, 0x00, 0xF0, 0x00, 0x00, 0x0F, 0x00, 0x00, 0xF0, 0x00,
@@ -57,8 +95,7 @@ const unsigned char sun [] PROGMEM =
 };
 
 // Karın bitmapi
-const unsigned char snow [] PROGMEM =
-{
+const unsigned char snow[] PROGMEM = {
   0x00, 0x00, 0x01, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x39, 0xCE, 0x00, 0x00, 0x00, 0x00, 0x39, 0xCE,
   0x00, 0x00, 0x00, 0x00, 0x1D, 0xDC, 0x00, 0x00, 0x00, 0x00, 0x1F, 0xFC, 0x00, 0x00, 0x00, 0x00,
   0x07, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x07, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x01, 0xC0, 0x00, 0x00,
@@ -91,20 +128,17 @@ int pinButton = 12;
 int buttonState = 0;
 int lastButtonState = 0;
 
-void setup()
-{
+void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   pinMode(12, INPUT_PULLUP);
 }
 
-void loop()
-{
+void loop() {
   byte temperature = 0;
   byte humidity = 0;
   int err = SimpleDHTErrSuccess;
 
-  if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess)
-  {
+  if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess) {
     display.print("DHT11 sensörü okumasında hata oluştu, Hata=");
     display.print(err);
     return;
@@ -112,51 +146,44 @@ void loop()
 
   buttonState = digitalRead(pinButton);
 
-  if (buttonState == 0)
-  {
+  if (buttonState == 0) {
     delay(50);
 
-    if (buttonState = ! lastButtonState)
-    {
+    if (buttonState = !lastButtonState) {
       lastButtonState = 1;
-    }
-    else
-    {
+    } else {
       lastButtonState = 0;
     }
-
   }
 
 
-  if (lastButtonState == 1)
-  {
+  if (lastButtonState == 1) {
     display.clearDisplay();
-    display.setTextSize(1.4);      // Normal 1:1 pixel scale
-    display.setTextColor(WHITE); // Draw white text
-    display.cp437(true);         // Use full 256 char 'Code Page 437' font
+    display.setTextSize(1.4);     // Normal 1:1 pixel scale
+    display.setTextColor(WHITE);  // Draw white text
+    display.cp437(true);          // Use full 256 char 'Code Page 437' font
 
     display.drawBitmap(0, 5, thermo, 32, 32, 1);
     display.drawBitmap(6, 40, humi, 16, 22, 1);
 
     display.setCursor(38, 17);
-    display.print("Sicaklik: "); display.print((int)temperature); display.print(" *C ");
+    display.print("Sicaklik: ");
+    display.print((int)temperature);
+    display.print(" *C ");
     display.setCursor(38, 45);
-    display.print("Nem: "); display.print((int)humidity); display.print(" H ");
+    display.print("Nem: ");
+    display.print((int)humidity);
+    display.print(" H ");
 
     display.display();
     delay(500);
-  }
-  else
-  {
-    if ((int)temperature < 15)
-    {
+  } else {
+    if ((int)temperature < 15) {
       display.clearDisplay();
       display.drawBitmap(40, 16, snow, 44, 48, 1);
       display.display();
       delay(500);
-    }
-    else
-    {
+    } else {
       display.clearDisplay();
       display.drawBitmap(40, 16, sun, 48, 48, 1);
       display.display();

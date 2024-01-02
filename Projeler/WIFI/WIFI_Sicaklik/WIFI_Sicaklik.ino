@@ -5,11 +5,11 @@
 // const char ssid[] = WIFI_SSID_EV;
 // const char pass[] = WIFI_PASSWORD_EV;
 const char ssid[] = WIFI_SSID_IS;
-const char pass[] = WIFI_PASSWORD_IS;	
+const char pass[] = WIFI_PASSWORD_IS;
 
-const char IP[] = "184.106.153.149"; // thingspeak.com
-#define Baud_Rate 115200 //Another common value is 9600
-#define DELAY_TIME 5000 //time in ms between posting data to ThingSpeak
+const char IP[] = "184.106.153.149";  // thingspeak.com
+#define Baud_Rate 115200              //Another common value is 9600
+#define DELAY_TIME 5000               //time in ms between posting data to ThingSpeak
 
 //Can use a post also
 String GET = "GET /update?api_key=BAFE28CFOS4W2F7I&field1=";
@@ -24,29 +24,25 @@ int pinDHT11 = 13;
 SimpleDHT11 dht11(pinDHT11);
 
 //this runs once
-void setup()
-{
+void setup() {
   Serial.begin(Baud_Rate);
   Serial.println("AT");
 
   delay(5000);
 
-  if (Serial.find("OK")) 
-  {
+  if (Serial.find("OK")) {
     //connect to your wifi netowork
     bool connected = connectWiFi();
   }
 }
 
 //this runs over and over
-void loop()
-{
+void loop() {
   byte temperature = 0;
   byte humidity = 0;
   int err = SimpleDHTErrSuccess;
 
-  if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess)
-  {
+  if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess) {
     return;
   }
 
@@ -60,8 +56,7 @@ void loop()
   delay(DELAY_TIME);
 }
 
-bool updateTemp(String tenmpF, String humid) 
-{
+bool updateTemp(String tenmpF, String humid) {
   //initialize your AT command string
   String cmd = "AT+CIPSTART=\"TCP\",\"";
 
@@ -72,8 +67,7 @@ bool updateTemp(String tenmpF, String humid)
   //connect
   Serial.println(cmd);
   delay(2000);
-  if (Serial.find("Error")) 
-  {
+  if (Serial.find("Error")) {
     return false;
   }
 
@@ -92,28 +86,22 @@ bool updateTemp(String tenmpF, String humid)
   //Use AT commands to send data
   Serial.print("AT+CIPSEND=");
   Serial.println(cmd.length());
-  if (Serial.find(">")) 
-  {
+  if (Serial.find(">")) {
     //send through command to update values
     Serial.print(cmd);
-  }
-  else {
+  } else {
     Serial.println("AT+CIPCLOSE");
   }
 
-  if (Serial.find("OK")) 
-  {
+  if (Serial.find("OK")) {
     //success! Your most recent values should be online.
     return true;
-  }
-  else 
-  {
+  } else {
     return false;
   }
 }
 
-boolean connectWiFi() 
-{
+boolean connectWiFi() {
   //set ESP8266 mode with AT commands
   Serial.println("AT+CWMODE=1");
   delay(2000);
@@ -130,13 +118,10 @@ boolean connectWiFi()
   delay(5000);
 
   //if connected return true, else false
-  if (Serial.find("OK")) 
-  {
+  if (Serial.find("OK")) {
     Serial.println("Baglandi");
     return true;
-  }
-  else 
-  {
+  } else {
     return false;
   }
 }

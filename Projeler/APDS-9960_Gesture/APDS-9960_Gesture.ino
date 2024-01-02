@@ -49,7 +49,7 @@
 #include <SparkFun_APDS9960.h>
 
 // Pins
-#define APDS9960_INT    2 // Needs to be an interrupt pin
+#define APDS9960_INT 2  // Needs to be an interrupt pin
 
 // Constants
 
@@ -73,14 +73,14 @@ void setup() {
   attachInterrupt(0, interruptRoutine, FALLING);
 
   // Initialize APDS-9960 (configure I2C and initial values)
-  if ( apds.init() ) {
+  if (apds.init()) {
     Serial.println(F("APDS-9960 initialization complete"));
   } else {
     Serial.println(F("Something went wrong during APDS-9960 init!"));
   }
 
   // Start running the APDS-9960 gesture sensor engine
-  if ( apds.enableGestureSensor(true) ) {
+  if (apds.enableGestureSensor(true)) {
     Serial.println(F("Gesture sensor is now running"));
   } else {
     Serial.println(F("Something went wrong during gesture sensor init!"));
@@ -88,7 +88,7 @@ void setup() {
 }
 
 void loop() {
-  if ( isr_flag == 1 ) {
+  if (isr_flag == 1) {
     detachInterrupt(0);
     handleGesture();
     isr_flag = 0;
@@ -101,8 +101,8 @@ void interruptRoutine() {
 }
 
 void handleGesture() {
-  if ( apds.isGestureAvailable() ) {
-    switch ( apds.readGesture() ) {
+  if (apds.isGestureAvailable()) {
+    switch (apds.readGesture()) {
       case DIR_UP:
         Serial.println("UP");
         break;

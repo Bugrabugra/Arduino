@@ -13,8 +13,7 @@ int valueX = 0;
 int valueY = 0;
 int valueSwitch = 0;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   pinMode(pinSwitch, INPUT);
 
@@ -25,14 +24,13 @@ void setup()
   servo2.write(0);
 }
 
-void loop()
-{
+void loop() {
   valueX = analogRead(joyX);
-  valueX = map (valueX, 0, 1023, 0, 180);
+  valueX = map(valueX, 0, 1023, 0, 180);
   servo1.write(valueX);
 
   valueY = analogRead(joyY);
-  valueY = map (valueY, 0, 1023, 0, 180);
+  valueY = map(valueY, 0, 1023, 0, 180);
   servo2.write(valueY);
 
   valueSwitch = digitalRead(pinSwitch);

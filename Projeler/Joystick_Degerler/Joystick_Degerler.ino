@@ -5,15 +5,13 @@ int valueX = 0;
 int valueY = 0;
 int valueSwitch = 0;
 
-void setup()
-{
+void setup() {
   pinMode(pinSwitch, INPUT);
   digitalWrite(pinSwitch, HIGH);
   Serial.begin(115200);
 }
 
-void loop()
-{
+void loop() {
   valueX = analogRead(joyX);
   delay(100);
   valueY = analogRead(joyY);

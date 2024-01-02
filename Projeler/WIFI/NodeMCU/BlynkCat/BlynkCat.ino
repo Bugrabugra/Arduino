@@ -19,19 +19,16 @@ const char pass[] = WIFI_PASSWORD_EV;
 
 int pinIR = 5;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   Blynk.begin(auth, ssid, pass);
   pinMode(pinIR, INPUT_PULLUP);
 }
 
-void loop()
-{
+void loop() {
   Blynk.run();
 
-  if (!digitalRead(pinIR))
-  {
+  if (!digitalRead(pinIR)) {
     Blynk.notify("Pülü tuvalette!");
   }
 }

@@ -12,8 +12,7 @@ unsigned long lastCode;
 
 Servo myservo;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   irrecv.enableIRIn();
 
@@ -21,32 +20,25 @@ void setup()
   myservo.write(pos);
 }
 
-void loop()
-{
-  if (irrecv.decode(&results))
-  {
-    if (results.value = 0xFFFFFFFF)
-    {
+void loop() {
+  if (irrecv.decode(&results)) {
+    if (results.value = 0xFFFFFFFF) {
       results.value = lastCode;
     }
 
-    if (results.value = 0xFF22DD)
-    {
+    if (results.value = 0xFF22DD) {
       lastCode = results.value;
       pos += 2;
-      if (pos > 180)
-      {
+      if (pos > 180) {
         pos = 180;
       }
       myservo.write(pos);
     }
 
-    if (results.value = 0xFF02FD)
-    {
+    if (results.value = 0xFF02FD) {
       lastCode = results.value;
       pos -= 2;
-      if (pos < 0)
-      {
+      if (pos < 0) {
         pos = 0;
       }
       myservo.write(pos);

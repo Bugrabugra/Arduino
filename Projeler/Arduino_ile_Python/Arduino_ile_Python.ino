@@ -12,8 +12,7 @@ int buttonStateBlue = 0;
 int buttonStateConfirm = 0;
 int potansValue = 0;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   pinMode(pinRedButton, INPUT);
@@ -22,8 +21,7 @@ void setup()
   pinMode(pinConfirmButton, INPUT);
 }
 
-void loop()
-{
+void loop() {
 
   buttonStateRed = digitalRead(pinRedButton);
   buttonStateGreen = digitalRead(pinGreenButton);
@@ -34,28 +32,23 @@ void loop()
   Serial.println(potansValue);
   delay(300);
 
-  if (buttonStateRed == HIGH)
-  {
+  if (buttonStateRed == HIGH) {
     delay(300);
     Serial.println("Red");
   }
 
-  if (buttonStateGreen == HIGH)
-  {
+  if (buttonStateGreen == HIGH) {
     delay(300);
     Serial.println("Green");
   }
 
-  if (buttonStateBlue == HIGH)
-  {
+  if (buttonStateBlue == HIGH) {
     delay(300);
     Serial.println("Blue");
   }
 
-  if (buttonStateConfirm == HIGH)
-  {
+  if (buttonStateConfirm == HIGH) {
     delay(300);
     Serial.println("Confirm");
   }
-
 }

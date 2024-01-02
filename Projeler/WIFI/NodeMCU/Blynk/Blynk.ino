@@ -17,12 +17,11 @@ const char auth[] = BLYNK_NODEMCU;
 const char ssid[] = WIFI_SSID_EV;
 const char pass[] = WIFI_PASSWORD_EV;
 
-void setup()
-{
+void setup() {
   WidgetLED led1(V1);
 
 
-// V1 LED Widget is blinking
+  // V1 LED Widget is blinking
 
   // if (led1.getValue()) {
   //   led1.off();
@@ -39,18 +38,16 @@ void setup()
   Blynk.begin(auth, ssid, pass);
   Serial.println(Blynk.connected());
 
-  if (Blynk.connected())
-  {
+  if (Blynk.connected()) {
     led1.on();
   }
-  
+
   // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 80);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
 }
 
-void loop()
-{
+void loop() {
   Blynk.run();
   // You can inject your own code or combine it with other sketches.
   // Check other examples on how to communicate with Blynk. Remember

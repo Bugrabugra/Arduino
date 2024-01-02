@@ -44,13 +44,11 @@ char pass[] = WIFI_PASSWORD_EV;
 
 Servo servo;
 
-BLYNK_WRITE(V3)
-{
+BLYNK_WRITE(V3) {
   servo.write(param.asInt());
 }
 
-void setup()
-{
+void setup() {
   // Debug console
   Serial.begin(9600);
 
@@ -62,8 +60,6 @@ void setup()
   servo.attach(15);
 }
 
-void loop()
-{
+void loop() {
   Blynk.run();
 }
-

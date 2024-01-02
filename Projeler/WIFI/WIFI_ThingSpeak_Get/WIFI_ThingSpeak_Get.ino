@@ -7,34 +7,30 @@
 // const char ssid[] = WIFI_SSID_EV;
 // const char pass[] = WIFI_PASSWORD_EV;
 const char ssid[] = WIFI_SSID_IS;
-const char pass[] = WIFI_PASSWORD_IS;	
+const char pass[] = WIFI_PASSWORD_IS;
 
 
 #define host "184.106.153.149"
 int sayi = 0;
 
-void setup()
-{
-  Serial.begin(115200); //Seriport'u açıyoruz. Güncellediğimiz
+void setup() {
+  Serial.begin(115200);  //Seriport'u açıyoruz. Güncellediğimiz
 
   Serial.println("AT");
   delay(5000);
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     //connect to your wifi netowork
     startWifi();
-  } 
+  }
 }
 
-void loop() 
-{
+void loop() {
   httpRequest();
   delay(10000);
 }
 
-void httpRequest() 
-{
+void httpRequest() {
   String start_com = "AT+CIPSTART=\"TCP\",\"";
   start_com += host;
   start_com += "\",80";
@@ -42,8 +38,7 @@ void httpRequest()
   Serial.println(start_com);  //AT+CIPSTART komutu ile sunucuya bağlanmak için sunucudan izin istiyoruz.
   delay(2000);
 
-  if (Serial.find("Error"))
-  {
+  if (Serial.find("Error")) {
     return false;
   }
 
@@ -55,28 +50,26 @@ void httpRequest()
   //TCP burada yapacağımız bağlantı çeşidini gösteriyor. 80 ise bağlanacağımız portu gösteriyor
 
   //veri yollayacağımız zaman bu komutu kullanıyoruz. Bu komut ile önce kaç tane karakter yollayacağımızı söylememiz gerekiyor.
-  Serial.print("AT+CIPSEND="); 
+  Serial.print("AT+CIPSEND=");
   Serial.println(postData.length());
 
   //eğer sunucu ile iletişim sağlayıp komut uzunluğunu gönderebilmişsek ESP modülü bize ">" işareti ile geri dönüyor.
   if (Serial.find(">")) {
-        // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
-        Serial.print(postData);
-        // delay(2000); //Delayi önce koyunca veriyi çekemedi
-        gelenVeri();
-        delay(3000);
-        Serial.println("AT+CIPCLOSE");
+    // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
+    Serial.print(postData);
+    // delay(2000); //Delayi önce koyunca veriyi çekemedi
+    gelenVeri();
+    delay(3000);
+    Serial.println("AT+CIPCLOSE");
 
-        // çalışma sıklığı saniye olarak
+    // çalışma sıklığı saniye olarak
     //delay(device.interval * 1000);
-        delay(2500);
-
+    delay(2500);
   }
 }
-void startWifi() 
-{
+void startWifi() {
   //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
-  Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
+  Serial.println("AT+CWMODE=3");  //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
   delay(2000);
   String baglantiKomutu = "AT+CWJAP=\"";
   baglantiKomutu += ssid;
@@ -87,23 +80,18 @@ void startWifi()
   Serial.println(baglantiKomutu);
   delay(5000);
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
 
-void gelenVeri() 
-{
+void gelenVeri() {
   String gelen = "", jsonData = "";
 
-  if (Serial.available() > 0) 
-  {
+  if (Serial.available() > 0) {
     gelen = Serial.readString();
   }
 
@@ -123,8 +111,7 @@ void gelenVeri()
   DeserializationError error = deserializeJson(doc, jsonData);
 
   // Test if parsing succeeds.
-  if (error) 
-  {
+  if (error) {
     Serial.print(F("deserializeJson() failed: "));
     Serial.println(error.c_str());
     return;
@@ -133,9 +120,9 @@ void gelenVeri()
   // device init
   JsonObject feeds_0 = doc["feeds"][0];
 
-  const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-30T10:52:56Z"
-  int feeds_0_entry_id = feeds_0["entry_id"]; // 112
-  const char* feeds_0_field1 = feeds_0["field1"]; // "1"
+  const char* feeds_0_created_at = feeds_0["created_at"];  // "2019-09-30T10:52:56Z"
+  int feeds_0_entry_id = feeds_0["entry_id"];              // 112
+  const char* feeds_0_field1 = feeds_0["field1"];          // "1"
 
   Serial.println("---------JSON Response-----------");
 
@@ -147,8 +134,7 @@ void gelenVeri()
   Serial.println(feeds_0_field1);
 }
 
-String parseJsonStr(String gelen) 
-{
+String parseJsonStr(String gelen) {
   int find1 = 0, find2 = 0;
   String findChar1 = "{", findChar2 = "}";
   String JsonStr = "";

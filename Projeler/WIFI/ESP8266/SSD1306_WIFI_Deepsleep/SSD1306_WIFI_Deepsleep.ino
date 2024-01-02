@@ -1,4 +1,4 @@
-#include <Wire.h> // Only needed for Arduino 1.6.5 and earlier
+#include <Wire.h>  // Only needed for Arduino 1.6.5 and earlier
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <SSD1306.h>
@@ -13,7 +13,7 @@ SSD1306 display(0x3c, 0, 2);
 
 const char ssid[] = WIFI_SSID_EV;
 const char password[] = WIFI_PASSWORD_EV;
-const char *host = "https://timeapi.io/api/Time/current/zone?timeZone=Turkey"; //We read the data from this host
+const char *host = "https://timeapi.io/api/Time/current/zone?timeZone=Turkey";  //We read the data from this host
 int port = 443;
 
 String Data_Raw;
@@ -39,7 +39,7 @@ void loop() {
     display.display();
   }
 
-  client.setInsecure(); //the magic line, use with caution
+  client.setInsecure();  //the magic line, use with caution
   client.connect(host, port);
   // client.setFingerprint(fingerprint);
   http.begin(client, host);
@@ -49,10 +49,10 @@ void loop() {
     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
       Data_Raw = http.getString();
     }
-    
+
     StaticJsonDocument<384> doc;
     DeserializationError error = deserializeJson(doc, Data_Raw);
-    const char *time = doc["time"]; // "01:50"
+    const char *time = doc["time"];  // "01:50"
     display.clear();
     display.setTextAlignment(TEXT_ALIGN_LEFT);
     display.setFont(ArialMT_Plain_10);

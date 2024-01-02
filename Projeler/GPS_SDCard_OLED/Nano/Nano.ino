@@ -31,78 +31,68 @@ File dataFile;
 // file name
 String fileName;
 
-// hour difference 
+// hour difference
 int hourDifference = 3;
 
 // timestamp of previous location capture. Used to check if we should save this location or skip it
 unsigned long previous = 0;
 
 // point counter
-int count = 1; 
+int count = 1;
 
-void setup() 
-{
+void setup() {
   // Start the software serial port at the GPS's default baud
   gpsSerial.begin(GPSBaud);
 
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
 
-  if (!SD.begin(5)) 
-  {
-    while (true);
+  if (!SD.begin(5)) {
+    while (true)
+      ;
   }
 }
 
-void loop() 
-{
-  while (gpsSerial.available() > 0)
-  {
-    if (gps.encode(gpsSerial.read()))
-    {
+void loop() {
+  while (gpsSerial.available() > 0) {
+    if (gps.encode(gpsSerial.read())) {
       logInfo();
     }
   }
 
-  if (millis() > 10000 && gps.charsProcessed() < 10)
-  {
-    while(true);
+  if (millis() > 10000 && gps.charsProcessed() < 10) {
+    while (true)
+      ;
   }
 }
 
 // Help function to pad 0 prefix when values < 10
-void printIntValue(int value)
-{
-  if(value < 10)
-  {
+void printIntValue(int value) {
+  if (value < 10) {
     dataFile.print(F("0"));
   }
   dataFile.print(value);
 }
 
-void logInfo()
-{
+void logInfo() {
   // Wait until we have location locked!
-  if(!gps.location.isValid())
-  {
+  if (!gps.location.isValid()) {
     return;
   }
 
-  if(!opened)
-  {
+  if (!opened) {
     // When we first get something to log we take file name from that time
     fileName = "";
     fileName += gps.date.year();
-    if(gps.date.month() < 10) fileName += "0";
+    if (gps.date.month() < 10) fileName += "0";
     fileName += gps.date.month();
-    if(gps.date.day() < 10) fileName += "0";
+    if (gps.date.day() < 10) fileName += "0";
     fileName += gps.date.day();
     fileName += ".txt";
     opened = true;
   }
 
-  if(millis() - previous > frequency)
-  {
+  if (millis() - previous > frequency) {
     previous = millis();
     // Write data row (dd.MM.yyyy HH:mm:ss lat,lon)
     dataFile = SD.open(fileName, FILE_WRITE);

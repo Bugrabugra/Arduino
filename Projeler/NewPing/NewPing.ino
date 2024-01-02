@@ -4,15 +4,13 @@
 #define trigPin 9
 #define echoPin 8
 
-void setup()
-{
-  Serial.begin (9600);
+void setup() {
+  Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 }
 
-void loop()
-{
+void loop() {
   long sure, mesafe;
 
   digitalWrite(trigPin, LOW);
@@ -24,12 +22,9 @@ void loop()
   sure = pulseIn(echoPin, HIGH);
   mesafe = (sure / 2) / 29.1;
 
-  if (mesafe > 200 || mesafe < 0)
-  {
+  if (mesafe > 200 || mesafe < 0) {
     Serial.println("Menzil Disi");
-  }
-  else
-  {
+  } else {
     Serial.print(mesafe);
     Serial.println(" cm");
   }

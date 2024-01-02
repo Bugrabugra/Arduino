@@ -12,28 +12,24 @@ const char pass[] = WIFI_PASSWORD_EV;
 char host[16] = "184.106.153.149";
 int sayi = 0;
 
-void setup()
-{
-  Serial.begin(115200); //Seriport'u açıyoruz. Güncellediğimiz
+void setup() {
+  Serial.begin(115200);  //Seriport'u açıyoruz. Güncellediğimiz
 
   Serial.println("AT");
   delay(5000);
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     //connect to your wifi netowork
     startWifi();
-  } 
+  }
 }
 
-void loop() 
-{
+void loop() {
   httpRequest();
   delay(10000);
 }
 
-void httpRequest() 
-{
+void httpRequest() {
   char start_sentence[44] = "AT+CIPSTART=\"TCP\",\"";
   strcat(start_sentence, host);
   strcat(start_sentence, "\",80");
@@ -41,8 +37,7 @@ void httpRequest()
   Serial.println(start_sentence);  //AT+CIPSTART komutu ile sunucuya bağlanmak için sunucudan izin istiyoruz.
   delay(2000);
 
-  if (Serial.find("Error"))
-  {
+  if (Serial.find("Error")) {
     return false;
   }
 
@@ -55,12 +50,11 @@ void httpRequest()
   //TCP burada yapacağımız bağlantı çeşidini gösteriyor. 80 ise bağlanacağımız portu gösteriyor
 
   //veri yollayacağımız zaman bu komutu kullanıyoruz. Bu komut ile önce kaç tane karakter yollayacağımızı söylememiz gerekiyor.
-  Serial.print("AT+CIPSEND="); 
+  Serial.print("AT+CIPSEND=");
   Serial.println(sizeof(postData));
 
   //eğer sunucu ile iletişim sağlayıp komut uzunluğunu gönderebilmişsek ESP modülü bize ">" işareti ile geri dönüyor.
-  if (Serial.find(">")) 
-  {
+  if (Serial.find(">")) {
     // arduino da ">" işaretini gördüğü anda sıcaklık verisini esp modülü ile thingspeak sunucusuna yolluyor.
     Serial.print(postData);
     // delay(2000); //Delayi önce koyunca veriyi çekemedi
@@ -75,10 +69,9 @@ void httpRequest()
 }
 
 
-void startWifi() 
-{
+void startWifi() {
   //esp modülü ile bağlantıyı kurabilmişsek modül "AT" komutuna "OK" komutu ile geri dönüş yapıyor.
-  Serial.println("AT+CWMODE=3"); //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
+  Serial.println("AT+CWMODE=3");  //esp modülümüzün WiFi modunu STA şekline getiriyoruz. Bu mod ile modülümüz başka ağlara bağlanabilecek.
   delay(2000);
 
   char baglantiKomutu[40] = "AT+CWJAP=\"";
@@ -90,19 +83,15 @@ void startWifi()
   Serial.println(baglantiKomutu);
   delay(5000);
 
-  if (Serial.find("OK"))
-  {
+  if (Serial.find("OK")) {
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
 
-void gelenVeri() 
-{
+void gelenVeri() {
   const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + JSON_OBJECT_SIZE(8) + 240;
   DynamicJsonDocument doc(capacity);
 
@@ -111,8 +100,7 @@ void gelenVeri()
 
 
 
-  if (Serial.available() > 0) 
-  {
+  if (Serial.available() > 0) {
     gelen = Serial.readString();
   }
   delay(1000);
@@ -129,8 +117,7 @@ void gelenVeri()
   DeserializationError error = deserializeJson(doc, jsonData);
 
   // Test if parsing succeeds.
-  if (error) 
-  {
+  if (error) {
     Serial.print(F("deserializeJson() failed: "));
     Serial.println(error.c_str());
     return;
@@ -139,9 +126,9 @@ void gelenVeri()
   // device init
   JsonObject feeds_0 = doc["feeds"][0];
 
-  const char* feeds_0_created_at = feeds_0["created_at"]; // "2019-09-30T10:52:56Z"
-  int feeds_0_entry_id = feeds_0["entry_id"]; // 112
-  const char* feeds_0_field1 = feeds_0["field1"]; // "1"
+  const char* feeds_0_created_at = feeds_0["created_at"];  // "2019-09-30T10:52:56Z"
+  int feeds_0_entry_id = feeds_0["entry_id"];              // 112
+  const char* feeds_0_field1 = feeds_0["field1"];          // "1"
 
   Serial.println("---------JSON Response-----------");
 
@@ -153,8 +140,7 @@ void gelenVeri()
   Serial.println(feeds_0_field1);
 }
 
-String parseJsonStr(String gelen) 
-{
+String parseJsonStr(String gelen) {
   int find1 = 0, find2 = 0;
   String findChar1 = "{", findChar2 = "}";
   String JsonStr = "";

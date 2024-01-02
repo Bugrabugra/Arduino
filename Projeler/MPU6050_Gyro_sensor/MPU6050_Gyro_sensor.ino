@@ -4,16 +4,14 @@
 
 MPU6050 mpu6050(Wire);
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
   mpu6050.calcGyroOffsets(true);
 }
 
-void loop()
-{
+void loop() {
   mpu6050.update();
   Serial.print("angleX : ");
   Serial.print(mpu6050.getAngleX());

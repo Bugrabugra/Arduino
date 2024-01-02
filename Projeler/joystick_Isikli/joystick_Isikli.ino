@@ -12,12 +12,11 @@ int RT = 11;
 
 int IUP = A0;
 int ILR = A1;
-int MID = 10; // 10 mid point delta arduino, use 4 for attiny
+int MID = 10;  // 10 mid point delta arduino, use 4 for attiny
 int LRMID = 0;
 int UPMID = 0;
 
-void setup()
-{
+void setup() {
   pinMode(DWN, OUTPUT);
   pinMode(UP, OUTPUT);
   pinMode(LEFT, OUTPUT);
@@ -34,50 +33,37 @@ void setup()
   UPMID = analogRead(IUP);
 }
 
-void loop()
-{
+void loop() {
   UD = analogRead(IUP);
   LR = analogRead(ILR);
 
   // UP-DOWN
-  if (UD < UPMID - MID)
-  {
+  if (UD < UPMID - MID) {
     digitalWrite(DWN, HIGH);
-  }
-  else
-  {
+  } else {
     digitalWrite(DWN, LOW);
   }
 
-  if (UD > UPMID + MID)
-  {
+  if (UD > UPMID + MID) {
     digitalWrite(UP, HIGH);
-  }
-  else
-  {
+  } else {
     digitalWrite(UP, LOW);
   }
 
   // LEFT-RIGHT
-  if (LR < LRMID - MID)
-  {
+  if (LR < LRMID - MID) {
     digitalWrite(LEFT, HIGH);
-  }
-  else
-  {
+  } else {
     digitalWrite(LEFT, LOW);
   }
 
-  if (LR > LRMID + MID)
-  {
+  if (LR > LRMID + MID) {
     digitalWrite(RT, HIGH);
   }
 
-  else
-  {
+  else {
     digitalWrite(RT, LOW);
   }
 
   delay(400);
-
 }

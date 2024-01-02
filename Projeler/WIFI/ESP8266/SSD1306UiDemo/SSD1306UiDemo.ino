@@ -1,4 +1,4 @@
-#include <Wire.h> // Only needed for Arduino 1.6.5 and earlier
+#include <Wire.h>  // Only needed for Arduino 1.6.5 and earlier
 #include "SSD1306.h"
 #include "OLEDDisplayUi.h"
 #include "images.h"
@@ -14,7 +14,7 @@ OLEDDisplayUi ui(&display);
 
 const char ssid[] = WIFI_SSID_EV;
 const char password[] = WIFI_PASSWORD_EV;
-const char *host = "https://timeapi.io/api/Time/current/zone?timeZone=Turkey"; //We read the data from this host
+const char *host = "https://timeapi.io/api/Time/current/zone?timeZone=Turkey";  //We read the data from this host
 int port = 443;
 
 String Data_Raw;
@@ -66,7 +66,7 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
   // !fetched &&
 
   if (!fetched && ui.getUiState()->frameState == FIXED) {
-    client.setInsecure(); //the magic line, use with caution
+    client.setInsecure();  //the magic line, use with caution
     client.connect(host, port);
     // client.setFingerprint(fingerprint);
     http.begin(client, host);
@@ -81,7 +81,7 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
 
       StaticJsonDocument<384> doc;
       DeserializationError error = deserializeJson(doc, Data_Raw);
-      const char* time = doc["time"]; // "01:50"
+      const char *time = doc["time"];  // "01:50"
 
       display->clear();
       display->setTextAlignment(TEXT_ALIGN_LEFT);
@@ -103,28 +103,28 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
 }
 
 // void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y) {
-  // // Text alignment demo
-  // display->setFont(ArialMT_Plain_10);
-  // display->drawString(x + 0, y + 0, "Connecting to");
-  // display->drawString(x + 0, y + 10, password);
+// // Text alignment demo
+// display->setFont(ArialMT_Plain_10);
+// display->drawString(x + 0, y + 0, "Connecting to");
+// display->drawString(x + 0, y + 10, password);
 
-  // if (http.begin(host, httpPortRead, thinghttp_address)) {
-  //   int httpCode = http.GET();
-  //   if (httpCode > 0) {
-  //     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-  //       Data_Raw = http.getString();
+// if (http.begin(host, httpPortRead, thinghttp_address)) {
+//   int httpCode = http.GET();
+//   if (httpCode > 0) {
+//     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+//       Data_Raw = http.getString();
 
-  //       display->clear();
-  //       display->setFont(ArialMT_Plain_10);
-  //       display->drawString(x + 0, y + 0, Data_Raw);
-  //       display->setFont(ArialMT_Plain_16);
-  //       display->drawString(x + 0, y + 15, "IP: " + WiFi.localIP().toString());
-  //       display->display();
-  //       delay(2000);
-  //     }
-  //   }
-  //   http.end();
-  // }
+//       display->clear();
+//       display->setFont(ArialMT_Plain_10);
+//       display->drawString(x + 0, y + 0, Data_Raw);
+//       display->setFont(ArialMT_Plain_16);
+//       display->drawString(x + 0, y + 15, "IP: " + WiFi.localIP().toString());
+//       display->display();
+//       delay(2000);
+//     }
+//   }
+//   http.end();
+// }
 // }
 
 // void drawFrame4(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
@@ -142,7 +142,7 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
 
 // This array keeps function pointers to all frames
 // frames are the single views that slide in
-FrameCallback frames[] = {drawFrame1, drawFrame2};
+FrameCallback frames[] = { drawFrame1, drawFrame2 };
 
 // how many frames are there?
 int frameCount = 2;

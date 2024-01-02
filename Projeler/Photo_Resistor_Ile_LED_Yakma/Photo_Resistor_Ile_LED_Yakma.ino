@@ -6,8 +6,7 @@ int pinLED4 = 5;
 int analogOkuma = 0;
 
 
-void setup()
-{
+void setup() {
   pinMode(pinPR, INPUT);
   pinMode(pinLED1, OUTPUT);
   pinMode(pinLED2, OUTPUT);
@@ -16,8 +15,7 @@ void setup()
   Serial.begin(9600);
 }
 
-void loop()
-{
+void loop() {
   analogOkuma = analogRead(pinPR);
 
   Serial.println(analogOkuma);

@@ -12,13 +12,11 @@ int pinButton = 2;
 int pinLED = 4;
 int stateButton = 1;
 
-String readStateButton()
-{
+String readStateButton() {
   return String(stateButton);
 }
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
   Serial.println();
   pinMode(pinButton, INPUT_PULLUP);
@@ -32,8 +30,7 @@ void setup()
   Serial.print("AP IP address: ");
   Serial.println(IP);
 
-  server.on("/LED", HTTP_GET, [](AsyncWebServerRequest *request)
-  {
+  server.on("/LED", HTTP_GET, [](AsyncWebServerRequest* request) {
     request->send_P(200, "text/plain", readStateButton().c_str());
   });
 
@@ -42,20 +39,15 @@ void setup()
 }
 
 
-void loop()
-{
-  if (digitalRead(pinButton) == 0)
-  {
+void loop() {
+  if (digitalRead(pinButton) == 0) {
     delay(500);
-    if (stateButton == 0)
-    {
+    if (stateButton == 0) {
       stateButton = 1;
       Serial.println(stateButton);
-    }
-    else
-    {
+    } else {
       stateButton = 0;
       Serial.println(stateButton);
-    } 
+    }
   }
 }

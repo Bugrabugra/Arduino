@@ -15,7 +15,7 @@ struct Signal {
 Signal data;
 
 const uint64_t pipe = 0xE8E8F0F0E1LL;
-RF24 radio(CE_PIN, CSN_PIN); 
+RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
   Serial.begin(9600);
@@ -28,7 +28,7 @@ void setup() {
   radio.setAutoAck(false);
   radio.setDataRate(RF24_250KBPS);
   radio.setPALevel(RF24_PA_HIGH);
-  radio.startListening(); 
+  radio.startListening();
 }
 
 void loop() {

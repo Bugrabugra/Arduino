@@ -32,8 +32,7 @@ int pinPot = 0;
 //Potansiyometre düğme değeri
 int potDeger = 0;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   pinMode(pinRedLED, OUTPUT);
@@ -49,23 +48,18 @@ void setup()
   pinMode(btnBlue, INPUT_PULLUP);
 }
 
-void loop()
-{
+void loop() {
   valBtnRed = digitalRead(btnRed);
   valBtnGreen = digitalRead(btnGreen);
   valBtnBlue = digitalRead(btnBlue);
 
-  if (valBtnRed == LOW)
-  {
-    if (valBtnRedLastState == 0)
-    {
+  if (valBtnRed == LOW) {
+    if (valBtnRedLastState == 0) {
       delay(200);
       digitalWrite(pinRedLED, HIGH);
       digitalWrite(pinRGBRedLED, HIGH);
       valBtnRedLastState = 1;
-    }
-    else if (valBtnRedLastState == 1)
-    {
+    } else if (valBtnRedLastState == 1) {
       delay(200);
       digitalWrite(pinRedLED, LOW);
       digitalWrite(pinRGBRedLED, LOW);
@@ -75,19 +69,14 @@ void loop()
     }
   }
 
-  if (valBtnRedLastState == 1)
-  {
-    if (valBtnGreen == LOW)
-    {
-      if (valBtnGreenLastState == 0)
-      {
+  if (valBtnRedLastState == 1) {
+    if (valBtnGreen == LOW) {
+      if (valBtnGreenLastState == 0) {
         delay(200);
         digitalWrite(pinGreenLED, HIGH);
         digitalWrite(pinRGBGreenLED, HIGH);
         valBtnGreenLastState = 1;
-      }
-      else if (valBtnGreenLastState == 1)
-      {
+      } else if (valBtnGreenLastState == 1) {
         delay(200);
         digitalWrite(pinGreenLED, LOW);
         digitalWrite(pinRGBRedLED, LOW);
@@ -98,19 +87,14 @@ void loop()
     }
   }
 
-  if (valBtnGreenLastState == 1)
-  {
-    if (valBtnBlue == LOW)
-    {
-      if (valBtnBlueLastState == 0)
-      {
+  if (valBtnGreenLastState == 1) {
+    if (valBtnBlue == LOW) {
+      if (valBtnBlueLastState == 0) {
         delay(200);
         digitalWrite(pinBlueLED, HIGH);
         digitalWrite(pinRGBBlueLED, HIGH);
         valBtnBlueLastState = 1;
-      }
-      else if (valBtnBlueLastState == 1)
-      {
+      } else if (valBtnBlueLastState == 1) {
         delay(200);
         digitalWrite(pinBlueLED, LOW);
         digitalWrite(pinRGBRedLED, LOW);
@@ -124,18 +108,14 @@ void loop()
   potDeger = analogRead(pinPot);
   Serial.println(potDeger);
 
-  if (valBtnBlueLastState == 1)
-  {
-    if (potDeger > 600 && potDeger < 800)
-    {
+  if (valBtnBlueLastState == 1) {
+    if (potDeger > 600 && potDeger < 800) {
       digitalWrite(pinRGBGreenLED, HIGH);
       tone(pinBuzzer, 1000);
       delay(100);
       noTone(pinBuzzer);
       delay(100);
-    }
-    else
-    {
+    } else {
       digitalWrite(pinRGBGreenLED, LOW);
       digitalWrite(pinRGBRedLED, LOW);
       digitalWrite(pinRGBGreenLED, LOW);

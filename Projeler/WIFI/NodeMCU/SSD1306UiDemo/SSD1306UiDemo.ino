@@ -6,21 +6,21 @@
 #include <ESP8266HTTPClient.h>
 #include "credentials.h"
 
-SSD1306  display(0x3c, 5, 4);
-OLEDDisplayUi ui ( &display );
+SSD1306 display(0x3c, 5, 4);
+OLEDDisplayUi ui(&display);
 
 const char ssid[] = WIFI_SSID_EV;
 const char password[] = WIFI_PASSWORD_EV;
-const char* host = "api.thingspeak.com";  //We read the data from this host                                   
-const int httpPortRead = 80; 
+const char* host = "api.thingspeak.com";  //We read the data from this host
+const int httpPortRead = 80;
 const char* thinghttp_address = "/apps/thinghttp/send_request?api_key=ID01RLTWTE0EF82T";
 String Data_Raw;
 int pin1 = 12;
 int pin3 = 14;
 bool fetched = false;
-    
-WiFiClient client;                                                  
-HTTPClient http; 
+
+WiFiClient client;
+HTTPClient http;
 
 
 // Overlay
@@ -30,8 +30,7 @@ HTTPClient http;
 //   display->drawString(128, 0, String(millis()));
 // }
 
-void drawProgress(OLEDDisplay *display, int percentage, String label) 
-{
+void drawProgress(OLEDDisplay* display, int percentage, String label) {
   display->clear();
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->setFont(ArialMT_Plain_10);
@@ -41,7 +40,7 @@ void drawProgress(OLEDDisplay *display, int percentage, String label)
   delay(400);
 }
 
-void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+void drawFrame1(OLEDDisplay* display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
   // draw an xbm image.
   // Please note that everything that should be transitioned
   // needs to be drawn relative to x and y
@@ -58,7 +57,7 @@ void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   }
 }
 
-void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+void drawFrame2(OLEDDisplay* display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
   // Demonstrates the 3 included default sizes. The fonts come from SSD1306Fonts.h file
   // Besides the default fonts there will be a program to convert TrueType fonts into this format
 
@@ -69,14 +68,14 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   if (digitalRead(pin3) == LOW) {
     ui.previousFrame();
   }
-  // !fetched && 
-  
+  // !fetched &&
+
   if (!fetched && ui.getUiState()->frameState == FIXED) {
     http.begin(host, httpPortRead, thinghttp_address);
     int httpCode = http.GET();
 
     if (httpCode > 0) {
-      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {          
+      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
         Data_Raw = http.getString();
       }
       display->clear();
@@ -95,10 +94,10 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
       }
       http.end();
     }
-  }                                                
+  }
 }
 
-void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
+void drawFrame3(OLEDDisplay* display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
   // Text alignment demo
 
   display->setFont(ArialMT_Plain_10);
@@ -108,7 +107,7 @@ void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   // if (http.begin(host, httpPortRead, thinghttp_address)) {
   //   int httpCode = http.GET();
   //   if (httpCode > 0) {
-  //     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {                
+  //     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
   //       Data_Raw = http.getString();
 
   //       display->clear();
@@ -116,11 +115,11 @@ void drawFrame3(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   //       display->drawString(x + 0, y + 0, Data_Raw);
   //       display->setFont(ArialMT_Plain_16);
   //       display->drawString(x + 0, y + 15, "IP: " + WiFi.localIP().toString());
-  //       display->display(); 
-  //       delay(2000);                                                                        
+  //       display->display();
+  //       delay(2000);
   //     }
   //   }
-  //   http.end();                                                                 
+  //   http.end();
   // }
 }
 
@@ -156,12 +155,12 @@ void setup() {
   pinMode(pin3, INPUT_PULLUP);
   display.init();
 
-	// The ESP is capable of rendering 60fps in 80Mhz mode
-	// but that won't give you much time for anything else
-	// run it in 160Mhz mode or just set it to 30 fps
+  // The ESP is capable of rendering 60fps in 80Mhz mode
+  // but that won't give you much time for anything else
+  // run it in 160Mhz mode or just set it to 30 fps
   ui.setTargetFPS(60);
 
-	// Customize the active and inactive symbol
+  // Customize the active and inactive symbol
   ui.setActiveSymbol(activeSymbol);
   ui.setInactiveSymbol(inactiveSymbol);
 
@@ -190,7 +189,7 @@ void setup() {
 
   display.flipScreenVertically();
 
-  WiFi.begin(ssid, password); 
+  WiFi.begin(ssid, password);
 }
 
 
@@ -204,13 +203,11 @@ void loop() {
     delay(remainingTimeBudget);
   }
 
-  if (digitalRead(pin1) == LOW)
-  {
+  if (digitalRead(pin1) == LOW) {
     ui.nextFrame();
   }
 
-  if (digitalRead(pin3) == LOW)
-  {
+  if (digitalRead(pin3) == LOW) {
     ui.previousFrame();
   }
 }

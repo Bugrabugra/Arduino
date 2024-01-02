@@ -6,11 +6,11 @@
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_WIDTH 128  // OLED display width, in pixels
+#define SCREEN_HEIGHT 64  // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET 4  // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 File myFile;
@@ -33,10 +33,9 @@ String year_str = "";
 String date_time = "";
 String satellite = "";
 
-int count = 0; 
+int count = 0;
 
-void setup() 
-{
+void setup() {
   //Initialize display
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
@@ -46,14 +45,13 @@ void setup()
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
 
-  if (!SD.begin(5)) 
-  {
-    while (1);
+  if (!SD.begin(5)) {
+    while (1)
+      ;
   }
 }
 
-void loop() 
-{
+void loop() {
   satellite_count = gps.satellites.value();
   latitude = gps.location.lat();
   longitude = gps.location.lng();
@@ -68,27 +66,21 @@ void loop()
   // month_int = 10;
   // year_int = 2019;
 
-  if (day_int < 10)
-  {
+  if (day_int < 10) {
     day_str = "0" + String(day_int);
-  }
-  else 
-  {
+  } else {
     day_str = String(day_int);
   }
 
-  if (month_int < 10)
-  {
+  if (month_int < 10) {
     month_str = "0" + String(month_int);
-  }
-  else 
-  {
+  } else {
     month_str = String(month_int);
   }
 
   year_str = String(year_int);
   date_time = day_str + month_str + year_str;
-  
+
   myFile = SD.open("GPS.TXT", FILE_WRITE);
   myFile.println(String(count) + "-" + String(latitude) + "-" + String(longitude) + "-" + String(date_time) + "-" + String(satellite_count));
   myFile.close();

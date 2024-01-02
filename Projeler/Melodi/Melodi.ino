@@ -27,11 +27,9 @@ int noteDurations[] = {
   4, 8, 8, 4, 4, 4, 4, 4
 };
 
-void setup()
-{
+void setup() {
   // iterate over the notes of the melody:
-  for (int thisNote = 0; thisNote < 8; thisNote++)
-  {
+  for (int thisNote = 0; thisNote < 8; thisNote++) {
     // to calculate the note duration, take one second divided by the note type.
     //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000 / noteDurations[thisNote];
@@ -47,5 +45,4 @@ void setup()
 }
 
 void loop() {
-
 }

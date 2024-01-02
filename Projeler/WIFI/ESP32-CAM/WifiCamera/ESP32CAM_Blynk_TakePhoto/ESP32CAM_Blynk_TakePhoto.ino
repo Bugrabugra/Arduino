@@ -11,30 +11,29 @@
 #include <BlynkSimpleEsp32.h>
 
 // Select camera model
-#define CAMERA_MODEL_AI_THINKER // Has PSRAM
+#define CAMERA_MODEL_AI_THINKER  // Has PSRAM
 
 #include "camera_pins.h"
 
-#define PHOTO 14      //ESP32 CAM 1
+#define PHOTO 14  //ESP32 CAM 1
 //#define PHOTO 15      //ESP32 CAM 2
 #define LED 4
 
 
-const char* ssid = "SONRASI_YOKTU";       //wifi name
-const char* password = "BuuRA03045025";       //password
-char auth[] = "aYFWGI-Akz-xRuWucLwrXWg3CO27BIbD";          //Auth Code sent by Blynk
+const char* ssid = "SONRASI_YOKTU";                //wifi name
+const char* password = "BuuRA03045025";            //password
+char auth[] = "aYFWGI-Akz-xRuWucLwrXWg3CO27BIbD";  //Auth Code sent by Blynk
 
 String local_IP;
 int count = 0;
 void startCameraServer();
 
-void takePhoto()
-{
+void takePhoto() {
   // digitalWrite(LED, HIGH);
   delay(200);
   uint32_t randomNum = random(50000);
-  Serial.println("http://"+local_IP+"/capture?_cb="+ (String)randomNum);
-  Blynk.setProperty(V1, "urls", "http://588e3b0fab4e.ngrok.io/capture?_cb=" + (String)randomNum); //ESP32 CAM 1
+  Serial.println("http://" + local_IP + "/capture?_cb=" + (String)randomNum);
+  Blynk.setProperty(V1, "urls", "http://588e3b0fab4e.ngrok.io/capture?_cb=" + (String)randomNum);  //ESP32 CAM 1
   // Blynk.setProperty(V1, "urls", "http://" + local_IP + "/capture?_cb=" + (String)randomNum); //ESP32 CAM 1
 
   //Blynk.setProperty(V2, "urls", "http://"+local_IP+"/capture?_cb="+(String)randomNum); //ESP32 CAM 2
@@ -44,10 +43,10 @@ void takePhoto()
 
 void setup() {
   Serial.begin(115200);
-  pinMode(LED,OUTPUT);
+  pinMode(LED, OUTPUT);
   Serial.setDebugOutput(true);
   Serial.println();
-  
+
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -69,7 +68,7 @@ void setup() {
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
-  
+
   // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
   //                      for larger pre-allocated frame buffer.
   if (psramFound()) {
@@ -89,12 +88,12 @@ void setup() {
     return;
   }
 
-  sensor_t * s = esp_camera_sensor_get();
+  sensor_t* s = esp_camera_sensor_get();
   // initial sensors are flipped vertically and colors are a bit saturated
   if (s->id.PID == OV3660_PID) {
-    s->set_vflip(s, 1); // flip it back
-    s->set_brightness(s, 1); // up the brightness just a bit
-    s->set_saturation(s, -2); // lower the saturation
+    s->set_vflip(s, 1);        // flip it back
+    s->set_brightness(s, 1);   // up the brightness just a bit
+    s->set_saturation(s, -2);  // lower the saturation
   }
   // drop down frame size for higher initial frame rate
   s->set_framesize(s, FRAMESIZE_QVGA);
@@ -121,7 +120,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   Blynk.run();
-  if (digitalRead(PHOTO) == HIGH){
+  if (digitalRead(PHOTO) == HIGH) {
     takePhoto();
   }
 }

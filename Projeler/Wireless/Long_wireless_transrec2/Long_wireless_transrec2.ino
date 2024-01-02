@@ -6,7 +6,7 @@
 // Hardware configuration: Set up nRF24L01 radio on SPI bus (pins 10, 11, 12, 13) plus pins 7 & 8
 RF24 radio(7, 8);
 
-byte addresses[][6] = {"1Node", "2Node"};
+byte addresses[][6] = { "1Node", "2Node" };
 
 int pinButton = 3;
 int pinLED = 4;
@@ -14,8 +14,7 @@ int pinLED = 4;
 // -----------------------------------------------------------------------------
 // SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP   SETUP
 // -----------------------------------------------------------------------------
-void setup() 
-{
+void setup() {
   Serial.begin(9600);
   Serial.println("THIS IS THE TRANSMITTER CODE - YOU NEED THE OTHER ARDIUNO TO SEND BACK A RESPONSE");
 
@@ -26,8 +25,8 @@ void setup()
   radio.begin();
 
   // radio.setPALevel(RF24_PA_MIN);
-  // RF24_PA_MIN=-18dBm, 
-  // RF24_PA_LOW=-12dBm, 
+  // RF24_PA_MIN=-18dBm,
+  // RF24_PA_LOW=-12dBm,
   // RF24_PA_MED=-6dBM,
   // RF24_PA_HIGH=0dBm
 
@@ -41,8 +40,7 @@ void setup()
 // -----------------------------------------------------------------------------
 // LOOP     LOOP     LOOP     LOOP     LOOP     LOOP     LOOP     LOOP     LOOP
 // -----------------------------------------------------------------------------
-void loop() 
-{
+void loop() {
   // Generate a single random character to transmit
   unsigned char outgoing = digitalRead(pinButton);
 
@@ -51,8 +49,7 @@ void loop()
 
   // Did we manage to SUCCESSFULLY transmit that (by getting an acknowledgement back from the other Arduino)?
   // Even we didn't we'll continue with the sketch, you never know, the radio fairies may help us
-  if (!radio.write(&outgoing, sizeof(unsigned char))) 
-  {
+  if (!radio.write(&outgoing, sizeof(unsigned char))) {
     Serial.println("No acknowledgement of transmission - receiving radio device connected?");
   }
 
@@ -63,11 +60,9 @@ void loop()
   unsigned long started_waiting_at = millis();
 
   // Loop here until we get indication that some data is ready for us to read (or we time out)
-  while (!radio.available()) 
-  {
+  while (!radio.available()) {
     // Oh dear, no response received within our timescale
-    if (millis() - started_waiting_at > 200 ) 
-    {
+    if (millis() - started_waiting_at > 200) {
       Serial.println("No response received - timeout!");
       return;
     }
@@ -76,12 +71,9 @@ void loop()
   // Now read the data that is waiting for us in the nRF24L01's buffer
   unsigned char incoming;
   radio.read(&incoming, sizeof(unsigned char));
-  if (incoming == 0)
-  {
+  if (incoming == 0) {
     digitalWrite(pinLED, HIGH);
-  }
-  else
-  {
+  } else {
     digitalWrite(pinLED, LOW);
   }
   // Show user what we sent and what we got back

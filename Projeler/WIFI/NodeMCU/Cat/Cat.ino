@@ -4,14 +4,13 @@
 #include "credentials.h"
 
 //----------------  Fill in your credentails   ---------------------
- const char ssid[] = WIFI_SSID_EV;
- const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_EV;
+const char pass[] = WIFI_PASSWORD_EV;
 //const char ssid[] = WIFI_SSID_IS;
 //const char pass[] = WIFI_PASSWORD_IS;
 //------------------------------------------------------------------
- 
-void setup() 
-{
+
+void setup() {
   Serial.begin(115200);
   delay(10);
 
@@ -22,22 +21,19 @@ void setup()
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
- 
+
   WiFi.begin(WIFI_SSID_EV, WIFI_PASSWORD_EV);
- 
-  while (WiFi.status() != WL_CONNECTED) 
-  {
+
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
- 
+
   Serial.println("");
-  Serial.println("WiFi connected"); 
+  Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
- 
-void loop() 
-{
-  
+
+void loop() {
 }

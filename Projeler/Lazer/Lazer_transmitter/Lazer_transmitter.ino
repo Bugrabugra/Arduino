@@ -1,11 +1,9 @@
 int pinLaser = 6;
 
-void setup()
-{
+void setup() {
   pinMode(pinLaser, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
   digitalWrite(pinLaser, HIGH);
 }

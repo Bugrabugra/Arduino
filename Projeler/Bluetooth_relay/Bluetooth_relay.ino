@@ -1,26 +1,20 @@
 int pinRelay = 2;
 String veri = "";
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   pinMode(pinRelay, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
   veri = "";
 
-  while (Serial.available())
-  {
+  while (Serial.available()) {
     veri += (char)Serial.read();
 
-    if (veri == "1")
-    {
+    if (veri == "1") {
       digitalWrite(pinRelay, HIGH);
-    }
-    else if (veri == "2")
-    {
+    } else if (veri == "2") {
       digitalWrite(pinRelay, LOW);
     }
   }

@@ -15,18 +15,16 @@ const char* serverLED = "http://192.168.4.1/LED";
 String stateButton;
 
 unsigned long previousMillis = 0;
-const long interval = 1000; 
+const long interval = 1000;
 
-void setup() 
-{
+void setup() {
   Serial.begin(115200);
   pinMode(pinLED, OUTPUT);
   Serial.println();
-  
+
   WiFi.mode(WIFI_STA);
   WiFiMulti.addAP(ssid, password);
-  while((WiFiMulti.run() == WL_CONNECTED)) 
-  { 
+  while ((WiFiMulti.run() == WL_CONNECTED)) {
     delay(500);
     Serial.print(".");
   }
@@ -34,59 +32,47 @@ void setup()
   Serial.println("Connected to WiFi");
 }
 
-void loop() 
-{
+void loop() {
   unsigned long currentMillis = millis();
-  
-  if(currentMillis - previousMillis >= interval) 
-  {
-     // Check WiFi connection status
-    if ((WiFiMulti.run() == WL_CONNECTED)) 
-    {
+
+  if (currentMillis - previousMillis >= interval) {
+    // Check WiFi connection status
+    if ((WiFiMulti.run() == WL_CONNECTED)) {
       stateButton = httpGETRequest(serverLED);
-      
+
       Serial.println("State: " + stateButton);
 
-      if (stateButton == "1")
-      {
+      if (stateButton == "1") {
         digitalWrite(pinLED, HIGH);
-      }
-      else
-      {
+      } else {
         digitalWrite(pinLED, LOW);
       }
-   
+
       // save the last HTTP GET Request
       previousMillis = currentMillis;
-    }
-    else 
-    {
+    } else {
       Serial.println("WiFi Disconnected");
     }
   }
 }
 
-String httpGETRequest(const char* serverName) 
-{
+String httpGETRequest(const char* serverName) {
   WiFiClient client;
   HTTPClient http;
-    
-  // Your IP address with path or Domain name with URL path 
+
+  // Your IP address with path or Domain name with URL path
   http.begin(client, serverName);
-  
+
   // Send HTTP POST request
   int httpResponseCode = http.GET();
-  
-  String payload = "--"; 
-  
-  if (httpResponseCode>0) 
-  {
+
+  String payload = "--";
+
+  if (httpResponseCode > 0) {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
     payload = http.getString();
-  }
-  else 
-  {
+  } else {
     Serial.print("Error code: ");
     Serial.println(httpResponseCode);
   }

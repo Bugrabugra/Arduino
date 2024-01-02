@@ -10,8 +10,7 @@ char pass[] = WIFI_PASSWORD_EV;
 
 int pinIR = 3;
 
-void setup()
-{
+void setup() {
   // Debug console
   Serial.begin(9600);
   pinMode(pinIR, INPUT);
@@ -19,11 +18,9 @@ void setup()
   Blynk.begin(auth, ssid, pass);
 }
 
-void loop()
-{
+void loop() {
   Blynk.run();
-  if (analogRead(pinIR) < 800)
-  {
+  if (analogRead(pinIR) < 800) {
     Blynk.virtualWrite(V5, analogRead(pinIR));
   }
 }

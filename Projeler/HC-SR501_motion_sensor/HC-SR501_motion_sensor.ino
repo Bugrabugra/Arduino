@@ -8,8 +8,7 @@ int motionDetected = 0;
 
 int pirValue;
 
-void setup()
-{
+void setup() {
   pinMode(ledDetected, OUTPUT);
   pinMode(ledReady, OUTPUT);
   pinMode(ledWait, OUTPUT);
@@ -26,24 +25,19 @@ void setup()
   digitalWrite(ledWait, LOW);
 }
 
-void loop()
-{
+void loop() {
   pirValue = digitalRead(pinPir);
 
-  if (pirValue == 1)
-  {
+  if (pirValue == 1) {
     digitalWrite(ledDetected, HIGH);
     motionDetected = 1;
 
     delay(3000);
-  }
-  else
-  {
+  } else {
     digitalWrite(ledDetected, LOW);
   }
 
-  if (motionDetected == 1)
-  {
+  if (motionDetected == 1) {
     digitalWrite(ledDetected, LOW);
     digitalWrite(ledReady, LOW);
     digitalWrite(ledWait, HIGH);

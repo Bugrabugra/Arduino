@@ -2,18 +2,17 @@
 #include "credentials.h"
 
 //----------------  Fill in your credentails   ---------------------
- const char ssid[] = WIFI_SSID_EV;
- const char pass[] = WIFI_PASSWORD_EV;
+const char ssid[] = WIFI_SSID_EV;
+const char pass[] = WIFI_PASSWORD_EV;
 //const char ssid[] = WIFI_SSID_IS;
 //const char pass[] = WIFI_PASSWORD_IS;
 //------------------------------------------------------------------
 
-WiFiClient  client;
+WiFiClient client;
 
 int pinLED = 5;
 
-void setup() 
-{
+void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
 
@@ -26,17 +25,15 @@ void setup()
 
   Serial.print("Attempting to connect to SSID: ");
   Serial.println(ssid);
-  while(WiFi.status() != WL_CONNECTED)
-  {
+  while (WiFi.status() != WL_CONNECTED) {
     WiFi.begin(ssid, pass);
     Serial.print(".");
-    delay(500);     
-  } 
+    delay(500);
+  }
   Serial.println("\nConnected");
-  
 
-  if(WiFi.status() == WL_CONNECTED)
-  {
+
+  if (WiFi.status() == WL_CONNECTED) {
     digitalWrite(pinLED, HIGH);
   }
 
@@ -50,7 +47,5 @@ void setup()
   delay(20);
 }
 
-void loop() 
-{
-
+void loop() {
 }

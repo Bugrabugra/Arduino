@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <RotaryEncoder.h>
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <Adafruit_GFX.h>     // Core graphics library
+#include <Adafruit_ST7735.h>  // Hardware-specific library
 #include <SPI.h>
 
 //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_NANO_EVERY)
@@ -35,16 +35,16 @@ RotaryEncoder encoder(PIN_IN1, PIN_IN2, RotaryEncoder::LatchMode::TWO03);
 //CS = 10
 //SDA = 11
 //SCL = 13
- 
-#define TFT_CS     10
-#define TFT_RST    9
-#define TFT_DC     8
+
+#define TFT_CS 10
+#define TFT_RST 9
+#define TFT_DC 8
 
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 // Menu names
-char *menuMain[] = {"LED", "Brightness"};
-char *menuLED[] = {"On", "Off"};
+char *menuMain[] = { "LED", "Brightness" };
+char *menuLED[] = { "On", "Off" };
 int numPage = 0;
 int menuRowCount = 0;
 int pixelsPerRow = 10;
@@ -60,9 +60,9 @@ void setup() {
   tft.setTextSize(1);
 }
 
-void menuTitle(const char* text) {
+void menuTitle(const char *text) {
   tft.setCursor(5, 5);
-  tft.setTextColor(ST7735_ORANGE); 
+  tft.setTextColor(ST7735_ORANGE);
   tft.print(text);
   tft.drawLine(0, 15, 160, 15, ST7735_ORANGE);
 }
@@ -82,8 +82,8 @@ void menu_populator(char *menu_name_list[]) {
   if ((int)(encoder.getDirection()) == 1) {
     delay(200);
     cursorPos = cursorPos + pixelsPerRow;
-    
-    if (cursorPos > ((menuRowCount-1) * pixelsPerRow)) {
+
+    if (cursorPos > ((menuRowCount - 1) * pixelsPerRow)) {
       cursorPos = 15;
     }
   }
@@ -91,9 +91,9 @@ void menu_populator(char *menu_name_list[]) {
   if ((int)(encoder.getDirection()) == -1) {
     delay(200);
     cursorPos = cursorPos - pixelsPerRow;
-    
+
     if (cursorPos < 0) {
-      cursorPos = ((menuRowCount-1) * pixelsPerRow);
+      cursorPos = ((menuRowCount - 1) * pixelsPerRow);
     }
   }
 
@@ -115,7 +115,7 @@ void loop() {
     tft.setCursor(5, chevronPosition);
     tft.print(">");
     pos = newPos;
-  } else if (pos != newPos && (int)(encoder.getDirection()) == -1){
+  } else if (pos != newPos && (int)(encoder.getDirection()) == -1) {
     chevronPosition = chevronPosition - 10;
     tft.setCursor(5, chevronPosition);
     tft.print(">");
@@ -136,17 +136,17 @@ void loop() {
   // }
 
 
-    // Check page number
+  // Check page number
   switch (numPage) {
-  case 0:
-    menuTitle("Main menu");
-    menu_populator(menuMain);
-    menuRowCount = 2;
-    break;
-  case 1:
-    menuTitle("LED");
-    menu_populator(menuLED);
-    menuRowCount = 2;
-    break;
+    case 0:
+      menuTitle("Main menu");
+      menu_populator(menuMain);
+      menuRowCount = 2;
+      break;
+    case 1:
+      menuTitle("LED");
+      menu_populator(menuLED);
+      menuRowCount = 2;
+      break;
   }
 }

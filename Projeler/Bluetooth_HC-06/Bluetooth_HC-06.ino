@@ -6,34 +6,28 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
-#define OLED_RESET     4
+#define OLED_RESET 4
 
 String veri = "";
 int pinLed = 2;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
   pinMode(pinLed, OUTPUT);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 }
 
-void loop()
-{
+void loop() {
   veri = "";
 
-  while (Serial.available())
-  {
+  while (Serial.available()) {
     veri += (char)Serial.read();
 
-    if (veri == "1")
-    {
+    if (veri == "1") {
       digitalWrite(pinLed, HIGH);
-    }
-    else if (veri == "2")
-    {
+    } else if (veri == "2") {
       digitalWrite(pinLed, LOW);
     }
 
