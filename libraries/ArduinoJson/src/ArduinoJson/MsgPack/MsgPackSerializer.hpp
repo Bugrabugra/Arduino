@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <ArduinoJson/MsgPack/endianess.hpp>
+#include <ArduinoJson/MsgPack/endianness.hpp>
 #include <ArduinoJson/Polyfills/assert.hpp>
 #include <ArduinoJson/Polyfills/type_traits.hpp>
 #include <ArduinoJson/Serialization/CountingDecorator.hpp>
@@ -23,9 +23,8 @@ class MsgPackSerializer : public VariantDataVisitor<size_t> {
       : writer_(writer), resources_(resources) {}
 
   template <typename T>
-  typename enable_if<is_floating_point<T>::value && sizeof(T) == 4,
-                     size_t>::type
-  visit(T value32) {
+  enable_if_t<is_floating_point<T>::value && sizeof(T) == 4, size_t> visit(
+      T value32) {
     if (canConvertNumber<JsonInteger>(value32)) {
       JsonInteger truncatedValue = JsonInteger(value32);
       if (value32 == T(truncatedValue))
@@ -38,8 +37,8 @@ class MsgPackSerializer : public VariantDataVisitor<size_t> {
 
   template <typename T>
   ARDUINOJSON_NO_SANITIZE("float-cast-overflow")
-  typename enable_if<is_floating_point<T>::value && sizeof(T) == 8,
-                     size_t>::type visit(T value64) {
+  enable_if_t<is_floating_point<T>::value && sizeof(T) == 8, size_t> visit(
+      T value64) {
     float value32 = float(value64);
     if (value32 == value64)
       return visit(value32);
@@ -59,10 +58,14 @@ class MsgPackSerializer : public VariantDataVisitor<size_t> {
       writeByte(0xDD);
       writeInteger(uint32_t(n));
     }
-    for (auto it = array.createIterator(resources_); !it.done();
-         it.next(resources_)) {
-      it->accept(*this);
+
+    auto slotId = array.head();
+    while (slotId != NULL_SLOT) {
+      auto slot = resources_->getSlot(slotId);
+      slot->data()->accept(*this);
+      slotId = slot->next();
     }
+
     return bytesWritten();
   }
 
@@ -77,11 +80,15 @@ class MsgPackSerializer : public VariantDataVisitor<size_t> {
       writeByte(0xDF);
       writeInteger(uint32_t(n));
     }
-    for (auto it = object.createIterator(resources_); !it.done();
-         it.next(resources_)) {
-      visit(it.key());
-      it->accept(*this);
+
+    auto slotId = object.head();
+    while (slotId != NULL_SLOT) {
+      auto slot = resources_->getSlot(slotId);
+      visit(slot->key());
+      slot->data()->accept(*this);
+      slotId = slot->next();
     }
+
     return bytesWritten();
   }
 
@@ -198,7 +205,7 @@ class MsgPackSerializer : public VariantDataVisitor<size_t> {
 
   template <typename T>
   void writeInteger(T value) {
-    fixEndianess(value);
+    fixEndianness(value);
     writeBytes(reinterpret_cast<uint8_t*>(&value), sizeof(value));
   }
 

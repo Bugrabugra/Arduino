@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="wifi-manager" targetName="PlatformIO" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="167dcc7b-a0c0-481a-843e-7c205496a504" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../first/src/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../led/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../led/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../led/src/led.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/wifi-manager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_BusIO/Adafruit_SPIDevice.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_BusIO/Adafruit_SPIDevice.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_BusIO/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_BusIO/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_GrayOLED.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_GrayOLED.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_GrayOLED.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_GrayOLED.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_SPITFT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_SPITFT.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_SPITFT.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/Adafruit_SPITFT.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GFX_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/src/Adafruit_GPS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/src/Adafruit_GPS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/src/NMEA_build.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_GPS_Library/src/NMEA_build.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/examples/graphicstest_featherwing/graphicstest_featherwing.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/examples/graphicstest_featherwing/graphicstest_featherwing.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/examples/touchpaint_featherwing/touchpaint_featherwing.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/examples/touchpaint_featherwing/touchpaint_featherwing.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_ILI9341/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_LED_Backpack_Library/Adafruit_LEDBackpack.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_LED_Backpack_Library/Adafruit_LEDBackpack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_LED_Backpack_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_LED_Backpack_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_SSD1306/examples/OLED_featherwing/OLED_featherwing.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_SSD1306/examples/OLED_featherwing/OLED_featherwing.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Adafruit_SSD1306/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Adafruit_SSD1306/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/HttpClient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/HttpClient.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/HttpClient.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/HttpClient.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/WebSocketClient.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoHttpClient/src/WebSocketClient.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/appveyor.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/CompileOptions.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/CompileOptions.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/fuzzing/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/fuzzing/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/add.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/add.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/copyArray.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/copyArray.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/remove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/remove.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/std_string.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/std_string.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/subscript.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonArray/subscript.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/filter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/filter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/input_types.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/input_types.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/nestingLimit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDeserializer/nestingLimit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/ElementProxy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/ElementProxy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/MemberProxy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/MemberProxy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/add.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/add.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/containsKey.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/containsKey.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/overflowed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/overflowed.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/remove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/remove.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/shrinkToFit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/shrinkToFit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/subscript.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonDocument/subscript.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/containsKey.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/containsKey.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/copy.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/remove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/remove.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/std_string.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/std_string.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/subscript.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonObject/subscript.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonSerializer/JsonVariant.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonSerializer/JsonVariant.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonSerializer/std_string.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonSerializer/std_string.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/add.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/add.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/as.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/as.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/clear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/clear.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/compare.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/compare.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/containsKey.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/containsKey.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/copy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/copy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/remove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/remove.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/set.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/set.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/subscript.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/JsonVariant/subscript.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/StringWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/StringWriter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/TypeTraits.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/TypeTraits.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/conflicts.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/conflicts.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/custom_string.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/custom_string.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/unsigned_char.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/Misc/unsigned_char.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MixedConfiguration/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MixedConfiguration/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/deserializeVariant.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/deserializeVariant.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/doubleToFloat.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/doubleToFloat.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/filter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/filter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/input_types.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackDeserializer/input_types.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeArray.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeArray.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeObject.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeVariant.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/extras/tests/MsgPackSerializer/serializeVariant.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Array/ElementProxy.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Array/ElementProxy.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Array/Utilities.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Array/Utilities.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Collection/CollectionData.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Collection/CollectionData.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Collection/CollectionImpl.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Collection/CollectionImpl.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Configuration.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Configuration.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Reader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Reader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStreamReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStreamReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStringReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStringReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/IteratorReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/IteratorReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/RamReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/RamReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/StdStreamReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/StdStreamReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/VariantReader.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/Readers/VariantReader.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/deserialize.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Deserialization/deserialize.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Document/JsonDocument.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Document/JsonDocument.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/JsonDeserializer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/JsonDeserializer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/JsonSerializer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/JsonSerializer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/TextFormatter.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Json/TextFormatter.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackDeserializer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackDeserializer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackSerializer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackSerializer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/MsgPack/endianess.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Namespace.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Namespace.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/FloatTraits.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/FloatTraits.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/arithmeticCompare.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/arithmeticCompare.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/convertNumber.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/convertNumber.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/parseNumber.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Numbers/parseNumber.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Object/MemberProxy.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Object/MemberProxy.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/attributes.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/attributes.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/integer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/integer.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/limits.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/limits.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/preprocessor.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/preprocessor.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/conditional.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/conditional.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/enable_if.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/enable_if.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_base_of.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_base_of.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_enum.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_enum.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_floating_point.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_floating_point.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_integral.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_integral.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_signed.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_signed.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_unsigned.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/is_unsigned.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/make_unsigned.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/make_unsigned.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/remove_const.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/remove_const.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/remove_reference.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Polyfills/type_traits/remove_reference.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/PrintWriter.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/PrintWriter.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStreamWriter.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStreamWriter.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStringWriter.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStringWriter.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/serialize.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Serialization/serialize.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Strings/IsString.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Strings/IsString.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Strings/StringAdapters.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Strings/StringAdapters.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantCompare.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantCompare.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantData.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantData.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantOperators.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/Variant/VariantOperators.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/compatibility.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/compatibility.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/version.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/ArduinoJson/src/ArduinoJson/version.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/scripts/install-arduino-core-esp32.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/scripts/install-arduino-core-esp8266.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/scripts/install-arduino-ide.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/scripts/install-platformio.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/scripts/on-push.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/stale.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.github/workflows/push.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/_config.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/component.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/CaptivePortal/CaptivePortal.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/ESP_AsyncFSBrowser.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/.exclude.files" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/ace.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/ext-searchbox.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/index.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/mode-css.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/mode-html.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/mode-javascript.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/ESP_AsyncFSBrowser/data/worker-html.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/regex_patterns/.test.build_flags" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/regex_patterns/regex_patterns.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/examples/simple_server/simple_server.ino" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/keywords.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/library.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/library.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncEventSource.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncEventSource.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncJson.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncWebSocket.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncWebSocket.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/AsyncWebSynchronization.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/ESPAsyncWebServer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/SPIFFSEditor.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/SPIFFSEditor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/StringArray.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebAuthentication.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebAuthentication.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebHandlerImpl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebHandlers.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebRequest.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebResponseImpl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebResponses.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/WebServer.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/ESPAsyncWebServer-master/src/edit.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/Contributors.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/Contributors.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/Doxyfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/Doxyfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/changelog.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/examples/IRremoteInfo/IRremoteInfo.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/examples/IRremoteInfo/IRremoteInfo.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/examples/MicroGirs/MicroGirs.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/examples/MicroGirs/MicroGirs.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/IRremote/src/IRremote.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/IRremote/src/IRremote.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Keyboard/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Keyboard/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/COMMON_ISSUES.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/COMMON_ISSUES.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/RF24.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/RF24.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/RF24.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/RF24.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/configure" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/configure" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples/scanner/scanner.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples/scanner/scanner.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/Makefile.examples" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/Makefile.examples" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/gettingstarted.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/gettingstarted.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/interrupts/transfer_interrupt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/interrupts/transfer_interrupt.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/examples_linux/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/nRF24L01.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/nRF24L01.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/pyRF24/pyRF24.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/pyRF24/pyRF24.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/pyRF24/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/pyRF24/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/ATXMegaD3/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/ATXMegaD3/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/RF24_arch_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/RF24_arch_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/compatibility.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/compatibility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/gpio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/gpio.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/gpio.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/gpio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/spi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/spi.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/MRAA/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/RF24_arch_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/RF24_arch_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/compatibility.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/compatibility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/interrupt.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/RPi/interrupt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/RF24_arch_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/RF24_arch_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/compatibility.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/compatibility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/gpio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/gpio.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/gpio.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/gpio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/interrupt.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/interrupt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/spi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/spi.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/SPIDEV/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/compatibility.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/compatibility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/gpio.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/gpio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/Template/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/RF24_arch_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/RF24_arch_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/includes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/spi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/spi.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/spi.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RF24/utility/wiringPi/spi.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RTClib/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RTClib/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/RTClib/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/RTClib/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/README.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/README.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/CardInfo/CardInfo.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/CardInfo/CardInfo.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/Datalogger/Datalogger.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/Datalogger/Datalogger.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/DumpFile/DumpFile.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/DumpFile/DumpFile.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/Files/Files.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/Files/Files.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/NonBlockingWrite/NonBlockingWrite.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/NonBlockingWrite/NonBlockingWrite.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/ReadWrite/ReadWrite.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/ReadWrite/ReadWrite.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/examples/listfiles/listfiles.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/examples/listfiles/listfiles.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/extras/codespell-ignore-words-list.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/File.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/File.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/SD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/SD.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/SD.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/SD.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/FatStructs.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/FatStructs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2Card.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2Card.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2Card.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2Card.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2PinMap.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/Sd2PinMap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFat.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFatUtil.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFatUtil.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFatmainpage.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFatmainpage.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdFile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdVolume.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/SD/src/utility/SdVolume.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/docs/api.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/docs/api.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/docs/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/docs/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Knob/Knob.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Knob/Knob.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Knob/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Knob/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Sweep/Sweep.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Sweep/Sweep.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Sweep/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/examples/Sweep/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/Servo.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/Servo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/avr/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/avr/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/avr/ServoTimers.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/avr/ServoTimers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/megaavr/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/megaavr/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/nrf52/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/nrf52/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/nrf52/ServoTimers.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/nrf52/ServoTimers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/sam/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/sam/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/samd/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/samd/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/stm32f4/Servo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/stm32f4/Servo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/Servo/src/stm32f4/ServoTimers.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/Servo/src/stm32f4/ServoTimers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/AllFunctions/AllFunctions.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/AllFunctions/AllFunctions.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/BlynkClient/BlynkClient.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/BlynkClient/BlynkClient.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/FileDownload/FileDownload.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/FileDownload/FileDownload.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/HttpClient/HttpClient.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/HttpClient/HttpClient.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/HttpsClient/HttpsClient.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/HttpsClient/HttpsClient.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/MqttClient/MqttClient.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/MqttClient/MqttClient.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/WebClient/WebClient.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/WebClient/WebClient.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/more/SIM800_SslSetCert/SIM800_SslSetCert.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/examples/more/SIM800_SslSetCert/SIM800_SslSetCert.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClient.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClient.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientA6.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientA6.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientBG96.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientBG96.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientESP8266.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientESP8266.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientM590.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientM590.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientSIM800.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientSIM800.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientSIM808.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientSIM808.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientUBLOX.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientUBLOX.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientXBee.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmClientXBee.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmCommon.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmCommon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmFifo.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/src/TinyGsmFifo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/AT_Debug/AT_Debug.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/AT_Debug/AT_Debug.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/Diagnostics/Diagnostics.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/Diagnostics/Diagnostics.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/FactoryReset/FactoryReset.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/FactoryReset/FactoryReset.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/test_build/test_build.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../libraries/TinyGSM/tools/test_build/test_build.ino" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="esp01_1m" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Bugrabugra&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Bugrabugra/Arduino.git&quot;,
+    &quot;accountId&quot;: &quot;0899c318-52b9-4dee-9bde-e2ac8b93dec5&quot;
+  }
+}</component>
+  <component name="PlatformioLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="wifi-manager" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="wifi-manager" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="2.0.1" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2l9uR5bvjTjL85npmceDCnOpHke" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlatformIO" type="platformio" factoryName="PlatformIO Debug" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wifi-manager" TARGET_NAME="PlatformIO" CONFIG_NAME="PlatformIO">
+      <method v="2" />
+    </configuration>
+    <configuration name="PlatformIO" type="platformio" factoryName="PlatformIO Debug" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wifi-manager" TARGET_NAME="PlatformIO" CONFIG_NAME="PlatformIO">
+      <method v="2" />
+    </configuration>
+    <configuration name="PlatformIO" type="platformio" factoryName="PlatformIO Debug" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wifi-manager" TARGET_NAME="PlatformIO" CONFIG_NAME="PlatformIO">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="167dcc7b-a0c0-481a-843e-7c205496a504" name="Changes" comment="" />
+      <created>1724604601559</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1724604601559</updated>
+      <workItem from="1724604602631" duration="228000" />
+      <workItem from="1724604849179" duration="326000" />
+      <workItem from="1724605263547" duration="3008000" />
+      <workItem from="1724620016100" duration="3329000" />
+      <workItem from="1724623431764" duration="1603000" />
+      <workItem from="1725181977573" duration="222000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

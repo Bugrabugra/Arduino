@@ -107,12 +107,17 @@ class CollectionData {
       return collection->remove(it, resources);
   }
 
+  SlotId head() const {
+    return head_;
+  }
+
+  void addSlot(SlotWithId slot, ResourceManager* resources);
+
  protected:
   iterator addSlot(ResourceManager*);
 
  private:
   SlotWithId getPreviousSlot(VariantSlot*, const ResourceManager*) const;
-  void releaseSlot(SlotWithId, ResourceManager*);
 };
 
 inline const VariantData* collectionToVariant(
