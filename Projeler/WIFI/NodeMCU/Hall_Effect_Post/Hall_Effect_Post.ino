@@ -15,11 +15,13 @@
 //const char *ssid = "SONRASI_YOKTU";          //Enter SSID
 //const char *password = "BuuRA03045025";  //Enter Password
 
-const int pinWifi = 0;
-const int pinHallEffect = 2;
+// const int pinWifi = 0;
+const int pinHallEffect = 14;
 
 String windowState;
-String endpoint = "http://192.168.1.100:3000/hall";
+// char endpoint[40] = "http://192.168.1.102:3000/hall";
+String endpoint = "http://192.168.1.102:3000/hall";
+
 int state;
 
 WiFiManager wm;
@@ -104,7 +106,7 @@ WiFiManager wm;
 //}
 
 void setup() {
-  pinMode(pinWifi, OUTPUT);
+  // pinMode(pinWifi, OUTPUT);
   pinMode(pinHallEffect, INPUT);
 
   // Change to true when testing to force configuration every time we run
@@ -125,7 +127,7 @@ void setup() {
   delay(10);
 
   // Connect to Wi-Fi
-//  Wi-Fi.begin(ssid, password);
+//  WiFi.begin(ssid, password);
 //  while (WiFi.status() != WL_CONNECTED) {
 //    delay(500);
 //    Serial.print("*");
@@ -146,9 +148,11 @@ void setup() {
 
   res = wm.autoConnect("AutoConnectAP", "password");
 
+  Serial.println(res);
+
   if (res) {
     if (MDNS.begin("esp8266")) {
-      digitalWrite(pinWifi, HIGH);
+      // digitalWrite(pinWifi, HIGH);
     }
   }
 
@@ -159,6 +163,9 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   state = digitalRead(pinHallEffect);
+
+  Serial.print("state: ");
+  Serial.println(state);
 
   // Let's deal with the user config values
 
@@ -175,13 +182,22 @@ void setup() {
 
 void loop() {
   if (WiFi.status() == WL_CONNECTED) {
-    digitalWrite(pinWifi, HIGH);
+    // digitalWrite(pinWifi, HIGH);
 
     WiFiClient client;
     HTTPClient http;
 
+    Serial.print("endpoint: ");
+    Serial.println(String(endpoint));
+
     http.begin(client, endpoint);  // HTTP
     http.addHeader("Content-Type", "application/json");
+
+    Serial.print("digitalRead: ");
+    Serial.println(digitalRead(pinHallEffect));
+
+    Serial.print("state: ");
+    Serial.println(state);
 
     if (digitalRead(pinHallEffect) != state) {
       if (digitalRead(pinHallEffect) == LOW) {
@@ -194,10 +210,13 @@ void loop() {
         state = 1;
       }
 
-      http.POST("{\"window\":\"salon1\",\"state\":\"" + windowState + "\"}");
-    }
+      // http.POST("{\"window\":\"salon1\",\"state\":\"" + windowState + "\"}");
+      http.POST(windowState);
+      Serial.println(windowState);
 
-    http.end();
+
+      // Serial.println("{\"window\":\"salon1\",\"state\": \"" + windowState + "\"  }");
+    }
   }
 
   delay(3000);
