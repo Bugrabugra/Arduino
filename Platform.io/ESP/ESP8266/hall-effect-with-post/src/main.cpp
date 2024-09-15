@@ -19,7 +19,7 @@ const int pinWifi = 0;
 const int pinHallEffect = 2;
 
 String windowState;
-char endpoint[40];
+char endpoint[40] = "http://192.168.1.102:3000/hall";
 int state;
 
 WiFiManager wm;
@@ -132,15 +132,15 @@ void setup() {
 //  }
 
   // Reset settings (only for development)
-  wm.resetSettings();
+//  wm.resetSettings();
 
 //  wm.setSaveConfigCallback(saveConfigCallback);
 
   // define a text box, 50 characters maximum
-  WiFiManagerParameter ip_text_box("ip_text", "Enter endpoint", "", 50);
+//  WiFiManagerParameter ip_text_box("ip_text", "Enter endpoint", "", 50);
 
   // add custom parameter
-  wm.addParameter(&ip_text_box);
+//  wm.addParameter(&ip_text_box);
 
   bool res;
   res = wm.autoConnect("AutoConnectAP", "password");
@@ -162,7 +162,7 @@ void setup() {
   // Let's deal with the user config values
 
   // Copy the string value
-  strcpy(endpoint, ip_text_box.getValue());
+//  strcpy(endpoint, ip_text_box.getValue());
 //  Serial.print("endpoint: ");
 //  Serial.println(endpoint);
 
