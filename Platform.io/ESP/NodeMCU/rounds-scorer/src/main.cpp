@@ -1,42 +1,14 @@
-/**
- * This example is for new users which are familiar with other legacy Firebase libraries.
- *
- * The example shows how to listen the data changes in your Firebase Realtime database
- * while the database was set periodically.
- *
- * All functions used in this example are non-blocking (async) functions.
- *
- * This example will use the database secret for privilege Realtime database access which does not need
- * to change the security rules or it can access Realtime database no matter what the security rules are set.
- *
- * This example is for ESP32, ESP8266 and Raspberry Pi Pico W.
- *
- * You can adapt the WiFi and SSL client library that are available for your devices.
- *
- * For the ethernet and GSM network which are not covered by this example,
- * you have to try another elaborate examples and read the library documentation thoroughly.
- *
- */
-
 #include <Arduino.h>
-
-#if defined(ESP32) || defined(ARDUINO_RASPBERRY_PI_PICO_W)
-#include <WiFi.h>
-#elif defined(ESP8266)
-
 #include <ESP8266WiFi.h>
-
-#endif
-
 #include <FirebaseClient.h>
 #include <WiFiClientSecure.h>
 #include <ctime>
 #include <ArduinoJson.h>
+#include <WiFiClientSecure.h>
+
 
 #define WIFI_SSID "SONRASI_YOKTU"
 #define WIFI_PASSWORD "BuuRA03045025"
-
-#define DATABASE_SECRET "AcVnXIVOBniTJK4ShvXcNxYd3KcMZJTtw462EBXw"
 #define DATABASE_URL "https://rounds-scorer-default-rtdb.europe-west1.firebasedatabase.app"
 
 const int pinButtonStartMatch = 2;
@@ -47,28 +19,22 @@ const int pinLEDGreen = 14;
 const int pinLEDBlue = 12;
 const int pinLEDOrange = 13;
 
-// The SSL client used for secure server connection.
-WiFiClientSecure ssl1, ssl2, ssl3;
+void asyncCB(AsyncResult &aResult);
 
-// The default network config object that used in this library.
+void printResult(AsyncResult &aResult);
+
 DefaultNetwork network;
-
-// The client, aka async client, is the client that handles many tasks required for each operation.
-AsyncClientClass clientOngoingMatchId(ssl1, getNetwork(network)),
-    clientMatches(ssl2, getNetwork(network)),
-    clientOngoingMatch(ssl3, getNetwork(network));
-
-// The authentication task handler, aka FirebaseApp.
+UserAuth user_auth("AIzaSyB7tLcb93bOOoam8xHshFQSgy0jEGXf3h8", "b@g.com", "123456");
 FirebaseApp app;
-
-// The Realtime database class object that provides the functions.
+WiFiClientSecure ssl_client1, ssl_client2;
+using AsyncClient = AsyncClientClass;
+AsyncClient aClient(ssl_client1, getNetwork(network)), aClient2(ssl_client2, getNetwork(network));
 RealtimeDatabase Database;
 
-// The class that stores the operating result, aka AsyncResult.
-AsyncResult resultOngoingMatchId, result2;
-
-// The legacy token provider class used for authentication initialization.
-LegacyToken dbSecret(DATABASE_SECRET);
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+char ongoingMatchId[20];
+unsigned long ms = 0;
+bool isListeningOngoingMatchStarted = false;
 
 struct Match {
     time_t createdAt{};
@@ -77,18 +43,13 @@ struct Match {
     time_t updatedAt{};
     String winner;
 };
-
-unsigned long ms = 0;
-String ongoingMatchId;
-bool isListeningOngoingMatchStarted = false;
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 void startMatchCB(AsyncResult &aResult) {
-  Serial.print("startMatch uid: ");
-  Serial.println(aResult.uid().c_str());
+  printResult(aResult);
 
   if (strcmp(aResult.uid().c_str(), "startMatch") == 0) {
-    StaticJsonDocument<128> match;
-
+    StaticJsonDocument<50> match;
     DeserializationError error = deserializeJson(match, aResult.c_str());
 
     if (error) {
@@ -101,74 +62,41 @@ void startMatchCB(AsyncResult &aResult) {
     if (name) {
       Serial.print("Name: ");
       Serial.println(name);
-      ongoingMatchId = name;
-      Database.set<String>(clientOngoingMatchId, "/ongoingMatchId", ongoingMatchId);
+      strcpy(ongoingMatchId, name);
+      Serial.print("ongoingMatchId copied: ");
+      Serial.println(ongoingMatchId);
+
+      Database.set<string_t>(aClient, "/ongoingMatchId", string_t(ongoingMatchId));
     } else {
       Serial.println("Name was not found");
     }
   }
 }
 
+void getOngoingMatchIdStreamCB(AsyncResult &aResult) {
+  printResult(aResult);
+
+  auto &RTDB = aResult.to<RealtimeDatabaseResult>();
+  if (RTDB.to<String>().isEmpty() || RTDB.to<String>() == "null") {
+    strcpy(ongoingMatchId, "");
+  } else {
+    strcpy(ongoingMatchId, RTDB.to<String>().c_str());
+  }
+}
+
 void startMatch(const Match &match) {
+  Serial.println("startMatch");
+
   StaticJsonDocument<256> doc;
   doc["createdAt"] = match.createdAt;
   doc["duration"] = match.duration;
   doc["updatedAt"] = match.updatedAt;
   doc["winner"] = match.winner;
 
-  String jsonString;
+  char jsonString[256];
   serializeJson(doc, jsonString);
 
-  Database.push<object_t>(clientMatches, "/matches", object_t(jsonString), startMatchCB, "startMatch");
-}
-
-void voteForTeamCB(AsyncResult &aResult) {
-  auto &RTDB = aResult.to<RealtimeDatabaseResult>();
-
-  Serial.print("voteForTeamCB result: ");
-  Serial.println(RTDB.to<String>());
-}
-
-void voteForTeam(const String &team) {
-  StaticJsonDocument<256> doc;
-
-  if (team == "blue") {
-    doc["blue"] = 1;
-    doc["orange"] = 0;
-  } else {
-    doc["blue"] = 0;
-    doc["orange"] = 1;
-  }
-
-  String jsonString;
-  serializeJson(doc, jsonString);
-
-  Database.push<object_t>(
-      clientOngoingMatch,
-      "/matches/" + ongoingMatchId + "/rounds",
-      object_t(jsonString),
-      voteForTeamCB,
-      "voteForTeam"
-  );
-}
-
-void getOngoingMatchStreamCB(AsyncResult &aResult) {
-  auto &RTDB = aResult.to<RealtimeDatabaseResult>();
-
-  Serial.print("ongoing match stream: ");
-  Serial.println(RTDB.to<String>());
-
-  Serial.print("ongoing match not stream: ");
-  Serial.println(aResult.c_str());
-}
-
-void getOngoingMatchIdStreamCB(AsyncResult &aResult) {
-  auto &RTDB = aResult.to<RealtimeDatabaseResult>();
-  if (RTDB.to<String>().isEmpty() || RTDB.to<String>() == "null") {
-    ongoingMatchId = "";
-  } else {
-    ongoingMatchId = RTDB.to<String>();
-  }
+  Database.push<object_t>(aClient2, "/matches", object_t(jsonString), startMatchCB, "startMatch");
 }
 
 void setup() {
@@ -196,15 +124,12 @@ void setup() {
 
   Firebase.printf("Firebase Client v%s\n", FIREBASE_CLIENT_VERSION);
 
-  ssl1.setInsecure();
-  ssl2.setInsecure();
-  ssl3.setInsecure();
+  Serial.println("Initializing app...");
 
-#if defined(ESP8266)
-  ssl1.setBufferSizes(1024, 1024);
-  ssl2.setBufferSizes(1024, 1024);
-  ssl3.setBufferSizes(1024, 1024);
-#endif
+  ssl_client1.setInsecure();
+  ssl_client2.setInsecure();
+  ssl_client1.setBufferSizes(4096, 1024);
+  ssl_client2.setBufferSizes(4096, 1024);
 
   configTime(0, 0, "pool.ntp.org", "time.nist.gov");
   Serial.println("Retrieving time from NTP server...");
@@ -214,90 +139,90 @@ void setup() {
   }
   Serial.println("Time retrieved!");
 
-  // Initialize the authentication handler.
-  initializeApp(clientOngoingMatchId, app, getAuth(dbSecret));
-
-  // Binding the authentication handler with your Database class object.
+  initializeApp(aClient2, app, getAuth(user_auth), asyncCB, "authTask");
   app.getApp<RealtimeDatabase>(Database);
-
-  // Set your database URL
   Database.url(DATABASE_URL);
-
-  // Initiate the Stream connection to listen the data changes.
-  // This function can be called once.
-  // The Stream was connected using async get function (non-blocking) which the result will assign to the function in this case.
+  Database.setSSEFilters("get,put,patch,keep-alive,cancel,auth_revoked");
   Database.get(
-      clientOngoingMatchId, "/ongoingMatchId", getOngoingMatchIdStreamCB,
-      true, "getOngoingMatchId" /* this option is for Stream connection */);
+      aClient, "/ongoingMatchId", getOngoingMatchIdStreamCB, true /* SSE mode (HTTP Streaming) */, "ongoingMatchId"
+  );
 }
 
 void loop() {
-  // Polling for internal task operation
-  // This required for Stream in this case.
+  // The async task handler should run inside the main loop
+  // without blocking delay or bypassing with millis code blocks.
+
+  app.loop();
+
   Database.loop();
 
-//  app.loop();
-  // We don't have to poll authentication handler task using app.loop() as seen in other examples
-  // because the database secret is the privilege access key that never expired.
-
-  // Set the random int value to "/test/stream/int" every 20 seconds.
-
-  Serial.println(ongoingMatchId);
-
-  if (!isListeningOngoingMatchStarted && !ongoingMatchId.isEmpty()) {
-    Database.get(
-        clientOngoingMatch, "/matches/" + ongoingMatchId, getOngoingMatchStreamCB,
-        true, "getOngoingMatch" /* this option is for Stream connection */);
-    isListeningOngoingMatchStarted = true;
-  }
-
-  if (!ongoingMatchId.isEmpty()) {
-    digitalWrite(pinLEDGreen, HIGH);
-  } else {
-    digitalWrite(pinLEDGreen, LOW);
-  }
-
-
-  if (millis() - ms > 5000 || ms == 0) {
-    if (!ongoingMatchId.isEmpty()) {
-      if (digitalRead(pinButtonScoreForBlue) == LOW) {
-        digitalWrite(pinLEDBlue, HIGH);
-        voteForTeam("blue");
-      } else {
-        digitalWrite(pinLEDBlue, LOW);
-      }
-
-      if (digitalRead(pinButtonScoreForOrange) == LOW) {
-        digitalWrite(pinLEDOrange, HIGH);
-        voteForTeam("orange");
-      } else {
-        digitalWrite(pinLEDOrange, LOW);
-      }
-
-      ms = millis();
-    }
-  }
-
-  if (millis() - ms > 5000 || ms == 0) {
-    if (digitalRead(pinButtonStartMatch) == LOW && ongoingMatchId.isEmpty()) {
+  if (millis() - ms > 10000 && app.ready()) {
+    if (digitalRead(pinButtonStartMatch) == LOW && strlen(ongoingMatchId) == 0) {
       ms = millis();
 
       time_t now = time(nullptr);
       Serial.print("Unix time: ");
       Serial.println(now);
 
-      // We set the data with this non-blocking set function (async) which the result was assign to the function.
-      // Database.set<int>(clientMatches, "/count", now, result2);
-
       Match newMatch;
       newMatch.createdAt = time(nullptr);
       newMatch.duration = 0;
       newMatch.updatedAt = time(nullptr);
-      newMatch.winner = NULL;
+      newMatch.winner = "";
 
       startMatch(newMatch);
     } else {
       digitalWrite(pinLEDGreen, LOW);
     }
+  }
+}
+
+void asyncCB(AsyncResult &aResult) {
+  // WARNING!
+  // Do not put your codes inside the callback and printResult.
+
+  printResult(aResult);
+}
+
+void printResult(AsyncResult &aResult) {
+  if (aResult.isEvent()) {
+    Firebase.printf(
+        "Event task: %s, msg: %s, code: %d\n", aResult.uid().c_str(), aResult.appEvent().message().c_str(),
+        aResult.appEvent().code());
+  }
+
+  if (aResult.isDebug()) {
+    Firebase.printf("Debug task: %s, msg: %s\n", aResult.uid().c_str(), aResult.debug().c_str());
+  }
+
+  if (aResult.isError()) {
+    Firebase.printf(
+        "Error task: %s, msg: %s, code: %d\n", aResult.uid().c_str(), aResult.error().message().c_str(),
+        aResult.error().code());
+  }
+
+  if (aResult.available()) {
+    auto &RTDB = aResult.to<RealtimeDatabaseResult>();
+    if (RTDB.isStream()) {
+      Serial.println("----------------------------");
+      Firebase.printf("task: %s\n", aResult.uid().c_str());
+      Firebase.printf("event: %s\n", RTDB.event().c_str());
+      Firebase.printf("path: %s\n", RTDB.dataPath().c_str());
+      Firebase.printf("data: %s\n", RTDB.to<const char *>());
+      Firebase.printf("type: %d\n", RTDB.type());
+
+      // The stream event from RealtimeDatabaseResult can be converted to the values as following.
+      bool v1 = RTDB.to<bool>();
+      int v2 = RTDB.to<int>();
+      float v3 = RTDB.to<float>();
+      double v4 = RTDB.to<double>();
+      String v5 = RTDB.to<String>();
+
+    } else {
+      Serial.println("----------------------------");
+      Firebase.printf("task: %s, payload: %s\n", aResult.uid().c_str(), aResult.c_str());
+    }
+
+    Firebase.printf("Free Heap: %d\n", EspClass::getFreeHeap());
   }
 }
