@@ -26,13 +26,15 @@ void printResult(AsyncResult &aResult);
 DefaultNetwork network;
 UserAuth user_auth("AIzaSyB7tLcb93bOOoam8xHshFQSgy0jEGXf3h8", "b@g.com", "123456");
 FirebaseApp app;
-WiFiClientSecure ssl_client1, ssl_client2;
+WiFiClientSecure ssl_auth, ssl_client, ssl_listenOngoingMatchId;
 using AsyncClient = AsyncClientClass;
-AsyncClient aClient(ssl_client1, getNetwork(network)), aClient2(ssl_client2, getNetwork(network));
+AsyncClient clientAuth(ssl_auth, getNetwork(network)),
+    client(ssl_client, getNetwork(network)),
+    clientListenOngoingMatchId(ssl_listenOngoingMatchId, getNetwork(network));
 RealtimeDatabase Database;
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-char ongoingMatchId[20];
+String ongoingMatchId;
 unsigned long ms = 0;
 bool isListeningOngoingMatchStarted = false;
 
@@ -49,7 +51,7 @@ void startMatchCB(AsyncResult &aResult) {
   printResult(aResult);
 
   if (strcmp(aResult.uid().c_str(), "startMatch") == 0) {
-    StaticJsonDocument<50> match;
+    StaticJsonDocument<100> match;
     DeserializationError error = deserializeJson(match, aResult.c_str());
 
     if (error) {
@@ -57,16 +59,16 @@ void startMatchCB(AsyncResult &aResult) {
       Serial.println(error.c_str());
     }
 
-    const char *name = match["name"];
+    String name = match["name"];
 
     if (name) {
       Serial.print("Name: ");
       Serial.println(name);
-      strcpy(ongoingMatchId, name);
+      ongoingMatchId = name;
       Serial.print("ongoingMatchId copied: ");
       Serial.println(ongoingMatchId);
 
-      Database.set<string_t>(aClient, "/ongoingMatchId", string_t(ongoingMatchId));
+      Database.set<String>(client, "/ongoingMatchId", ongoingMatchId);
     } else {
       Serial.println("Name was not found");
     }
@@ -77,26 +79,59 @@ void getOngoingMatchIdStreamCB(AsyncResult &aResult) {
   printResult(aResult);
 
   auto &RTDB = aResult.to<RealtimeDatabaseResult>();
-  if (RTDB.to<String>().isEmpty() || RTDB.to<String>() == "null") {
-    strcpy(ongoingMatchId, "");
+  if (RTDB.to<String>().isEmpty()) {
+    ongoingMatchId = "";
   } else {
-    strcpy(ongoingMatchId, RTDB.to<String>().c_str());
+    ongoingMatchId = RTDB.to<String>().c_str();
   }
 }
 
 void startMatch(const Match &match) {
   Serial.println("startMatch");
 
-  StaticJsonDocument<256> doc;
+  StaticJsonDocument<140> doc;
   doc["createdAt"] = match.createdAt;
   doc["duration"] = match.duration;
   doc["updatedAt"] = match.updatedAt;
   doc["winner"] = match.winner;
 
-  char jsonString[256];
+  char jsonString[140];
   serializeJson(doc, jsonString);
 
-  Database.push<object_t>(aClient2, "/matches", object_t(jsonString), startMatchCB, "startMatch");
+  Serial.println(jsonString);
+
+  Database.push<object_t>(client, "/matches", object_t(jsonString), startMatchCB, "startMatch");
+}
+
+void voteForTeamCB(AsyncResult &aResult) {
+  printResult(aResult);
+  auto &RTDB = aResult.to<RealtimeDatabaseResult>();
+
+  Serial.print("voteForTeamCB result: ");
+  Serial.println(RTDB.to<String>());
+}
+
+void voteForTeam(const String &team) {
+  StaticJsonDocument<56> doc;
+
+  if (team == "blue") {
+    doc["blue"] = 1;
+    doc["orange"] = 0;
+  } else {
+    doc["blue"] = 0;
+    doc["orange"] = 1;
+  }
+
+  char jsonString[56];
+  serializeJson(doc, jsonString);
+
+  Database.push<object_t>(
+      client,
+      "/matches/" + ongoingMatchId + "/rounds",
+      object_t(jsonString),
+      voteForTeamCB,
+      "voteForTeam"
+  );
 }
 
 void setup() {
@@ -126,10 +161,16 @@ void setup() {
 
   Serial.println("Initializing app...");
 
-  ssl_client1.setInsecure();
-  ssl_client2.setInsecure();
-  ssl_client1.setBufferSizes(4096, 1024);
-  ssl_client2.setBufferSizes(4096, 1024);
+  ssl_auth.setInsecure();
+  ssl_client.setInsecure();
+  ssl_client.setInsecure();
+  ssl_client.setInsecure();
+  ssl_listenOngoingMatchId.setInsecure();
+  ssl_auth.setBufferSizes(1024, 1024);
+  ssl_client.setBufferSizes(1024, 1024);
+  ssl_client.setBufferSizes(1024, 1024);
+  ssl_client.setBufferSizes(1024, 1024);
+  ssl_listenOngoingMatchId.setBufferSizes(4096, 1024);
 
   configTime(0, 0, "pool.ntp.org", "time.nist.gov");
   Serial.println("Retrieving time from NTP server...");
@@ -139,12 +180,13 @@ void setup() {
   }
   Serial.println("Time retrieved!");
 
-  initializeApp(aClient2, app, getAuth(user_auth), asyncCB, "authTask");
+  initializeApp(clientAuth, app, getAuth(user_auth), asyncCB, "authTask");
   app.getApp<RealtimeDatabase>(Database);
   Database.url(DATABASE_URL);
   Database.setSSEFilters("get,put,patch,keep-alive,cancel,auth_revoked");
   Database.get(
-      aClient, "/ongoingMatchId", getOngoingMatchIdStreamCB, true /* SSE mode (HTTP Streaming) */, "ongoingMatchId"
+      clientListenOngoingMatchId, "/ongoingMatchId", getOngoingMatchIdStreamCB, true /* SSE mode (HTTP Streaming) */,
+      "ongoingMatchId"
   );
 }
 
@@ -156,8 +198,14 @@ void loop() {
 
   Database.loop();
 
+  if (ongoingMatchId.isEmpty()) {
+    digitalWrite(pinLEDGreen, LOW);
+  } else {
+    digitalWrite(pinLEDGreen, HIGH);
+  }
+
   if (millis() - ms > 10000 && app.ready()) {
-    if (digitalRead(pinButtonStartMatch) == LOW && strlen(ongoingMatchId) == 0) {
+    if (digitalRead(pinButtonStartMatch) == LOW && ongoingMatchId.isEmpty()) {
       ms = millis();
 
       time_t now = time(nullptr);
@@ -171,8 +219,26 @@ void loop() {
       newMatch.winner = "";
 
       startMatch(newMatch);
-    } else {
-      digitalWrite(pinLEDGreen, LOW);
+    }
+
+    if (!ongoingMatchId.isEmpty()) {
+      if (digitalRead(pinButtonScoreForBlue) == LOW) {
+        ms = millis();
+
+        digitalWrite(pinLEDBlue, HIGH);
+        voteForTeam("blue");
+      } else {
+        digitalWrite(pinLEDBlue, LOW);
+      }
+
+      if (digitalRead(pinButtonScoreForOrange) == LOW) {
+        ms = millis();
+
+        digitalWrite(pinLEDOrange, HIGH);
+        voteForTeam("orange");
+      } else {
+        digitalWrite(pinLEDOrange, LOW);
+      }
     }
   }
 }
@@ -185,6 +251,9 @@ void asyncCB(AsyncResult &aResult) {
 }
 
 void printResult(AsyncResult &aResult) {
+  Serial.print("GENEL ongoingMatchId: ");
+  Serial.println(ongoingMatchId);
+
   if (aResult.isEvent()) {
     Firebase.printf(
         "Event task: %s, msg: %s, code: %d\n", aResult.uid().c_str(), aResult.appEvent().message().c_str(),
