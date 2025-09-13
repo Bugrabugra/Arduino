@@ -13,7 +13,7 @@
 #define SCREEN_HEIGHT 64  // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-#define OLED_RESET -1  // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET (-1)  // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 const unsigned char Battery_Status_Full[] PROGMEM = {
@@ -37,7 +37,7 @@ const unsigned char Battery_Status_Full[] PROGMEM = {
 };
 
 void setup() {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // 3C calisiyor -1 ile SSD1306_128_32 ile
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // 3C is working with -1 with SSD1306_128_32
 }
 
 void loop() {
