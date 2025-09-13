@@ -78,7 +78,7 @@ void setup()
   rotaryEncoder.setup(readEncoderISR);
   //set boundaries and if values should cycle or not
   //in this example we will set possible values between 0 and 1000;
-  bool circleValues = false;
+  constexpr bool circleValues = false;
   rotaryEncoder.setBoundaries(0, 1000, circleValues); //minValue, maxValue, circleValues true|false (when max go to min and vice versa)
 
   /*Rotary acceleration introduced 25.2.2021.
@@ -87,8 +87,8 @@ void setup()
    * Using acceleration, faster you turn, faster will the value raise.
    * For fine-tuning slow down.
    */
-  //rotaryEncoder.disableAcceleration(); //acceleration is now enabled by default - disable if you dont need it
-  rotaryEncoder.setAcceleration(250); //or set the value - larger number = more accelearation; 0 or 1 means disabled acceleration
+  //rotaryEncoder.disableAcceleration(); //acceleration is now enabled by default - disable if you don't need it
+  rotaryEncoder.setAcceleration(250); //or set the value - larger number = more acceleration; 0 or 1 means disabled acceleration
   rotaryEncoder.isButtonPulldown = true;
 }
 
