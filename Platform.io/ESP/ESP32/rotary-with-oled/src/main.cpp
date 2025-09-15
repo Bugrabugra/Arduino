@@ -97,7 +97,7 @@ void loop() {
   int r = 25;
 
   // Convert angle to radians
-  float rad = (angle - 90) * 3.14159 / 180.0;
+  const float rad = (angle - 90) * 3.14159 / 180.0;
 
   // Needle endpoint
   int x = cx + r * cos(rad);
