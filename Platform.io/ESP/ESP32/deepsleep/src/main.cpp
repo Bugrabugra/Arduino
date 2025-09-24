@@ -12,7 +12,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 #define BUTTON_PIN 5
 
 void setup() {
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT);
 
   // Start OLED
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
@@ -22,8 +22,16 @@ void setup() {
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
 
+  const int state = digitalRead(BUTTON_PIN);
+
+  if (state == LOW) {
+    esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_HIGH);
+  } else {
+    esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
+  }
+
   // Attach wakeup pin
-  esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
+  // esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
 
   // 5 seconds countdown
   for (int i = 5; i > 0; i--) {
@@ -40,6 +48,8 @@ void setup() {
   display.clearDisplay();
   display.setCursor(0, 20);
   display.print("Sleeping");
+  display.setCursor(0, 40);
+  display.println(state == LOW ? "At home" : "Not home");
   display.display();
   delay(500);
 
