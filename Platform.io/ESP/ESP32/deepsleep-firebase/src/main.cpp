@@ -13,8 +13,6 @@
 
 #define BUTTON_PIN 5
 
-void processData(AsyncResult &aResult);
-
 SSL_CLIENT ssl_client;
 
 using AsyncClient = AsyncClientClass;
@@ -63,9 +61,6 @@ void setup() {
 
   Serial.println("Initializing app...");
   initializeApp(aClient, app, getAuth(user_auth), auth_debug_print, "🔐 authTask");
-
-  // Or initialize the app and wait.
-  // initializeApp(aClient, app, getAuth(user_auth), 120 * 1000, auth_debug_print);
 
   app.getApp<RealtimeDatabase>(Database);
 
@@ -116,7 +111,6 @@ void set_await(const int buttonState) {
 void loop() {
   // To maintain the authentication and async tasks
   app.loop();
-
 
   if (app.ready() && !taskComplete) {
     taskComplete = true;
