@@ -30,9 +30,6 @@ void setup() {
     esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
   }
 
-  // Attach wakeup pin
-  // esp_deep_sleep_enable_gpio_wakeup(1ULL << BUTTON_PIN, ESP_GPIO_WAKEUP_GPIO_LOW);
-
   // 5 seconds countdown
   for (int i = 5; i > 0; i--) {
     display.clearDisplay();
