@@ -45,7 +45,7 @@ void setup() {
   display.clearDisplay();
   display.display();
 
-  Serial.begin(115200);
+  // Serial.begin(115200);
 
   // Start OLED
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
