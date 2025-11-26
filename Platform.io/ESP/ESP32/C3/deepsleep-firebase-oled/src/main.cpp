@@ -21,6 +21,9 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
+// 128 x 32
+// #define SCREEN_HEIGHT 32
+
 SSL_CLIENT ssl_client;
 
 using AsyncClient = AsyncClientClass;
@@ -45,8 +48,6 @@ void setup() {
   display.clearDisplay();
   display.display();
 
-  // Serial.begin(115200);
-
   // Start OLED
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     for (;;);
@@ -59,37 +60,26 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-  // Serial.print("Connecting to Wi-Fi");
-
-  display.clearDisplay();
+ display.clearDisplay();
 
   while (WiFiClass::status() != WL_CONNECTED) {
-    // Serial.print(".");
-    display.setCursor(0, 20);
+    display.setCursor(0, 0);
     display.print("Connecting WiFi...");
     display.display();
     delay(300);
   }
-  // Serial.println();
-  // Serial.print("Connected with IP: ");
-  // Serial.println(WiFi.localIP());
-  // Serial.println();
 
   configTime(gmtOffset_sec, daylightOffset_sec, "pool.ntp.org", "time.nist.gov");
 
   tm timeInfo{};
   if (!getLocalTime(&timeInfo)) {
-    // Serial.println("Failed to obtain time");
     return;
   }
-  // Serial.println(&timeInfo, "Time set: %Y-%m-%d %H:%M:%S");
 
   Firebase.printf("Firebase Client v%s\n", FIREBASE_CLIENT_VERSION);
 
   set_ssl_client_insecure_and_buffer(ssl_client);
 
-  // Serial.println("Initializing app...");
   initializeApp(aClient, app, getAuth(user_auth), auth_debug_print, "🔐 authTask");
 
   app.getApp<RealtimeDatabase>(Database);
@@ -107,8 +97,6 @@ void setup() {
 
 void show_status(const bool result, const int buttonState, const char *timeStr) {
   if (result) {
-    // Serial.println("Success");
-
     for (int i = 5; i > 0; i--) {
       display.clearDisplay();
       display.setTextSize(1);
@@ -121,6 +109,13 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
       display.print(buttonState == LOW ? "At home" : "Not at home");
       display.setCursor(0, 50);
       display.print(timeStr);
+
+      // 128 x 32
+      // display.setCursor(0, 0);
+      // display.print(buttonState == LOW ? "At home" : "Not at home");
+      // display.setCursor(0, 20);
+      // display.print(timeStr);
+
       display.display();
       delay(1000);
     }
@@ -137,8 +132,6 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
 void set_await(const int buttonState) {
   // Set the specific value (waits until the value was successfully set)
   // Using Database.set<T>
-  // Serial.println(String("buttonState: ") + buttonState);
-
   time_t now;
   struct tm timeInfo{};
   time(&now);
@@ -149,10 +142,7 @@ void set_await(const int buttonState) {
 
   const String jsonStr = String("{\"isAtHome\":") + (buttonState ? "false" : "true") + R"(,"ts":")" + timeStr + "\"}";
 
-  // Serial.println("JSON -> " + jsonStr);
-
   // Set json
-  // Serial.println("Setting the JSON value... ");
   const bool result = Database.set<object_t>(aClient, "/status", object_t(jsonStr.c_str()));
 
   show_status(result, buttonState, timeStr);
