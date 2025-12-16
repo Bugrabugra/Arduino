@@ -19,10 +19,11 @@
 
 // OLED
 #define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
+// 128 x 64
+// #define SCREEN_HEIGHT 64
 
 // 128 x 32
-// #define SCREEN_HEIGHT 32
+#define SCREEN_HEIGHT 32
 
 SSL_CLIENT ssl_client;
 
@@ -60,10 +61,10 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
- display.clearDisplay();
+  display.clearDisplay();
 
   while (WiFiClass::status() != WL_CONNECTED) {
-    display.setCursor(0, 0);
+    display.setCursor(10, 0);
     display.print("Connecting WiFi...");
     display.display();
     delay(300);
@@ -100,21 +101,22 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
     for (int i = 5; i > 0; i--) {
       display.clearDisplay();
       display.setTextSize(1);
-      display.setCursor(0, 20);
-      display.print("Sleeping in: ");
-      display.setCursor(0, 30);
-      display.print(i);
-      display.print(" sec");
-      display.setCursor(0, 40);
-      display.print(buttonState == LOW ? "At home" : "Not at home");
-      display.setCursor(0, 50);
-      display.print(timeStr);
+      // 128 x 64
+      // display.setCursor(0, 20);
+      // display.print("Sleeping in: ");
+      // display.setCursor(0, 30);
+      // display.print(i);
+      // display.print(" sec");
+      // display.setCursor(0, 40);
+      // display.print(buttonState == LOW ? "At home" : "Not at home");
+      // display.setCursor(0, 50);
+      // display.print(timeStr);
 
       // 128 x 32
-      // display.setCursor(0, 0);
-      // display.print(buttonState == LOW ? "At home" : "Not at home");
-      // display.setCursor(0, 20);
-      // display.print(timeStr);
+      display.setCursor(10, 0);
+      display.print(buttonState == LOW ? "At home" : "Not at home");
+      display.setCursor(10, 20);
+      display.print(timeStr);
 
       display.display();
       delay(1000);
