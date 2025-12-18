@@ -19,10 +19,6 @@
 
 // OLED
 #define SCREEN_WIDTH 128
-// 128 x 64
-// #define SCREEN_HEIGHT 64
-
-// 128 x 32
 #define SCREEN_HEIGHT 32
 
 SSL_CLIENT ssl_client;
@@ -49,6 +45,8 @@ void setup() {
   display.clearDisplay();
   display.display();
 
+  Serial.begin(115200);
+
   // Start OLED
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     for (;;);
@@ -61,10 +59,10 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  display.clearDisplay();
+ display.clearDisplay();
 
   while (WiFiClass::status() != WL_CONNECTED) {
-    display.setCursor(10, 0);
+    display.setCursor(10, 10);
     display.print("Connecting WiFi...");
     display.display();
     delay(300);
@@ -101,23 +99,10 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
     for (int i = 5; i > 0; i--) {
       display.clearDisplay();
       display.setTextSize(1);
-      // 128 x 64
-      // display.setCursor(0, 20);
-      // display.print("Sleeping in: ");
-      // display.setCursor(0, 30);
-      // display.print(i);
-      // display.print(" sec");
-      // display.setCursor(0, 40);
-      // display.print(buttonState == LOW ? "At home" : "Not at home");
-      // display.setCursor(0, 50);
-      // display.print(timeStr);
-
-      // 128 x 32
-      display.setCursor(10, 0);
+      display.setCursor(10, 10);
       display.print(buttonState == LOW ? "At home" : "Not at home");
-      display.setCursor(10, 20);
+      display.setCursor(10, 25);
       display.print(timeStr);
-
       display.display();
       delay(1000);
     }
@@ -132,8 +117,6 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
 }
 
 void set_await(const int buttonState) {
-  // Set the specific value (waits until the value was successfully set)
-  // Using Database.set<T>
   time_t now;
   struct tm timeInfo{};
   time(&now);
@@ -144,7 +127,7 @@ void set_await(const int buttonState) {
 
   const String jsonStr = String("{\"isAtHome\":") + (buttonState ? "false" : "true") + R"(,"ts":")" + timeStr + "\"}";
 
-  // Set json
+  // Set JSON
   const bool result = Database.set<object_t>(aClient, "/status", object_t(jsonStr.c_str()));
 
   show_status(result, buttonState, timeStr);
