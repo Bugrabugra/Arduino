@@ -9,8 +9,8 @@
 
 #define BTN_UP 2
 #define BTN_DOWN 3
-#define BTN_BACK 4
-#define BTN_ENTER 5
+#define BTN_BACK 5
+#define BTN_ENTER 4
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
