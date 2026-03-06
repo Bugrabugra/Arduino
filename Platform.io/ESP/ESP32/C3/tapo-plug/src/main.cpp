@@ -9,7 +9,6 @@ TapoDevice tapo;
 constexpr int buttonOffPin = 4;
 constexpr int buttonOnPin = 5;
 
-
 constexpr unsigned long debounceDelay = 50;     // ms
 constexpr unsigned long actionCooldownMs = 300; // common duration between two command
 
@@ -43,9 +42,7 @@ void setup() {
   }
 
   // Initialize Tapo device
-  tapo.begin("192.168.1.170", "bugraotken@gmail.com", "vekhym-9subSa-gesput");
-  // Example: tapo.begin("192.168.1.100", "abc@example.com", "abc123");
-
+  tapo.begin("192.168.1.173", "bugraotken@gmail.com", "vekhym-9subSa-gesput");
 }
 
 void loop() {

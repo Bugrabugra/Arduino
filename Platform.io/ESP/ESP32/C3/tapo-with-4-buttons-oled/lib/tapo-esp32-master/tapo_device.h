@@ -29,7 +29,6 @@ private:
         return false;
     }
 
-    /* helpers */
     String wrap_param(const String &key, const String &value, bool numeric = false) {
         return "\"" + key + "\":" + (numeric ? value : "\"" + value + "\"");
     }
@@ -39,24 +38,28 @@ public:
         protocol.handshake(ip_address, username, password);
     }
 
+    bool isOn() {
+        return check_state("\"device_on\":true");
+    }
+
     bool on() {
         const String command = "{\"method\":\"set_device_info\",\"params\":{\"device_on\":true}}";
-        return send_command(command);
+        return send_command(command, "\"device_on\":true");
     }
 
     bool off() {
         const String command = "{\"method\":\"set_device_info\",\"params\":{\"device_on\":false}}";
-        return send_command(command);
+        return send_command(command, "\"device_on\":false");
     }
 
-    bool set_brightness(uint8_t level) {                       // 1-100
+    bool set_brightness(uint8_t level) {
         String cmd = "{\"method\":\"set_device_info\",\"params\":{" +
                      wrap_param("brightness", String(level), true) + "}}";
         String exp = "\"brightness\":" + String(level);
         return send_command(cmd, exp);
     }
 
-    bool set_color(uint16_t hue, uint8_t saturation) {         // hue 0-360, sat 0-100
+    bool set_color(uint16_t hue, uint8_t saturation) {
         String cmd = "{\"method\":\"set_device_info\",\"params\":{" +
                      wrap_param("hue", String(hue), true) + "," +
                      wrap_param("saturation", String(saturation), true) + "," +
@@ -65,7 +68,7 @@ public:
         return send_command(cmd, exp);
     }
 
-    bool set_color_temperature(uint16_t kelvin) {              // e.g. 2500-6500
+    bool set_color_temperature(uint16_t kelvin) {
         String cmd = "{\"method\":\"set_device_info\",\"params\":{" +
                      wrap_param("color_temp", String(kelvin), true) + "," +
                      wrap_param("hue", "0", true) + "," +
@@ -74,8 +77,7 @@ public:
         return send_command(cmd, exp);
     }
 
-    bool set_hue_saturation(uint16_t hue, uint8_t saturation) { // alias
+    bool set_hue_saturation(uint16_t hue, uint8_t saturation) {
         return set_color(hue, saturation);
     }
 };
-
