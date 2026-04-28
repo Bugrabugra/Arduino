@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad75fa95-0fcc-4568-b6e9-8d19aa73fcf6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/Adafruit_GFX.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/Adafruit_GFX.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/Adafruit_GFX.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/Adafruit_GFX.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_GFX_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/Adafruit_SleepyDog.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/Adafruit_SleepyDog.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/examples/BasicUsage/BasicUsage.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/examples/BasicUsage/BasicUsage.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/examples/Sleep/Sleep.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/examples/Sleep/Sleep.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_SleepyDog_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDM.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDM.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDM.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDM.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDMSPI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDMSPI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDMSPI.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/Adafruit_ZeroPDMSPI.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/Adafruit_Zero_PDM_Library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT_U.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT_U.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT_U.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/DHT_U.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/DHT_sensor_library/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/changelog.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/examples/IRremoteInfo/IRremoteInfo.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/examples/IRremoteInfo/IRremoteInfo.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/examples/MicroGirs/MicroGirs.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/examples/MicroGirs/MicroGirs.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/keywords.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/keywords.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/IRremote/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/IRremote/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/COMMON_ISSUES.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/COMMON_ISSUES.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24_config.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/RF24_config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/GettingStarted/GettingStarted.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/GettingStarted/GettingStarted.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/rf24_ATTiny/rf24ping85/rf24ping85.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/rf24_ATTiny/rf24ping85/rf24ping85.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/rf24_ATTiny/timingSearch3pin/timingSearch3pin.ino" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/examples/rf24_ATTiny/timingSearch3pin/timingSearch3pin.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/library.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/library.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../libraries/RF24/nRF24L01.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../libraries/RF24/nRF24L01.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Bugrabugra"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Bugrabugra/Arduino.git",
+    "accountId": "0899c318-52b9-4dee-9bde-e2ac8b93dec5"
+  }
+}]]></component>
+  <component name="PlatformioLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2026" />
+    <option name="minorVersion" value="1.1" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3CytZRyjvFOTDIj9Fqu0nmXDpxH" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "org.rust.first.attach.projects": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad75fa95-0fcc-4568-b6e9-8d19aa73fcf6" name="Changes" comment="" />
+      <created>1777369693416</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1777369693416</updated>
+      <workItem from="1777369694427" duration="53000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
