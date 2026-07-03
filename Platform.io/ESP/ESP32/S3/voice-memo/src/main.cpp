@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "secrets.h"
 
 /*
   ESP32S3 Voice Memo - Two button operation
@@ -6,17 +7,19 @@
   Hardware:
   - PDM Microphone: DATA=42, CLK=41
   - SD Card CS: 21
-  - RECORD button: GPIO4 (change to any free pin)
-  - SYNC button:   GPIO1 (Boot button)
+  - RECORD button: GPIO3
+  - SYNC button:   GPIO4
+  - LED Success:   GPIO2
+  - LED Loading:   GPIO1
 
   Usage:
-  - Press RECORD button -> records 20s -> saves to SD card
-  - Press SYNC button   -> connects to WiFi -> uploads pending files -> disconnects
+  - Press RECORD button -> records 8s -> saves WAV to SD card
+  - Press SYNC button   -> connects to WiFi -> transcribes with Groq -> saves to Notion -> disconnects
 
   Fill in before flashing:
   - WIFI_SSID / WIFI_PASSWORD
-  - HA_IP (Home Assistant local IP)
-  - HA_TOKEN (HA Long-Lived Access Token)
+  - GROQ_API_KEY
+  - NOTION_TOKEN / NOTION_DATABASE_ID
 */
 
 #include "ESP_I2S.h"
@@ -25,82 +28,71 @@
 #include "WiFi.h"
 #include "HTTPClient.h"
 #include "WiFiClientSecure.h"
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <Wire.h>
 
-// ============================================================
-// CONFIGURATION - fill in before flashing
-// ============================================================
-const char* WIFI_SSID     = "YOUR_WIFI_SSID";
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
-const char* GROQ_API_KEY       = "YOUR_GROQ_API_KEY";
-const char* NOTION_TOKEN       = "YOUR_NOTION_TOKEN";
-const char* NOTION_DATABASE_ID = "YOUR_NOTION_DATABASE_ID";
-// ============================================================
 
 #define SD_CS_PIN       21
-#define RECORD_BTN_PIN   4   // Record button - GPIO4 (D3)
-#define SYNC_BTN_PIN     2   // Sync button - GPIO1 (D0)
-// #define LED_PIN         21   // Status LED (if available)
-#define RECORD_SECS     10   // Recording duration in seconds
-
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET -1
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-#define BTN_UP 3
-#define BTN_DOWN 9
-#define BTN_BACK 8
-#define BTN_ENTER 7
+#define PIN_BUTTON_RECORD   3
+#define PIN_BUTTON_SYNC     4
+#define PIN_LED_SUCCESS         2
+#define PIN_LED_LOADING         1
+#define RECORD_SECS     8
 
 I2SClass i2s;
 
 // Forward declarations
 void recordAndSave();
+
 void syncNow();
+
 bool tryConnectWifi();
-String transcribeWithGroq(const String& filepath);
+
+String transcribeWithGroq(const String &filepath);
+
 bool sendToNotion(String transcript);
+
 String getDate();
+
 bool isAlreadyUploaded(const String &filename);
+
 void markUploaded(const String &filename);
+
 String getNextFilename();
-// void blinkOK();
-// void blinkError();
+
+void blinkOK();
+
+void blinkLoading(int onMs, int offMs);
+
+void loadingOn();
+
+void loadingOff();
 
 // ============================================================
 // SETUP
 // ============================================================
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
-  pinMode(RECORD_BTN_PIN, INPUT_PULLUP);
-  pinMode(SYNC_BTN_PIN, INPUT_PULLUP);
-  // pinMode(LED_PIN, OUTPUT);
-  // digitalWrite(LED_PIN, LOW);
+  pinMode(PIN_BUTTON_RECORD, INPUT_PULLUP);
+  pinMode(PIN_BUTTON_SYNC, INPUT_PULLUP);
 
-  Serial.println("=== ESP32S3 Voice Memoizer ===");
+  pinMode(PIN_LED_SUCCESS, OUTPUT);
+  pinMode(PIN_LED_LOADING, OUTPUT);
+
+  digitalWrite(PIN_LED_SUCCESS, LOW);
+  digitalWrite(PIN_LED_LOADING, LOW);
 
   // Init SD card
   if (!SD.begin(SD_CS_PIN)) {
     Serial.println("SD card mount failed!");
-    // blinkError();
     return;
   }
-  Serial.println("SD card ready.");
 
   // Init I2S microphone
   i2s.setPinsPdmRx(42, 41);
+
   if (!i2s.begin(I2S_MODE_PDM_RX, 16000, I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_MONO)) {
     Serial.println("I2S init failed!");
-    // blinkError();
-    return;
   }
-  Serial.println("Microphone ready.");
-  Serial.println("RECORD button: start recording");
-  Serial.println("SYNC button:   upload to Notion via HA");
 }
 
 // ============================================================
@@ -108,24 +100,51 @@ void setup() {
 // ============================================================
 void loop() {
   // RECORD button pressed
-  if (digitalRead(RECORD_BTN_PIN) == LOW) {
+  if (digitalRead(PIN_BUTTON_RECORD) == LOW) {
     delay(50); // debounce
-    if (digitalRead(RECORD_BTN_PIN) == LOW) {
-      while (digitalRead(RECORD_BTN_PIN) == LOW) delay(10); // wait for release
+
+    if (digitalRead(PIN_BUTTON_RECORD) == LOW) {
+      while (digitalRead(PIN_BUTTON_RECORD) == LOW) delay(10); // wait for release
       recordAndSave();
     }
   }
 
   // SYNC button pressed
-  if (digitalRead(SYNC_BTN_PIN) == LOW) {
+  if (digitalRead(PIN_BUTTON_SYNC) == LOW) {
     delay(50); // debounce
-    if (digitalRead(SYNC_BTN_PIN) == LOW) {
-      while (digitalRead(SYNC_BTN_PIN) == LOW) delay(10); // wait for release
+
+    if (digitalRead(PIN_BUTTON_SYNC) == LOW) {
+      while (digitalRead(PIN_BUTTON_SYNC) == LOW) delay(10); // wait for release
       syncNow();
     }
   }
 
-  delay(20);
+  if (Serial.available()) {
+    String cmd = Serial.readStringUntil('\n');
+    cmd.trim();
+
+    if (cmd == "CLEAR") {
+      SD.remove("/uploaded.txt");
+      File root = SD.open("/");
+
+      while (true) {
+        File entry = root.openNextFile();
+
+        if (!entry) break;
+
+        String name = "/" + String(entry.name());
+        entry.close();
+
+        if (name.indexOf("memo_") >= 0 && name.endsWith(".wav")) {
+          SD.remove(name);
+        }
+      }
+      root.close();
+      Serial.println("SD cleared.");
+    }
+  }
+
+  delay(200);
 }
 
 // ============================================================
@@ -133,17 +152,18 @@ void loop() {
 // ============================================================
 void recordAndSave() {
   Serial.println("Recording " + String(RECORD_SECS) + "s...");
-  // digitalWrite(LED_PIN, HIGH);
+  loadingOn();
 
-  uint8_t* wav_buffer;
+  uint8_t *wav_buffer;
   size_t wav_size;
   wav_buffer = i2s.recordWAV(RECORD_SECS, &wav_size);
 
   String filename = getNextFilename();
   File file = SD.open(filename, FILE_WRITE);
+
   if (!file) {
     Serial.println("Failed to open file!");
-    // digitalWrite(LED_PIN, LOW);
+    loadingOff();
     free(wav_buffer);
     return;
   }
@@ -152,17 +172,19 @@ void recordAndSave() {
   file.close();
   free(wav_buffer);
 
-  // digitalWrite(LED_PIN, LOW);
+  loadingOff();
+  blinkOK();
+
   Serial.println("Saved: " + filename);
-  // blinkOK();
 }
 
 String getNextFilename() {
   int n = 1;
+
   while (true) {
     String name = "/memo_";
     if (n < 100) name += "0";
-    if (n < 10)  name += "0";
+    if (n < 10) name += "0";
     name += String(n) + ".wav";
     if (!SD.exists(name)) return name;
     n++;
@@ -174,17 +196,15 @@ String getNextFilename() {
 // ============================================================
 void syncNow() {
   Serial.println("Sync started...");
-  // digitalWrite(LED_PIN, HIGH);
 
-  if (!tryConnectWifi()) {
-    Serial.println("WiFi connection failed.");
-    // blinkError();
-    // digitalWrite(LED_PIN, LOW);
+  File root = SD.open("/");
+  if (!root) {
+    Serial.println("Failed to open SD root.");
     return;
   }
 
-  File root = SD.open("/");
-  if (!root) { WiFi.disconnect(); return; }
+  char pending[64][32];
+  int pendingCount = 0;
 
   while (true) {
     File entry = root.openNextFile();
@@ -194,90 +214,123 @@ void syncNow() {
     entry.close();
 
     if (name.indexOf("memo_") >= 0 && name.endsWith(".wav")) {
-      if (!isAlreadyUploaded(name)) {
-        Serial.println("Processing: " + name);
-
-        String transcript = transcribeWithGroq(name);
-        if (transcript.length() > 0) {
-          bool ok = sendToNotion(transcript);
-          if (ok) {
-            markUploaded(name);
-            Serial.println("Done: " + name);
-            // blinkOK();
-          } else {
-            Serial.println("Notion write failed: " + name);
-          }
-        } else {
-          Serial.println("Transcription failed: " + name);
-        }
-
-        delay(1000);
+      if (!isAlreadyUploaded(name) && pendingCount < 64) {
+        name.toCharArray(pending[pendingCount], 32);
+        pendingCount++;
       }
     }
   }
   root.close();
 
+  if (pendingCount == 0) {
+    Serial.println("Nothing to sync.");
+    return;
+  }
+
+  if (!tryConnectWifi()) {
+    Serial.println("WiFi connection failed.");
+    return;
+  }
+
+  for (int i = 0; i < pendingCount; i++) {
+    String name = pending[i];
+
+    loadingOn();
+    String transcript = transcribeWithGroq(name);
+    loadingOff();
+    transcript.trim(); // Whisper transcripts often have a stray leading space
+
+    if (transcript.length() > 0) {
+      delay(400);
+      loadingOn();
+      bool ok = sendToNotion(transcript);
+      loadingOff();
+      if (ok) {
+        markUploaded(name);
+        blinkOK();
+      } else {
+        Serial.println("Notion write failed: " + name);
+      }
+    } else {
+      Serial.println("Transcription failed: " + name);
+    }
+
+    delay(1000);
+  }
+
   WiFi.disconnect();
-  Serial.println("Sync complete. WiFi disconnected.");
-  // digitalWrite(LED_PIN, LOW);
+  Serial.println("Sync complete.");
 }
 
 // ============================================================
 // GROQ WHISPER TRANSCRIPTION
 // ============================================================
-String transcribeWithGroq(const String& filepath) {
+String transcribeWithGroq(const String &filepath) {
   File file = SD.open(filepath, FILE_READ);
   if (!file) return "";
 
   size_t filesize = file.size();
-  uint8_t* buf = static_cast<uint8_t *>(malloc(filesize));
-  if (!buf) { file.close(); return ""; }
+  uint8_t *buf = static_cast<uint8_t *>(malloc(filesize));
+
+  if (!buf) {
+    file.close();
+    return "";
+  }
+
   file.read(buf, filesize);
   file.close();
 
   // Build multipart/form-data body manually
   String boundary = "----ESP32Boundary7MA4YWxkTrZu0gW";
-  String filename  = filepath.substring(filepath.lastIndexOf('/') + 1);
+  String filename = filepath.substring(filepath.lastIndexOf('/') + 1);
 
   // Part 1: file field
   String partHeader =
-    "--" + boundary + "\r\n"
-    "Content-Disposition: form-data; name=\"file\"; filename=\"" + filename + "\"\r\n"
-    "Content-Type: audio/wav\r\n\r\n";
+      "--" + boundary + "\r\n"
+      "Content-Disposition: form-data; name=\"file\"; filename=\"" + filename + "\"\r\n"
+      "Content-Type: audio/wav\r\n\r\n";
 
   // Part 2: model field
   String modelPart =
-    "\r\n--" + boundary + "\r\n"
-    "Content-Disposition: form-data; name=\"model\"\r\n\r\n"
-    "whisper-large-v3-turbo"
-    "\r\n";
+      "\r\n--" + boundary + "\r\n"
+      "Content-Disposition: form-data; name=\"model\"\r\n\r\n"
+      "whisper-large-v3-turbo"
+      "\r\n";
 
   // Part 3: language field
   String langPart =
-    "--" + boundary + "\r\n"
-    "Content-Disposition: form-data; name=\"language\"\r\n\r\n"
-    "tr"
-    "\r\n";
+      "--" + boundary + "\r\n"
+      "Content-Disposition: form-data; name=\"language\"\r\n\r\n"
+      "tr"
+      "\r\n";
 
   // Part 4: response_format field
   String formatPart =
-    "--" + boundary + "\r\n"
-    "Content-Disposition: form-data; name=\"response_format\"\r\n\r\n"
-    "json"
-    "\r\n--" + boundary + "--\r\n";
+      "--" + boundary + "\r\n"
+      "Content-Disposition: form-data; name=\"response_format\"\r\n\r\n"
+      "json"
+      "\r\n--" + boundary + "--\r\n";
 
   size_t totalSize = partHeader.length() + filesize +
                      modelPart.length() + langPart.length() + formatPart.length();
 
-  uint8_t* body = static_cast<uint8_t *>(malloc(totalSize));
-  if (!body) { free(buf); return ""; }
+  uint8_t *body = static_cast<uint8_t *>(malloc(totalSize));
+  if (!body) {
+    free(buf);
+    return "";
+  }
 
   size_t offset = 0;
-  memcpy(body + offset, partHeader.c_str(), partHeader.length()); offset += partHeader.length();
-  memcpy(body + offset, buf, filesize);                            offset += filesize;
-  memcpy(body + offset, modelPart.c_str(), modelPart.length());   offset += modelPart.length();
-  memcpy(body + offset, langPart.c_str(), langPart.length());     offset += langPart.length();
-  memcpy(body + offset, formatPart.c_str(), formatPart.length()); offset += formatPart.length();
+  memcpy(body + offset, partHeader.c_str(), partHeader.length());
+  offset += partHeader.length();
+  memcpy(body + offset, buf, filesize);
+  offset += filesize;
+  memcpy(body + offset, modelPart.c_str(), modelPart.length());
+  offset += modelPart.length();
+  memcpy(body + offset, langPart.c_str(), langPart.length());
+  offset += langPart.length();
+  memcpy(body + offset, formatPart.c_str(), formatPart.length());
+  offset += formatPart.length();
   free(buf);
 
   WiFiClientSecure client;
@@ -295,13 +348,15 @@ String transcribeWithGroq(const String& filepath) {
   String transcript = "";
   if (httpCode == 200) {
     String response = http.getString();
-    Serial.println("Groq response: " + response);
     // Parse {"text":"..."} manually - avoids ArduinoJson dependency
-    int start = response.indexOf(R"("text":")") + 8;
-    int end   = response.indexOf("\",\"", start);
-    if (end < 0) end = response.indexOf("\"}", start);
-    if (start > 8 && end > start) {
-      transcript = response.substring(start, end);
+    int textKey = response.indexOf(R"("text":")");
+
+    if (textKey >= 0) {
+      int start = textKey + 8;
+      int end = response.indexOf("\"", start);
+      if (end > start) {
+        transcript = response.substring(start, end);
+      }
     }
   } else {
     Serial.println("Groq error " + String(httpCode) + ": " + http.getString());
@@ -318,13 +373,13 @@ bool sendToNotion(String transcript) {
   transcript.replace("\"", "\\\"");
 
   String payload =
-    "{"
+      "{"
       "\"parent\":{\"database_id\":\"" + String(NOTION_DATABASE_ID) + "\"},"
       "\"properties\":{"
-        "\"Name\":{\"title\":[{\"text\":{\"content\":\"" + transcript + "\"}}]},"
-        "\"Status\":{\"status\":{\"name\":\"To Do\"}}"
+      "\"Name\":{\"title\":[{\"text\":{\"content\":\"" + transcript + "\"}}]},"
+      "\"Status\":{\"status\":{\"name\":\"To Do\"}}"
       "}"
-    "}";
+      "}";
 
   WiFiClientSecure client;
   client.setInsecure();
@@ -337,10 +392,11 @@ bool sendToNotion(String transcript) {
   http.setTimeout(15000);
 
   int httpCode = http.POST(payload);
-  Serial.println("Notion response: " + String(httpCode));
+
   if (httpCode != 200) {
     Serial.println(http.getString());
   }
+
   http.end();
 
   return (httpCode == 200);
@@ -351,12 +407,17 @@ bool sendToNotion(String transcript) {
 // ============================================================
 String getDate() {
   configTime(0, 0, "pool.ntp.org");
+
   struct tm timeInfo;
+
   if (!getLocalTime(&timeInfo, 5000)) {
     return "2000-01-01"; // fallback if NTP fails
   }
+
   char buf[11];
+
   strftime(buf, sizeof(buf), "%Y-%m-%d", &timeInfo);
+
   return String(buf);
 }
 
@@ -364,19 +425,55 @@ String getDate() {
 // WIFI
 // ============================================================
 bool tryConnectWifi() {
-  Serial.print("Connecting to WiFi");
+  WiFi.mode(WIFI_STA);
+
+  WiFi.scanNetworks(true); // async, so we can blink while scanning
+
+  int found;
+  while ((found = WiFi.scanComplete()) < 0) {
+    blinkLoading(300, 300); // slow blink: scanning for SSID
+  }
+
+  bool ssidVisible = false;
+
+  for (int i = 0; i < found; i++) {
+    if (WiFi.SSID(i) == WIFI_SSID) {
+      ssidVisible = true;
+      break;
+    }
+  }
+
+  WiFi.scanDelete();
+  loadingOff();
+
+  if (!ssidVisible) {
+    Serial.println("SSID not found, skipping.");
+    return false;
+  }
+
+  Serial.println("Connecting to: " + String(WIFI_SSID));
+
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  int attempts = 0;
-  while (WiFi.status() != WL_CONNECTED && attempts < 20) {
-    delay(500);
-    Serial.print(".");
-    attempts++;
+
+  for (int i = 0; i < 20; i++) {
+    wl_status_t s = WiFi.status();
+    Serial.println("WiFi status: " + String(s));
+
+    if (s == WL_CONNECTED) {
+      loadingOff();
+      return true;
+    }
+
+    if (s == WL_CONNECT_FAILED || s == WL_NO_SSID_AVAIL) break;
+
+    blinkLoading(80, 80); // fast double-flicker: connecting to wifi
+    blinkLoading(80, 80);
   }
-  if (WiFi.status() == WL_CONNECTED) {
-    Serial.println(" connected! IP: " + WiFi.localIP().toString());
-    return true;
-  }
+
   WiFi.disconnect();
+
+  loadingOff();
+
   return false;
 }
 
@@ -385,34 +482,56 @@ bool tryConnectWifi() {
 // ============================================================
 bool isAlreadyUploaded(const String &filename) {
   File log = SD.open("/uploaded.txt", FILE_READ);
+
   if (!log) return false;
+
   while (log.available()) {
     String line = log.readStringUntil('\n');
     line.trim();
-    if (line == filename) { log.close(); return true; }
+
+    if (line == filename) {
+      log.close();
+      return true;
+    }
   }
+
   log.close();
+
   return false;
 }
 
-void markUploaded(const String& filename) {
+void markUploaded(const String &filename) {
   File log = SD.open("/uploaded.txt", FILE_APPEND);
-  if (log) { log.println(filename); log.close(); }
+
+  if (log) {
+    log.println(filename);
+    log.close();
+  }
 }
 
 // ============================================================
 // HELPERS
 // ============================================================
-// void blinkOK() {
-//   for (int i = 0; i < 3; i++) {
-//     digitalWrite(LED_PIN, HIGH); delay(100);
-//     digitalWrite(LED_PIN, LOW);  delay(100);
-//   }
-// }
+void blinkOK() {
+  for (int i = 0; i < 5; i++) {
+    digitalWrite(PIN_LED_SUCCESS, HIGH);
+    delay(200);
+    digitalWrite(PIN_LED_SUCCESS, LOW);
+    delay(150);
+  }
+}
 
-// void blinkError() {
-//   for (int i = 0; i < 10; i++) {
-//     digitalWrite(LED_PIN, HIGH); delay(50);
-//     digitalWrite(LED_PIN, LOW);  delay(50);
-//   }
-// }
+void blinkLoading(const int onMs, const int offMs) {
+  digitalWrite(PIN_LED_LOADING, HIGH);
+  delay(onMs);
+  digitalWrite(PIN_LED_LOADING, LOW);
+  delay(offMs);
+}
+
+void loadingOn() {
+  digitalWrite(PIN_LED_LOADING, HIGH);
+}
+
+void loadingOff() {
+  digitalWrite(PIN_LED_LOADING, LOW);
+}
