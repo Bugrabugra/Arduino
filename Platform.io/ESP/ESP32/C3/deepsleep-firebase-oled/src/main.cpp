@@ -4,6 +4,8 @@
 #include <FirebaseClient.h>
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
+#include <HTTPClient.h>
+#include <WiFiClientSecure.h>
 #include "ExampleFunctions.h"
 
 // Firebase
@@ -13,6 +15,9 @@
 #define USER_EMAIL "am-i-at-home@gmail.com"
 #define USER_PASSWORD "123456"
 #define DATABASE_URL "https://am-i-at-home-default-rtdb.europe-west1.firebasedatabase.app"
+
+// ntfy
+#define NTFY_URL "https://ntfy.sh/am-i-at-home"
 
 // Interrupt
 #define BUTTON_PIN 5
@@ -61,7 +66,7 @@ void setup() {
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
  display.clearDisplay();
 
-  while (WiFiClass::status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     display.setCursor(10, 10);
     display.print("Connecting WiFi...");
     display.display();
@@ -116,6 +121,23 @@ void show_status(const bool result, const int buttonState, const char *timeStr) 
   esp_deep_sleep_start();
 }
 
+void send_ntfy(const int buttonState, const char *timeStr) {
+  WiFiClientSecure client;
+  client.setInsecure();
+
+  HTTPClient http;
+  if (!http.begin(client, NTFY_URL)) {
+    Serial.println("ntfy: begin failed");
+    return;
+  }
+
+  http.addHeader("Content-Type", "text/plain; charset=utf-8");
+  const String message = String("Buğra ") + timeStr + (buttonState == LOW ? " tarihinde eve geldi" : " tarihinde evden ayrıldı");
+  const int code = http.POST(message);
+  Serial.printf("ntfy: HTTP %d\n", code);
+  http.end();
+}
+
 void set_await(const int buttonState) {
   time_t now;
   struct tm timeInfo{};
@@ -129,6 +151,9 @@ void set_await(const int buttonState) {
 
   // Set JSON
   const bool result = Database.set<object_t>(aClient, "/status", object_t(jsonStr.c_str()));
+
+  // Notify state change (each wake-up is a state change)
+  send_ntfy(buttonState, timeStr);
 
   show_status(result, buttonState, timeStr);
 }
